@@ -8,7 +8,7 @@ Automatic: You can tell Air-Script to hack all wifi networks around you.
 Air-Script will automatically hack every network in range in a matter of seconds to minutes with out any user input. When Air-Script is done. It will automatically turn off monitor mode, ask which wordlist to use and will crack the password for you.
 
 
-*If on Pi this step is recommended to be done on PC. Transfer handshakes from Pi to PC.*
+*If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
 
 
 To make things easier, do this all over SSH and Air-Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
