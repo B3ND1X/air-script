@@ -9,16 +9,15 @@ Air-Script will automatically hack every network in range in a matter of seconds
 
 
 *If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
-*Air-Script being automatic and extremely SSH/VNC friendly makes it unique*
 
 To make things easier, do this all over SSH and Air-Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
 It automatically turns off monitor mode after every step to ensure you can stay connected via SSH. 
 
 
 Air-Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
-Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!
- 
+Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
+*Air-Script being automatic and extremely SSH/VNC friendly makes it unique*
 
 *This script comes as is, there is no warranty.*
 *By using this you agree to not hack WiFi networks you do not own or have permission to hack.*
