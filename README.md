@@ -1,6 +1,12 @@
-This is Air Script for mobile devices: Works on Android, Raspberry Pi and iOS (iOS is not native, ssh to a linux device like a Pi is needed.)
-Air-Script is a python script to make testing the security of your WiFi network easier.
-Air-Script uses aircrack-ng to crack WiFi without all the typing. Save time, type less.
+Air-Script is an automated and automatic way to pwn wifi. 
+Automated: Step by step user friendly interface
+Automatic: You can tell Air-Script to hack all wifi networks around you.
+When Air-Script is done it will ask which wordlist to use and will crack the password for you.
+*If on Pi this step is recommended to be done on PC. Transfer handshakes from Pi to PC.*
+To make things easier, do this all over SSH and Air-Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
+It automatically turns off monitor mode after every step to ensure you can stay connected via SSH. 
+Air-Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!
+ 
 
 
 *This script comes as is, there is no warranty.*
