@@ -9,7 +9,7 @@ Air-Script will automatically hack every network in range in a matter of seconds
 
 
 *If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
-
+*Air-Script being automatic and extremely SSH/VNC friendly makes it unique*
 
 To make things easier, do this all over SSH and Air-Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
 It automatically turns off monitor mode after every step to ensure you can stay connected via SSH. 
