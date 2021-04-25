@@ -341,7 +341,8 @@ You can use method one, without the need of SSH or Ad Hoc. "
 
 fix(){
 apt-get update
-apt-get install aircrack-ng
+apt-get install -y aircrack-ng
+apt-get install -y macchanger
 echo "$(tput setaf 2)Fixing.. reboot recommended when finished."
 
 
