@@ -12,7 +12,7 @@ handshakeWait=2        ##### Time, how long aircack-ng waits for handshake in mi
 checkDependencies () {        ##### Check if aircrack-ng is installed or not #####
 if [ $(dpkg-query -W -f='${Status}' aircrack-ng 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
 echo "Installing aircrack-ng\n\n"
-sudo apt-get install aircrack-ng;
+apt-get install -y aircrack-ng;
 fi
 }
 
@@ -58,9 +58,10 @@ echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack A Wifi Network"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Wifi Networks"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Decrypt Passowrd(s)"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifi Jammer"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}View log file"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}Help"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}MAC Changer"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}View log file"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Help"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -80,15 +81,19 @@ case $option in
      wifiJammer
      exit 0
      ;;
-  5) echo -e "\n[${Green}Selected${White}] View log file"
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address.."
+     macChange
+     exit 0
+     ;;
+  6) echo -e "\n[${Green}Selected${White}] Option 6 View log file"
      log
      exit 0
      ;;
-  6) echo -e "\n[${Green}Selected${White}] Help"
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Help"
      Help
      exit 0
      ;;
-  7) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -210,6 +215,69 @@ bssid=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 4 `
 channel=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 6 `
 rm generated-01.kismet.csv 2> /dev/null
 echo -e "\n[${Green}${targetName}${White}] Preparing for attack..."
+}
+
+macChange() {
+     ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Change MAC Address"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Restore Original MAC Address"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Show Current MAC Address"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Changing MAC Address..."
+     spoofMAC
+     exit 0
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Restore MAC Address.."
+     RestoreMAC
+     exit 0
+     ;; 
+  3) echo -e "\n[${Green}Selected${White}] Current MAC Address.."
+     showMAC
+     exit 0
+     ;; 
+  4) echo -e "\n[${Green}Selected${White}] Going back.."
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
+done
+}
+
+
+spoofMAC(){
+macchanger -s eth0
+macchanger -s wlan0
+ifconfig eth0 down
+ifconfig wlan0 down
+macchanger -r eth0
+macchanger -r wlan0
+ifconfig eth0 up
+ifconfig wlan0 up
+macchanger -s eth0
+macchanger -s wlan0
+}
+
+RestoreMAC(){
+ifconfig eth0 down
+ifconfig wlan0 down
+macchanger -p eth0
+macchanger -p wlan0
+ifconfig eth0 up
+ifconfig wlan0 up
+macchanger -s eth0
+macchanger -s wlan0
+
+}
+
+showMAC() {
+macchanger -s eth0
+macchanger -s wlan0
 }
 
 log(){
