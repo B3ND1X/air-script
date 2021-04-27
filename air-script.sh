@@ -49,7 +49,7 @@ echo -e "${Red}
 echo -e "${Yellow} \n             Hack the world!!!
       By using this you agree to the EULA."
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0.1 Stable"
+echo -e "${Green}                         Version: 1.0.2 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -57,11 +57,12 @@ echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack Wifi"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Decrypt Passowrd(s)"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifi Jammer"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}MAC Changer"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}Anonsurf"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Change MAC Address"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Change IP Address"
 echo -e "      ${Red}[${Blue}6${Red}] ${Green}View log file"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}Help"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Extra Tools"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Help"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -85,15 +86,19 @@ case $option in
      anonsurf
      exit 0
      ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 6 View log..."
+  6) echo -e "\n[${Green}Selected${White}] Option 7 View log of cracked networks..."
      log
      exit 0
      ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 7 Help..."
+  7) echo -e "\n[${Green}Selected${White}] Option 8 Extra Tools..."
+     tools
+     exit 0
+     ;;
+  8) echo -e "\n[${Green}Selected${White}] Option 9 Help..."
      Help
      exit 0
      ;;
-  8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -107,7 +112,9 @@ wifiHacking () {        ##### Sending DeAuth and capture handshake #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Air-Script Attacks"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Fluxion Attacks"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifite Attacks"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifite2 Attacks"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -119,7 +126,15 @@ case $option in
      FluxionMenu
      exit 0
      ;;
-  3) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  3) echo -e "\n[${Green}Selected${White}] Option 2 Wifite.."
+     Wifite
+     exit 0
+     ;;
+  4) echo -e "\n[${Green}Selected${White}] Option 2 Wifite2.."
+     Wifite2
+     exit 0
+     ;;
+  5) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -239,6 +254,15 @@ cd fluxion
 sudo ./fluxion.sh
 }
 
+Wifite () {
+sudo wifite
+}
+
+Wifite2 () {
+cd tools
+cd wifite2
+sudo ./Wifite.py
+}
 
 crack() {
 wordlist
@@ -445,8 +469,33 @@ sudo anonsurf myip
 
 
 
-      
+      tools () {        ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Zirikatu"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Zirikaru"
+  zirikatu
+     ;;
+  2) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
+done
+}
 
+
+zirikatu () {
+cd tools
+cd zirikatu
+sudo ./zirikatu.sh
+
+}
 
 
 
@@ -455,7 +504,9 @@ Help()
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}How to set up for mobile"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Its not working :("
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Turn off monitor mode"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Uninstall"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -468,7 +519,15 @@ case $option in
      fix
      exit 0
      ;; 
-  3) echo -e "\n[${Green}Selected${White}] Going back.."
+  3) echo -e "\n[${Green}Selected${White}] Fixing monitor mode.."
+     stopMon
+     exit 0
+     ;; 
+  4) echo -e "\n[${Green}Selected${White}] Running uninstall tool.."
+    uninstall
+     exit 0
+     ;; 
+  5) echo -e "\n[${Green}Selected${White}] Going back.."
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -477,9 +536,18 @@ esac
 done
 }
 
+uninstall () {
+sudo ./uninstall.sh 
+}
 
+stopMon () {
+sudo airmon-ng stop wlan0mon
+sudo service network-mamager start
+sudo service network-mamager restart
+sudo ifconfig wlan0 up
+sudo wpa_suplicant
 
-
+}
 
 
 
@@ -515,13 +583,22 @@ chmod -R 755 kali-anonsurf
 cd kali-anonsurf
 ./installer.sh
 apt install ./kali-anonsurf.deb
-##################### Fluxion ##################### 
+###################### Wifite2 ####################
 cd ..
+git clone https://github.com/derv82/wifite2.git
+cd wifite2
+cd ..
+echo "$(tput setaf 2)Press Ctrl + C when fluxion is done."
+##################### Fluxion ##################### 
 git clone https://www.github.com/FluxionNetwork/fluxion.git
 chmod -R 755 fluxion
 cd fluxion
 sudo ./fluxion.sh -i
-echo "$(tput setaf 2)Fixing.. reboot recommended when finished."
+cd ..
+############### Zirikatu #########################
+git clone https://github.com/pasahitz/zirikatu
+chmod -R 755 zirikatu
+echo "$(tput setaf 2)Done!"
 
 
 }
