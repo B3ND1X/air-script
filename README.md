@@ -24,6 +24,7 @@ v 1.0
 
 ## WHAT IS AIR SCRIPT?
 
+![air-script logo](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0992.jpg)
 
 Air-Script is an automated and automatic way to pwn wifi. 
 
