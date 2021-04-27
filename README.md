@@ -76,8 +76,8 @@ run commands:
 
 ## HOW TO RUN:
 
-cd air-script
-sudo ./air-script.sh
+* cd air-script
+* sudo ./air-script.sh
 
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
