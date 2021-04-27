@@ -70,31 +70,31 @@ case $option in
   1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
      wifiHacking
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 3 Decrypt Passowrd(s).."
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Passowrd(s).."
      crack
      exit 0
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 4 Wifi Jammer..."
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Wifi Jammer..."
      wifiJammer
      exit 0
      ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 5 Changing MAC Address..."
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Changing MAC Address..."
      macChange
      exit 0
      ;;
-  5) echo -e "\n[${Green}Selected${White}] Option 6 Anonsurf..."
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Anonsurf..."
      anonsurf
      exit 0
      ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 7 View log of cracked networks..."
+  6) echo -e "\n[${Green}Selected${White}] Option 6 View log of cracked networks..."
      log
      exit 0
      ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 8 Extra Tools..."
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Extra Tools..."
      tools
      exit 0
      ;;
-  8) echo -e "\n[${Green}Selected${White}] Option 9 Help..."
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Help..."
      Help
      exit 0
      ;;
