@@ -2,8 +2,15 @@ What's New:
 
 v. 1.0.1 
 
+
 *Anonsurf option added*
+
+
 *MAC Changer option added*
+
+
+
+
 
 
 Air-Script is an automated and automatic way to pwn wifi. 
