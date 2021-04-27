@@ -49,7 +49,7 @@ echo -e "${Red}
 echo -e "${Yellow} \n             Hack the world!!!
       By using this you agree to the EULA."
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0 Stable"
+echo -e "${Green}                         Version: 1.0.1 Stable"
 }
 
 menu () {        ##### Display available options #####
