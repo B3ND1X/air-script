@@ -26,6 +26,10 @@ fi
 
 banner () {        ##### Banner #####
 echo -e "${Red}
+
+
+
+
  ▄▄▄       ██▓ ██▀███                            
 ▒████▄    ▓██▒▓██ ▒ ██▒                          
 ▒██  ▀█▄  ▒██▒▓██ ░▄█ ▒                          
@@ -189,7 +193,7 @@ sudo chmod -R 755 air-crack
 sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
-echo -e "[${Green}Status${White}] Done! Select 3 to crack captured passowrd or select 4 to exit.."
+echo -e "[${Green}Status${White}] Done! Select 3 to crack captured password or select 4 to exit.."
 }
 
 
