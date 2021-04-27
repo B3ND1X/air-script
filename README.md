@@ -7,7 +7,7 @@ v. 1.0.1
 * MAC Changer option added
 
 v 1.0
-* initial Release
+* Initial Release
 
 <br>
 </br>
