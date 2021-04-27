@@ -67,8 +67,6 @@ clear
 echo "$(tput setaf 2)Installing everything for you! Please wait..."
 sleep 5
 clear
-cd
-cd air-script
 cd tools
 apt-get update
 ##################### aircrack-ng ##################### 
