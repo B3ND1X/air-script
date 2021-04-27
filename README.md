@@ -52,8 +52,6 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 
 ![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)
 ![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0980.PNG)	
-![alt text](https://github.com/B3ND1X/air-script-img/blob/main/IMG_0984.PNG)
-![alt text](https://github.com/B3ND1X/air-script-img/blob/main/IMG_0981.PNG)
 ![alt text](https://github.com/B3ND1X/air-script-mobile/blob/main/img/IMG1.JPG)
 
 
