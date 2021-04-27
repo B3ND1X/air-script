@@ -65,3 +65,18 @@ chmod -R 755 /home/pi/air-script
 
 cd air-script
 sudo ./air-script.sh
+
+## DONT WANT TO USE ONLY AIR SCRIPT?
+
+Thats okay, me either! Thats why Air Script comes with extra tools!
+
+
+* PLEASE NOTE: If youre on Raspberry Pi over SSH or VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air-Script Attacks work when on SSH VNC or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
+
+## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
+
+It's a shame to see you go. No hard feelings!
+
+* Please go to "Help" (Option 8)
+* Select Uninstall (Option 4)
+
