@@ -57,7 +57,7 @@ sudo rm -r /home/superuser/air-script
 sudo rm -r /home/pi/air-script
 sudo rm -r /root/home/air-script
 sudo apt-get remove kali-anonsurf
-
+sudo rm -r /usr/sbin/wifite
 
 }
 
