@@ -4,7 +4,7 @@ v. 1.0.1
 
 
 * Anonsurf option added
-* MAC Changer option added*
+* MAC Changer option added
 
 v 1.0
 * initial Release
