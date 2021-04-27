@@ -44,7 +44,7 @@ It automatically turns off monitor mode after every step to ensure you can stay 
 Air-Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
 Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
-*Air-Script being automatic and extremely SSH/VNC friendly makes it unique*
+*Air-Script being automatic and extremely SSH/Ad Hoc friendly makes it somewhat unique*
 
 *This script comes as is, there is no warranty.*
 *By using this you agree to not hack WiFi networks you do not own or have permission to hack.*
@@ -84,7 +84,7 @@ sudo ./air-script.sh
 Thats okay, me either! Thats why Air Script comes with extra tools!
 
 
-* PLEASE NOTE: If youre on Raspberry Pi over SSH or VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air-Script Attacks work when on SSH VNC or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
+*PLEASE NOTE: If youre on Raspberry Pi over SSH, VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air-Script Attacks work when connected over SSH or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
 
 ## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
 
