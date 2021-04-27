@@ -1,19 +1,19 @@
-###CHANGELOG
+### CHANGELOG
 
 v. 1.0.1 
 
 
-*Anonsurf option added*
-*MAC Changer option added*
+* Anonsurf option added
+* MAC Changer option added*
 
 v 1.0
-*initial Release
+* initial Release
 
 <br>
 </br>
 
 
-##WHAT IS AIR SCRIPT?
+## WHAT IS AIR SCRIPT?
 
 
 Air-Script is an automated and automatic way to pwn wifi. 
@@ -50,7 +50,7 @@ https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=shari
 							               
 		
 		
-##HIW TO INSTALL:
+## HIW TO INSTALL:
 
 Open Terminal
 
@@ -61,7 +61,7 @@ git clone https://github.com/B3ND1X/air-script
 chmod -R 755 /home/pi/air-script
 
 
-##HOW TO RUN:
+## HOW TO RUN:
 
 cd air-script
 sudo ./air-script.sh
