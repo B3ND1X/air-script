@@ -55,7 +55,8 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 ![alt text](https://github.com/B3ND1X/air-script-img/blob/main/IMG_0981.PNG)
 ![alt text](https://github.com/B3ND1X/air-script-mobile/blob/main/img/IMG1.JPG)
 VIDEO:
-https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=sharing
+https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=sharing (KALI PC)
+https://drive.google.com/file/d/1F6777GA08joON5ZYYVb8gWt6bt6WNW-d/view?usp=sharing (KALI RASPBERRY PI SSH)
 							               
 		
 		
