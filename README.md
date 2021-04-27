@@ -69,6 +69,7 @@ run commands:
 * git clone https://github.com/B3ND1X/air-script
 * chmod -R 755 /home/pi/air-script (Pi Installation)
 * chmod -R 755 /home/root/air-script (Kali Installation)
+* sudo ./install.sh
 
 
 ## HOW TO RUN:
