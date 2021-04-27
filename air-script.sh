@@ -227,7 +227,7 @@ crack() {
 chmod -R 755 air-script
 sudo aircrack-ng -w wordlist.txt wep.cap
 sudo aircrack-ng -w wordlist.txt wpa.cap
-sudo aircrack-ng -a2 -w wordlist.txt *.cap
+#sudo aircrack-ng -a2 -w wordlist.txt *.cap
 sudo aircrack-ng -w wordlist.txt *.cap
 }
 
