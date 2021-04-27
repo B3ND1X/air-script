@@ -51,7 +51,7 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 *Hacking networks you do not have permission to hack is illegal. I am not responsible for your actions.*
 
 ![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)
-![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0980.PNG)	
+![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0991.JPG)	
 ![alt text](https://github.com/B3ND1X/air-script-mobile/blob/main/img/IMG1.JPG)
 
 
