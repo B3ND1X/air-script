@@ -3,9 +3,9 @@
 v. 1.0.1 
 
 
-* Anonsurf option added
-* MAC Changer option added
-
+* Anonsurf added to tools
+* MAC Changer added tools
+* Fluxion added to tools
 v 1.0
 * Initial Release
 
