@@ -1,11 +1,20 @@
 ### CHANGELOG
 
-v. 1.0.1 
+v 1.0.2
+* Extra tools option
+* Added Zirikatu to tools
+* Added uninstall script to remove air-script and or air-script tools
+* Cleaned things up
+
+
+v. 1.0.1
 
 
 * Anonsurf added to tools
 * MAC Changer added tools
 * Fluxion added to tools
+
+
 v 1.0
 * Initial Release
 
@@ -78,5 +87,5 @@ Thats okay, me either! Thats why Air Script comes with extra tools!
 It's a shame to see you go. No hard feelings!
 
 * Please go to "Help" (Option 8)
-* Select Uninstall (Option 4)
+* Select "Uninstall" (Option 4)
 
