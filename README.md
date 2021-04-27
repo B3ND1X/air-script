@@ -50,7 +50,7 @@ https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=shari
 							               
 		
 		
-## HIW TO INSTALL:
+## HOW TO INSTALL:
 
 Open Terminal
 
