@@ -97,7 +97,8 @@ v 1.0.4
 * Added TheFatRat
 * Added Angry IP Scanner
 * Added Sn1per
-* Updated install/uninstall script
+* Updated installer(Option to install all or select what to install to save space)
+* Updated Uninstaller 
 
 
 v 1.0.3
