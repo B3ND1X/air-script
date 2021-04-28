@@ -48,7 +48,7 @@ case $option in
     installAll
     exit 0
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Select A Tool To Install..."
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install To Save Space..."
     selectTool
     exit 0
      ;;
