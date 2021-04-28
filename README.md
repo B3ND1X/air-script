@@ -96,6 +96,8 @@ v 1.0.4
 * Added Ezsploit
 * Added TheFatRat
 * Added Angry IP Scanner
+* Added Sn1per
+* Updated install/uninstall script
 
 
 v 1.0.3
