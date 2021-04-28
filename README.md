@@ -1,34 +1,3 @@
-### CHANGELOG
-v 1.0.3
-* Added Wifiphisher to wifi tools
-* Added Zatacker to extra tools
-* Added Routerploit to extra tools
-* Updated installer and uninstaller
-* Small bug fixes and typos
-
-
-v 1.0.2
-* Extra tools option
-* Added Zirikatu to tools
-* Added uninstall script to remove air-script and or air-script tools
-* Cleaned things up
-
-
-v. 1.0.1
-
-
-* Anonsurf added to tools
-* MAC Changer added tools
-* Fluxion added to tools
-
-
-v 1.0
-* Initial Release
-
-<br>
-</br>
-
-
 ## WHAT IS AIR SCRIPT?
 
 ![air-script logo](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0992.jpg)
@@ -101,3 +70,54 @@ It's a shame to see you go. No hard feelings!
 
 * Please go to "Help" (Option 8)
 * Select "Uninstall" (Option 4)
+* 
+<br>
+</br>
+### CHANGELOG
+v 1.0.4
+* Small bug fixes and typos
+* Added Fluxion
+* Added Wifite & Wifite2
+* Added Fern
+* Added Airogeddon
+* Added Morpheus
+* Added Hakku
+* Added Trity
+* Added Cupp
+* Added Dracnmap
+* Added KickThemOut
+* Added Ghost-Phisher
+* Added Xerxes
+* Added Katana
+* Added Websploit
+* Added BeeLogger
+* Added Ezsploit
+* Added TheFatRat
+* Added Angry IP Scanner
+
+
+v 1.0.3
+* Added Wifiphisher to wifi tools
+* Added Zatacker to extra tools
+* Added Routerploit to extra tools
+* Updated installer and uninstaller
+* Small bug fixes and typos
+
+
+v 1.0.2
+* Extra tools option
+* Added Zirikatu to tools
+* Added uninstall script to remove air-script and or air-script tools
+* Cleaned things up
+
+
+v. 1.0.1
+
+
+* Anonsurf added to tools
+* MAC Changer added tools
+* Fluxion added to tools
+
+
+v 1.0
+* Initial Release
