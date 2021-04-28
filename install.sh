@@ -15,7 +15,7 @@ White="\e[0;97m"
 
 
 banner () {        ##### Banner #####
-echo -e "${Red}
+echo -e "${Green}
 
 
 
@@ -95,6 +95,20 @@ cd ..
 ############### Zirikatu #########################
 git clone https://github.com/pasahitz/zirikatu
 chmod -R 755 zirikatu
+################ Routersploit ##############################
+apt-get install python3-pip
+git clone https://www.github.com/threat9/routersploit
+cd routersploit
+python3 -m pip install -r requirements.txt
+cd ..
+################### Zattacker ##########################
+git clone https://github.com/Sleek1598/Zatacker.git
+cd Zatacker
+chmod +x setup.sh
+./setup.sh
+cd ..
+################# Wifiphisher ################################
+apt install -y wifiphisher 
 ############# DONE ###################
 clear
 echo "$(tput setaf 2)Fixing permissions..."
