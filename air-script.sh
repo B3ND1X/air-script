@@ -119,7 +119,9 @@ echo -e "      ${Red}[${Blue}2${Red}] ${Green}Fluxion Attacks"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifite Attacks"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifite2 Attacks"
 echo -e "      ${Red}[${Blue}5${Red}] ${Green}Wifiphisher Attacks"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Fern Attacks"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Airogeddon Attacks"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -143,7 +145,15 @@ case $option in
      StartWifiphisher
      exit 0
      ;;
-  6) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  6) echo -e "\n[${Green}Selected${White}] Option 6 Fern.."
+     Fern
+     exit 0
+     ;;
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Airgeddon.."
+     airogeddon
+     exit 0
+     ;;
+  8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -243,6 +253,17 @@ sudo aircrack-ng -w wordlist.txt *.cap
 StartWifiphisher () {
 wifiphisher
 
+}
+
+Fern () {
+sudo fern-wifi-cracker
+}
+
+
+airogeddon () {
+cd tools
+cd airgeddon
+sudo bash airgeddon.sh
 }
 
 
@@ -441,12 +462,27 @@ sudo anonsurf myip
 
 
 
+
       tools () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Zirikatu"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Routersploit"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Zatacker"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Morpheus"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Hakku"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Trity"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Cupp"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Dracnmap"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}KickThemOut"
+echo -e "      ${Red}[${Blue}10${Red}] ${Green}Ghost-Phisher"
+echo -e "      ${Red}[${Blue}11${Red}] ${Green}Xerxes"
+echo -e "      ${Red}[${Blue}12${Red}] ${Green}Katana"
+echo -e "      ${Red}[${Blue}13${Red}] ${Green}Websploit"
+echo -e "      ${Red}[${Blue}14${Red}] ${Green}BeeLogger"
+echo -e "      ${Red}[${Blue}15${Red}] ${Green}Ezsploit"
+echo -e "      ${Red}[${Blue}16${Red}] ${Green}TheFatRat"
+echo -e "      ${Red}[${Blue}17${Red}] ${Green}Angry IP Scanner"
+echo -e "      ${Red}[${Blue}18${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -460,7 +496,49 @@ case $option in
   3) echo -e "\n[${Green}Selected${White}] Option 3 Zatacker"
   Zatacker
      ;;
-  4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Morpheus"
+  morpheus
+     ;;
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Hakku"
+  Hakku
+     ;;
+  6) echo -e "\n[${Green}Selected${White}] Option 6 Trity"
+  Trity
+     ;;
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Cupp"
+  Cupp
+     ;;
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Dracnmap"
+  dracnmap
+     ;;
+  9) echo -e "\n[${Green}Selected${White}] Option 9 KickThemOut"
+  kickthemout
+     ;;
+  10) echo -e "\n[${Green}Selected${White}] Option 10 Ghost-Phisher"
+  ghostPhisher
+     ;;
+  11) echo -e "\n[${Green}Selected${White}] Option 11 Xerxes"
+  Xerxes
+     ;;
+  12) echo -e "\n[${Green}Selected${White}] Option 12 Katana"
+  Katana
+     ;;
+  13) echo -e "\n[${Green}Selected${White}] Option 13 Websploit"
+  websploit
+     ;;
+  14) echo -e "\n[${Green}Selected${White}] Option 13 Websploit"
+  BeeLogger
+     ;;
+  15) echo -e "\n[${Green}Selected${White}] Option 15 Ezsploit"
+  Ezsploit
+     ;;
+  16) echo -e "\n[${Green}Selected${White}] Option 16 TheFatRat"
+  TheFatRat
+     ;;
+  17) echo -e "\n[${Green}Selected${White}] Option 17 Angry IP Scanner"
+  AngryIpScanner
+     ;;
+  18) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -489,6 +567,111 @@ cd tools
 cd Zatacker
 ./ZT.sh
 }
+
+morpheus () {
+cd tools
+cd morpheus
+sudo ./morpheus.sh
+}
+
+Hakku () {
+cd tools
+cd hakkuframework
+./hakku
+
+}
+
+Trity () {
+trity
+
+}
+
+Cupp () {
+cd tools
+cd cupp
+python3 cupp.py -i
+}
+
+dracnmap () {
+cd tools
+cd Dracnmap
+chmod +x dracnmap-v2.2.sh
+sudo ./dracnmap-v2.2.sh
+
+}
+
+kickthemout () {
+cd tools
+cd kickthemout
+sudo python3 kickthemout.py
+
+}
+
+
+ghostPhisher () {
+cd tools
+cd ghost-phisher
+cd Ghost-Phisher
+chmod +x ghost.py
+sudo ./ghost.py
+}
+
+
+Xerxes () {
+cd tools
+cd XERXES
+echo "Xerxes DoS Attack"
+sleep 3
+echo "Remeber to hide your IP and MAC"
+sleep 3
+read -p "Enter the IP & Port of target (e.g. 102.102.102.102:80) : " ip
+sudo ./xerxes $ip
+
+}
+
+
+Katana () {
+cd tools
+cd KatanaFramework
+sudo ./ktf.run
+sudo ./ktf.run -h
+echo -e "\n[${Green}Selected${White}] Going back.."
+     exit 0
+  
+}
+
+websploit () {
+sudo websploit
+}
+
+
+
+BeeLogger () {
+cd tools
+cd BeeLogger
+sudo python bee.py
+}
+
+
+ezsploit () {
+cd tools
+cd ezsploit
+sudo ./ezploit.sh
+
+
+}
+
+TheFatRat () {
+sudo fatrat
+
+}
+
+AngryIpScanner () {
+sudo sh /usr/bin/ipscan
+
+}
+
+
 
 Help()
 {        ##### Display available options #####
