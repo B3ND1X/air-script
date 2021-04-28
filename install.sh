@@ -70,9 +70,17 @@ clear
 cd tools
 apt-get update
 ##################### aircrack-ng ##################### 
-apt-get install -y aircrack-ng
+sudo apt-get install -y aircrack-ng
 ##################### macchanger ##################### 
-apt-get install -y macchanger
+sudo apt-get install -y macchanger
+##################### Websploit #####################
+sudo apt-get install websploit
+#####################################################
+##################### Python PyQt4 ################################
+sudo apt-get install -y python3-pyqt4
+sudo apt-get install libqt4-dev
+sudo apt-get install python-qt4
+sudo pip install sip
 ##################### anonsurf ##################### 
 git clone https://github.com/Und3rf10w/kali-anonsurf
 chmod -R 755 kali-anonsurf
@@ -92,6 +100,12 @@ chmod -R 755 fluxion
 cd fluxion
 sudo ./fluxion.sh -i
 cd ..
+################# BeeLogger ####################
+git clone https://github.com/4w4k3/BeeLogger.git
+cd BeeLogger
+sudo chmod +x install.sh
+./install.sh
+cd ..
 ############### Zirikatu #########################
 git clone https://github.com/pasahitz/zirikatu
 chmod -R 755 zirikatu
@@ -105,10 +119,81 @@ cd ..
 git clone https://github.com/Sleek1598/Zatacker.git
 cd Zatacker
 chmod +x setup.sh
+echo "$(tput setaf 2)When asked for filepath, please specify or click enter for default"
+sleep 3
 ./setup.sh
 cd ..
-################# Wifiphisher ################################
+############################## Hakku ###################################
+git clone https://github.com/4shadoww/hakkuframework
+chmod -R 755 hakkuframework
+cd hakkuframework
+./isntall
+cd ..
+######################### morpheus ################################
+git clone https://github.com/r00t-3xp10it/morpheus.git
+cd morpheus
+chmod -R +x *.sh
+chmod -R +x *.py
+echo "$(tput setaf 2)Edit morpheus settings... click Crtl + X when done. Please wait.."
+sleep 5
+nano settings
+cd ..
+############## XERXES #########################################
+git clone https://github.com/XCHADXFAQ77X/XERXES
+cd XERXES
+chmod +x xerxes
+sudo gcc -o xerxes xerxes.c
+cd ..
+############## Katana ########################################
+git clone https://github.com/PowerScript/KatanaFramework.git
+cd KatanaFramework
+sudo sh dependencies
+sudo python install
+cd ..
+############## Airogedden ########################################
+git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
+cd airgeddon
+#sudo bash airgeddon.sh
+cd ..
+################# EZSPLOIT #####################################
+git clone https://github.com/rand0m1ze/ezsploit
+chmod +x ezsploit.sh
+###################### TheFatRat ############################
+git clone https://github.com/Screetsec/TheFatRat.git
+cd TheFatRat
+sudo chmod +x setup.sh && ./setup.sh
+./update && chmod +x setup.sh && ./setup.sh
+chmod +x chk_tools 
+./chk_too
+cd ..
+############## Cupp #############################################
+git clone https://github.com/Mebus/cupp
+chmod -R 755 cupp
+##################################################################
+git clone https://github.com/Screetsec/Dracnmap.git
+cd Dracnmap
+sudo chmod +x Dracnmap.sh 
+cd ..
+#################### KickThemOut ################################
+sudo apt-get install nmap
+git clone https://github.com/k4m4/kickthemout.git
+cd kickthemout/
+sudo -H pip3 install -r requirements.txt
+cd ..
+##################### Ghost-Phisher ##############################
+git clone https://github.com/savio-code/ghost-phisher
+#################### Trity #######################################
+git clone https://github.com/toxic-ig/Trity.git
+cd Trity
+sudo python install.py
+cd ..
+### Wifiphisher ################################
 apt install -y wifiphisher 
+############### Angry IP Scanner ######################
+sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
+sudo chmod +x ipscan_3.7.6_all.deb 
+sudo apt install ./ipscan_3.7.6_all.deb 
+cd ..
 ############# DONE ###################
 clear
 echo "$(tput setaf 2)Fixing permissions..."
@@ -142,7 +227,7 @@ clear
 echo -e "DONE"
 sleep 1
 clear
-echo -e "All done here, type air-script in terminal to start..."
+echo -e "All done here, type air-script in terminal or ./air-script.sh to start..."
 sleep  4
 cd air-script
 ./air-script.sh
