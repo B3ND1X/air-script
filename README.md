@@ -70,9 +70,9 @@ It's a shame to see you go. No hard feelings!
 
 * Please go to "Help" (Option 8)
 * Select "Uninstall" (Option 4)
-* 
 <br>
 </br>
+
 ### CHANGELOG
 v 1.0.4
 * Small bug fixes and typos
