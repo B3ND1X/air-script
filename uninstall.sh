@@ -53,9 +53,9 @@ done
 }
 
 uninstallALL () {  
-sudo rm -r /home/superuser/air-script
-sudo rm -r /home/pi/air-script
-sudo rm -r /root/home/air-script
+cd ..
+sudo rm -r air-script
+sudo apt-get remove wifiphisher
 sudo apt-get remove kali-anonsurf
 sudo rm -r /usr/sbin/wifite
 
@@ -65,6 +65,7 @@ sudo rm -r /usr/sbin/wifite
 uninstallTools () { 
 sudo rm -r tools
 sudo apt-get remove kali-anonsurf
+sudo apt-get remove wifiphisher
 }
 
 targeted () {
