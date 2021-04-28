@@ -37,7 +37,7 @@ echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Install Script And All Dependencies"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Select Tools To Install"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Select What To Install To Save Space"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
 while true; do
@@ -48,7 +48,7 @@ case $option in
     installAll
     exit 0
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install To Save Space..."
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install..."
     selectTool
     exit 0
      ;;
@@ -385,7 +385,7 @@ done
 
 aircrack () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -396,7 +396,7 @@ sudo apt-get install -y aircrack-ng
 
 macchanger () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -406,7 +406,7 @@ sudo apt-get install -y macchanger
 
 websploit () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -416,7 +416,7 @@ sudo apt-get install websploit
 
 wifiphisher () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -426,7 +426,7 @@ sudo apt install -y wifiphisher
 
 anonsurf () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -441,7 +441,7 @@ apt install ./kali-anonsurf.deb
 
 wifite () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -451,7 +451,7 @@ git clone https://github.com/derv82/wifite2.git
 
 fluxion () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -464,7 +464,7 @@ sudo ./fluxion.sh -i
 
 beelogger () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -476,7 +476,7 @@ sudo chmod +x install.sh
 
 zirikatu () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -486,7 +486,7 @@ chmod -R 755 zirikatu
 
 routersploit () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -498,7 +498,7 @@ python3 -m pip install -r requirements.txt
 
 zatacker () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -512,7 +512,7 @@ sleep 3
 
 hakku () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -524,7 +524,7 @@ cd hakkuframework
 
 morpheus () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -539,7 +539,7 @@ nano settings
 
 xerxes () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -551,7 +551,7 @@ sudo gcc -o xerxes xerxes.c
 
 katana () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -563,7 +563,7 @@ sudo python install
 
 airogeddon () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -575,7 +575,7 @@ sudo bash airgeddon.sh
 
 ezsploit () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -585,7 +585,7 @@ chmod +x ezsploit.sh
 
 thefatrat () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -599,7 +599,7 @@ chmod +x chk_tools
 
 cupp () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -609,7 +609,7 @@ chmod -R 755 cupp
 
 dracnmap () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -619,7 +619,7 @@ sudo chmod +x Dracnmap.sh
 
 kickthemout () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -631,7 +631,7 @@ sudo -H pip3 install -r requirements.txt
 
 ghostphisher () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -640,7 +640,7 @@ git clone https://github.com/savio-code/ghost-phisher
 
 sn1per () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -651,7 +651,7 @@ sudo bash install.sh
 
 trity () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
@@ -662,7 +662,7 @@ sudo python install.py
 
 angryipscanner () {
 clear
-echo "$(tput setaf 2)Installing everything for you! Please wait..."
+echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
 cd tools
