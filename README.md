@@ -36,11 +36,11 @@ v 1.0
 Air-Script is an automated and automatic way to pwn wifi. 
 
 
-Automated: Step by step user friendly interface
+Automated: Step by step user friendly interface, to improve work flow. Type less, attack more!
 
 
-Automatic: You can tell Air-Script to hack all wifi networks around you.
-Air-Script will automatically hack every network in range in a matter of seconds to minutes with out any user input. When Air-Script is done. It will automatically turn off monitor mode, ask which wordlist to use and will crack the password for you.
+Automatic: You can tell Air-Script to hack all wifi networks around you with Air Script attack. (Attack all option)
+Air-Script will automatically pwn every network in range in a matter of seconds to minutes with out any user input. When Air-Script is done. It will automatically turn off monitor mode, ask which wordlist to use and will crack the password for you.
 
 
 *If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
