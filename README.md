@@ -26,6 +26,8 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 
 *Air-Script being automatic and extremely SSH/Ad Hoc friendly makes it somewhat unique*
 
+Air-Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
+
 *This script comes as is, there is no warranty.*
 *By using this you agree to not hack WiFi networks you do not own or have permission to hack.*
 *Hacking networks you do not have permission to hack is illegal. I am not responsible for your actions.*
@@ -61,7 +63,7 @@ run commands:
 
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
-Thats okay, me either! Thats why Air Script comes with extra tools!
+Thats okay, me either! Thats why Air Script comes with extra tools! See changelog for a list of added tools.
 
 
 ## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
