@@ -37,21 +37,26 @@ echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Install Script And All Dependencies"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Select Tools To Install"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
 case $option in
   1) echo -e "\n[${Green}Selected${White}] Option 1 Install Script And All Dependencies..."
-    installScript
+    installAll
     exit 0
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Adding Air-Script Path..."
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Select A Tool To Install..."
+    selectTool
+    exit 0
+     ;;
+  3) echo -e "\n[${Green}Selected${White}] Option 2 Adding Air-Script Path..."
      AddPath
      exit 0
      ;;
-  3) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -62,7 +67,7 @@ done
 
 
 
-installScript () {
+installAll () {
 clear
 echo "$(tput setaf 2)Installing everything for you! Please wait..."
 sleep 5
@@ -155,7 +160,7 @@ cd ..
 ############## Airogedden ########################################
 git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
 cd airgeddon
-sudo bash airgeddon.sh
+#sudo bash airgeddon.sh
 cd ..
 ################# EZSPLOIT #####################################
 git clone https://github.com/rand0m1ze/ezsploit
@@ -239,6 +244,434 @@ cd air-script
 exit
 
 }
+
+
+selectTool () {        ##### Display available options #####
+echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Aircrack-ng"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Macchanger"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Websploit"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifiphisher"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Anonsurf"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Wifite"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}BeeLogger"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Zirikatu"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Routersploit"
+echo -e "      ${Red}[${Blue}10${Red}] ${Green}Zatacker"
+echo -e "      ${Red}[${Blue}11${Red}] ${Green}Hakku"
+echo -e "      ${Red}[${Blue}12${Red}] ${Green}Morpheus"
+echo -e "      ${Red}[${Blue}13${Red}] ${Green}Xerxes"
+echo -e "      ${Red}[${Blue}14${Red}] ${Green}Katana"
+echo -e "      ${Red}[${Blue}15${Red}] ${Green}Airogeddon"
+echo -e "      ${Red}[${Blue}16${Red}] ${Green}Ezsploit"
+echo -e "      ${Red}[${Blue}17${Red}] ${Green}TheFatRat"
+echo -e "      ${Red}[${Blue}18${Red}] ${Green}Cupp"
+echo -e "      ${Red}[${Blue}19${Red}] ${Green}Dracnmap"
+echo -e "      ${Red}[${Blue}20${Red}] ${Green}KickThemOut"
+echo -e "      ${Red}[${Blue}21${Red}] ${Green}Ghost-Phisher"
+echo -e "      ${Red}[${Blue}22${Red}] ${Green}Sn1per"
+echo -e "      ${Red}[${Blue}23${Red}] ${Green}Trity"
+echo -e "      ${Red}[${Blue}24${Red}] ${Green}Angry IP Scanner"
+echo -e "      ${Red}[${Blue}25${Red}] ${Green}Exit\n\n"
+while true; do
+echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+read -p "└─────►$(tput setaf 7) " option
+case $option in
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Installing Aircrack-ng..."
+    aircrack
+    exit 0
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Installing Macchanger..."
+     macchanger
+     exit 0
+     ;;
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Installing Websploit..."
+     websploit
+     exit 0
+     ;;
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Installing Wifiphisher..."
+     wifiphisher
+     exit 0
+     ;;
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Installing Anonsurf..."
+     anonsurf
+     exit 0
+     ;;
+  6) echo -e "\n[${Green}Selected${White}] Option 6 Installing Wifite..."
+     wifite
+     exit 0
+     ;;
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Installing Fluxion..."
+     fluxion
+     exit 0
+     ;;
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Installing BeeLogger..."
+     beelogger
+     exit 0
+     ;;
+  9) echo -e "\n[${Green}Selected${White}] Option 9 Installing Zirikatu..."
+     zirikatu
+     exit 0
+     ;;
+  10) echo -e "\n[${Green}Selected${White}] Option 10 Installing Zatacker..."
+     zatacker
+     exit 0
+     ;;
+  11) echo -e "\n[${Green}Selected${White}] Option 11 Installing Hakku..."
+     hakku
+     exit 0
+     ;;
+  12) echo -e "\n[${Green}Selected${White}] Option 12 Installing Morpheus..."
+     morpheus
+     exit 0
+     ;;
+  13) echo -e "\n[${Green}Selected${White}] Option 13 Installing Xerxes..."
+     xerxes
+     exit 0
+     ;;
+  14) echo -e "\n[${Green}Selected${White}] Option 14 Installing Katana..."
+     katana
+     exit 0
+     ;;
+  15) echo -e "\n[${Green}Selected${White}] Option 15 Installing Airogeddon..."
+     airogeddon
+     exit 0
+     ;;
+  16) echo -e "\n[${Green}Selected${White}] Option 16 Installing Ezsploit..."
+     ezsploit
+     exit 0
+     ;;
+  17) echo -e "\n[${Green}Selected${White}] Option 17 Installing TheFatRat..."
+     thefatrat
+     exit 0
+     ;;
+  18) echo -e "\n[${Green}Selected${White}] Option 18 Installing Cupp..."
+     cupp
+     exit 0
+     ;;
+  19) echo -e "\n[${Green}Selected${White}] Option 19 Installing Dracnmap..."
+     dracnmap
+     exit 0
+     ;;
+  20) echo -e "\n[${Green}Selected${White}] Option 20 Installing KickThemOut..."
+     kickthemout
+     exit 0
+     ;;
+  21) echo -e "\n[${Green}Selected${White}] Option 21 Installing Ghost-Phisher..."
+     ghostphisher
+     exit 0
+     ;;
+  22) echo -e "\n[${Green}Selected${White}] Option 22 Installing Sn1per..."
+     sn1per
+     exit 0
+     ;;
+  23) echo -e "\n[${Green}Selected${White}] Option 23 Installing Trity..."
+     trity
+     exit 0
+     ;;
+  24) echo -e "\n[${Green}Selected${White}] Option 24 Installing Angry IP Scanner..."
+     angryipscanner
+     exit 0
+     ;;
+  25) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+     exit 0
+     ;;
+  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+     ;;
+esac
+done
+}
+########################## List of tools #########################################
+
+aircrack () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get update
+sudo apt-get install -y aircrack-ng
+}
+
+
+macchanger () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get update
+sudo apt-get install -y macchanger
+}
+
+websploit () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get update
+sudo apt-get install websploit
+}
+
+wifiphisher () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get update
+sudo apt install -y wifiphisher 
+}
+
+anonsurf () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get update
+git clone https://github.com/Und3rf10w/kali-anonsurf
+chmod -R 755 kali-anonsurf
+cd kali-anonsurf
+./installer.sh
+apt install ./kali-anonsurf.deb
+
+}
+
+wifite () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/derv82/wifite2.git
+
+}
+
+fluxion () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://www.github.com/FluxionNetwork/fluxion.git
+chmod -R 755 fluxion
+cd fluxion
+sudo ./fluxion.sh -i
+}
+
+
+beelogger () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/4w4k3/BeeLogger.git
+cd BeeLogger
+sudo chmod +x install.sh
+./install.sh
+}
+
+zirikatu () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/pasahitz/zirikatu
+chmod -R 755 zirikatu
+}
+
+routersploit () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+apt-get install python3-pip
+git clone https://www.github.com/threat9/routersploit
+cd routersploit
+python3 -m pip install -r requirements.txt
+}
+
+zatacker () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/Sleek1598/Zatacker.git
+cd Zatacker
+chmod +x setup.sh
+echo "$(tput setaf 2)When asked for filepath, please specify or click enter for default"
+sleep 3
+./setup.sh
+}
+
+hakku () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/4shadoww/hakkuframework
+chmod -R 755 hakkuframework
+cd hakkuframework
+./isntall
+}
+
+morpheus () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/r00t-3xp10it/morpheus.git
+cd morpheus
+chmod -R +x *.sh
+chmod -R +x *.py
+echo "$(tput setaf 2)Edit morpheus settings... click Crtl + X when done. Please wait.."
+sleep 5
+nano settings
+}
+
+xerxes () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/XCHADXFAQ77X/XERXES
+cd XERXES
+chmod +x xerxes
+sudo gcc -o xerxes xerxes.c
+}
+
+katana () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/PowerScript/KatanaFramework.git
+cd KatanaFramework
+sudo sh dependencies
+sudo python install
+}
+
+airogeddon () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone htt
+git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
+cd airgeddon
+sudo bash airgeddon.sh
+}
+
+ezsploit () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/rand0m1ze/ezsploit
+chmod +x ezsploit.sh
+}
+
+thefatrat () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/Screetsec/TheFatRat.git
+cd TheFatRat
+sudo chmod +x setup.sh && ./setup.sh
+./update && chmod +x setup.sh && ./setup.sh
+chmod +x chk_tools 
+./chk_too
+}
+
+cupp () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/Mebus/cupp
+chmod -R 755 cupp
+}
+
+dracnmap () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/Screetsec/Dracnmap.git
+sudo chmod +x Dracnmap.sh 
+}
+
+kickthemout () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+sudo apt-get install nmap
+git clone https://github.com/k4m4/kickthemout.git
+cd kickthemout/
+sudo -H pip3 install -r requirements.txt
+}
+
+ghostphisher () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/savio-code/ghost-phisher
+}
+
+sn1per () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/1N3/Sn1per
+cd Sn1per
+sudo bash install.sh
+}
+
+trity () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/toxic-ig/Trity.git
+cd Trity
+sudo python install.py
+}
+
+angryipscanner () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+cd tools
+sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
+sudo chmod +x ipscan_3.7.6_all.deb 
+sudo apt install ./ipscan_3.7.6_all.deb 
+}
+
+############# End of tools ########################################################
 
 targeted () {
 banner
