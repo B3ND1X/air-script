@@ -155,7 +155,7 @@ cd ..
 ############## Airogedden ########################################
 git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
 cd airgeddon
-#sudo bash airgeddon.sh
+sudo bash airgeddon.sh
 cd ..
 ################# EZSPLOIT #####################################
 git clone https://github.com/rand0m1ze/ezsploit
