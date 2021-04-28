@@ -76,6 +76,8 @@ sudo apt-get install -y macchanger
 ##################### Websploit #####################
 sudo apt-get install websploit
 #####################################################
+### Wifiphisher ################################
+sudo apt install -y wifiphisher 
 ##################### Python PyQt4 ################################
 sudo apt-get install -y python3-pyqt4
 sudo apt-get install libqt4-dev
@@ -182,13 +184,16 @@ sudo -H pip3 install -r requirements.txt
 cd ..
 ##################### Ghost-Phisher ##############################
 git clone https://github.com/savio-code/ghost-phisher
-#################### Trity #######################################
+#################### Sniper #######################################
+git clone https://github.com/1N3/Sn1per
+cd Sn1per
+sudo bash install.sh
+cd ..
+################### Trity #######################################
 git clone https://github.com/toxic-ig/Trity.git
 cd Trity
 sudo python install.py
 cd ..
-### Wifiphisher ################################
-apt install -y wifiphisher 
 ############### Angry IP Scanner ######################
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
 sudo chmod +x ipscan_3.7.6_all.deb 
