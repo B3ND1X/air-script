@@ -243,11 +243,15 @@ sudo ./Wifite.py
 }
 
 crack() {
-chmod -R 755 air-script
-sudo aircrack-ng -w wordlist.txt wep.cap
-sudo aircrack-ng -w wordlist.txt wpa.cap
-#sudo aircrack-ng -a2 -w wordlist.txt *.cap
-sudo aircrack-ng -w wordlist.txt *.cap
+pwd
+read -p "Enter path to wordlist : " wordlist
+ $wordlist
+sudo aircrack-ng -w $wordlist *.cap
+#sudo aircrack-ng -w $wordlist wep.cap
+#sudo aircrack-ng -w $wordlist wpa.cap
+#sudo aircrack-ng -w wordlist.txt wep.cap
+#sudo aircrack-ng -w wordlist.txt wpa.cap
+#sudo aircrack-ng -w wordlist.txt *.cap
 }
 
 StartWifiphisher () {
@@ -482,7 +486,8 @@ echo -e "      ${Red}[${Blue}14${Red}] ${Green}BeeLogger"
 echo -e "      ${Red}[${Blue}15${Red}] ${Green}Ezsploit"
 echo -e "      ${Red}[${Blue}16${Red}] ${Green}TheFatRat"
 echo -e "      ${Red}[${Blue}17${Red}] ${Green}Angry IP Scanner"
-echo -e "      ${Red}[${Blue}18${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}18${Red}] ${Green}Sn1per"
+echo -e "      ${Red}[${Blue}19${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -538,7 +543,11 @@ case $option in
   17) echo -e "\n[${Green}Selected${White}] Option 17 Angry IP Scanner"
   AngryIpScanner
      ;;
-  18) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  18) echo -e "\n[${Green}Selected${White}] Option 18 Sn1per"
+  Sn1per
+  exit 0
+     ;;
+  19) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -668,6 +677,14 @@ sudo fatrat
 
 AngryIpScanner () {
 sudo sh /usr/bin/ipscan
+
+}
+
+
+Sn1per () {
+cd tools
+cd Sn1per
+sudo sniper
 
 }
 
