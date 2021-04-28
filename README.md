@@ -1,4 +1,11 @@
 ### CHANGELOG
+v 1.0.3
+* Added Wifiphisher to wifi tools
+* Added Zatacker to extra tools
+* Added Routerploit to extra tools
+* Updated installer and uninstaller
+* Small bug fixes and typos
+
 
 v 1.0.2
 * Extra tools option
