@@ -78,6 +78,11 @@ apt-get update
 sudo apt-get install -y aircrack-ng
 ##################### macchanger ##################### 
 sudo apt-get install -y macchanger
+######################## email #########################
+sudo apt-get install postfix
+sudo apt-get install sendemail
+sudo apt install postfix
+sudo apt install sendemail
 ##################### Websploit #####################
 sudo apt-get install websploit
 #####################################################
@@ -187,6 +192,12 @@ git clone https://github.com/k4m4/kickthemout.git
 cd kickthemout/
 sudo -H pip3 install -r requirements.txt
 cd ..
+########################## SETOOLKIT #############################
+git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
+cd setoolkit
+pip3 install -r requirements.txt
+python setup.py
+cd ..
 ##################### Ghost-Phisher ##############################
 git clone https://github.com/savio-code/ghost-phisher
 #################### Sniper #######################################
@@ -204,6 +215,11 @@ sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6
 sudo chmod +x ipscan_3.7.6_all.deb 
 sudo apt install ./ipscan_3.7.6_all.deb 
 cd ..
+################### RED HAWK ##########################
+git clone https://github.com/Tuhinshubhra/RED_HAWK
+echo "$(tput setaf 2) Red Hawk Download complete.."
+sleep 3
+echo "$(tput setaf 2) Run Fix option in Red Hawk to install.."
 ############# DONE ###################
 clear
 echo "$(tput setaf 2)Fixing permissions..."
@@ -272,7 +288,10 @@ echo -e "      ${Red}[${Blue}21${Red}] ${Green}Ghost-Phisher"
 echo -e "      ${Red}[${Blue}22${Red}] ${Green}Sn1per"
 echo -e "      ${Red}[${Blue}23${Red}] ${Green}Trity"
 echo -e "      ${Red}[${Blue}24${Red}] ${Green}Angry IP Scanner"
-echo -e "      ${Red}[${Blue}25${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}25${Red}] ${Green}Red Hawk"
+echo -e "      ${Red}[${Blue}26${Red}] ${Green}Setoolkit"
+echo -e "      ${Red}[${Blue}27${Red}] ${Green}Air Script Email Notifications"
+echo -e "      ${Red}[${Blue}28${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -370,10 +389,22 @@ case $option in
      exit 0
      ;;
   24) echo -e "\n[${Green}Selected${White}] Option 24 Installing Angry IP Scanner..."
-     angryipscanner
+      angryipscanner
      exit 0
      ;;
-  25) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  25) echo -e "\n[${Green}Selected${White}] Option 25 Installing Red Hawk..."
+     redhawk
+     exit 0
+     ;;
+  26) echo -e "\n[${Green}Selected${White}] Option 25 Installing Red Hawk..."
+     setoolkit
+     exit 0
+     ;;
+  27) echo -e "\n[${Green}Selected${White}] Option 25 Installing Postfix and Sendemail... Air Script needs this for notifications! Please wait..."
+     email
+     exit 0
+     ;;
+  28) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -670,6 +701,55 @@ sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6
 sudo chmod +x ipscan_3.7.6_all.deb 
 sudo apt install ./ipscan_3.7.6_all.deb 
 }
+
+redhawk () {
+clear
+echo "$(tput setaf 2)Installing... Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/Tuhinshubhra/RED_HAWK
+echo "$(tput setaf 2) Red Hawk Download complete.."
+sleep 3
+echo "$(tput setaf 2) Run Fix option in Red Hawk to install.."
+
+}
+
+
+
+setoolkit () {
+clear
+echo "$(tput setaf 2)Installing... Please wait..."
+sleep 5
+clear
+cd tools
+git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
+cd setoolkit
+pip3 install -r requirements.txt
+python setup.py
+
+}
+
+
+
+email () {
+sudo apt-get install postfix
+sudo apt-get install sendemail
+sudo apt install postfix
+sudo apt install sendemail
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 ############# End of tools ########################################################
 
