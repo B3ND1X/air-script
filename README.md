@@ -51,8 +51,13 @@ Either install all or choose which tools to install to save space.
 ## VIDEO:
 * https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=sharing (KALI PC)
 * https://drive.google.com/file/d/1F6777GA08joON5ZYYVb8gWt6bt6WNW-d/view?usp=sharing (KALI RASPBERRY PI SSH)
+
+## Mobile & Raspberry Pi
 							               
-*Please note: NO JAILBREAK is required to SSH to your Pi from iOS! Just download "Terminus" app from AppStore		
+PLEASE NOTE: 
+* NO JAILBREAK is required to SSH to your Pi from iOS! Just download "Terminus" app from AppStore	
+* NO ROOT is required when SSH to Pi from Android donwload a terminal of your choice from Google Play
+* For Raspberry Pi users, it's recomended to select only the tools you need to save on space. 
 		
 ## HOW TO INSTALL:
 
