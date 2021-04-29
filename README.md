@@ -49,7 +49,7 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
-[![](https://imgur.com/gallery/6aNhhT6)](https://youtu.be/tYfI1idoYtQ)
+[![](https://media.giphy.com/media/iqqPx0rj8KLOqqbdmn/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
 
 
 ## Mobile & Raspberry Pi
