@@ -49,7 +49,7 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/tYfI1idoYtQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)](https://youtu.be/tYfI1idoYtQ)
 Link: https://youtu.be/tYfI1idoYtQ
 
 ## Mobile & Raspberry Pi
