@@ -14,19 +14,18 @@ Air-Script will automatically pwn every network in range in a matter of seconds 
 
 *If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
 
-To make things easier, do this all over SSH and Air-Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
+To make things easier, do this all over SSH and Air Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
 It automatically turns off monitor mode after every step to ensure you can stay connected via SSH. 
 
 
-Air-Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
+Air Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
 Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
-*PLEASE NOTE: If youre on Raspberry Pi over SSH, VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air-Script Attacks work when connected over SSH or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
+*PLEASE NOTE: If youre on Raspberry Pi over SSH, VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air Script Attacks work when connected over SSH or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
 
+Don't want to sit around and pay attention to whats happening? Yeah, me either... Thats why Air Script will ask you if you want an email notification when its done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest. Your email is never recorded or sent to any server. Don't belive me? Check the code! Air Script is 100% open sourced and safe to use.
 
-*Air-Script being automatic and extremely SSH/Ad Hoc friendly makes it somewhat unique*
-
-Air-Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
+Air Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
 
 *This script comes as is, there is no warranty.*
 *By using this you agree to not hack WiFi networks you do not own or have permission to hack.*
@@ -76,6 +75,11 @@ It's a shame to see you go. No hard feelings!
 </br>
 
 ### CHANGELOG
+
+v 1.0.5
+* Email notifications for when Air Script is done attacking
+* Other small bug fixes and improvments
+
 v 1.0.4
 * Small bug fixes and typos
 * Added Fluxion
