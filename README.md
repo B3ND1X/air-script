@@ -43,10 +43,9 @@ Either install all or choose which tools to install to save space.
 *By using this script you agree to not hack, pwn or attack anything you do not own or have permission to hack, pwn or attack.*
 *Hacking, pwning or attacking things you do not have permission to is illegal and punishable by law. I am not responsible for your actions, or  any damages caused by misuse of Air Script or any of it's tools.*
 
-![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)
-![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0991.JPG)	
-![alt text](https://github.com/B3ND1X/air-script-mobile/blob/main/img/IMG1.JPG)
-
+![](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png | width=100)
+![](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0991.JPG | width=100)
+![](https://github.com/B3ND1X/air-script-mobile/blob/main/img/IMG1.JPG | width=100)
 
 ## VIDEO:
 [![Alt text](https://i9.ytimg.com/vi/tYfI1idoYtQ/mq1.jpg?sqp=CNjTqYQG&rs=AOn4CLCZi04_n2-gPGm2cxm3u6xghQ9M9A)](https://youtu.be/tYfI1idoYtQ)
