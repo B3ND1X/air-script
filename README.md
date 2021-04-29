@@ -39,8 +39,8 @@ Thats okay, me either! Thats why Air Script comes with extra tools! See changelo
 Air Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
 
 *This script comes as is, there is no warranty.*
-*By using this you agree to not hack WiFi networks you do not own or have permission to hack.*
-*Hacking networks you do not have permission to hack is illegal. I am not responsible for your actions.*
+*By using this script you agree to not hack, pwn or attack anything you do not own or have permission to hack, pwn or attack.*
+*Hacking, pwning or attacking things you do not have permission to is illegal and pinishable by law. I am not responsible for your actions, or  any damages caused by misuse of Air Script or any of it's tools.*
 
 ![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)
 ![alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0991.JPG)	
