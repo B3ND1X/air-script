@@ -49,8 +49,7 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
-* https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=sharing (KALI PC)
-* https://drive.google.com/file/d/1F6777GA08joON5ZYYVb8gWt6bt6WNW-d/view?usp=sharing (KALI RASPBERRY PI SSH)
+![alt text](https://youtu.be/tYfI1idoYtQ)
 
 ## Mobile & Raspberry Pi
 							               
