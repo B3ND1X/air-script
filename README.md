@@ -49,7 +49,7 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
-[![Alt text](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/air-scriptv1.0.2.png)](https://youtu.be/tYfI1idoYtQ)
+[![Alt text](https://youtu.be/tYfI1idoYtQ)]
 Link: https://youtu.be/tYfI1idoYtQ
 
 ## Mobile & Raspberry Pi
