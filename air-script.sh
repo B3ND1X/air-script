@@ -242,6 +242,7 @@ sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "P
 cd dictionary
 echo "current directory"
 pwd
+ls
 crack
 
 
@@ -264,6 +265,7 @@ checkServices
 cd dictionary
 echo "current directory"
 pwd
+ls
 crack
 
 }
@@ -314,6 +316,7 @@ sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "P
 cd dictionary
 echo "current directory"
 pwd
+ls
 crack
 }
 
@@ -333,6 +336,7 @@ checkservices
 cd dictionary
 echo "current directory"
 pwd
+ls
 crack
 }
 
