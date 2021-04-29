@@ -238,7 +238,7 @@ sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 checkServices 
 sleep 10
-sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP* "
+sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
 cd dictionary
 echo "current directory"
 pwd
@@ -310,7 +310,7 @@ sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
 checkservices
 sleep 10
-sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP*"
+sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 cd dictionary
 echo "current directory"
 pwd
