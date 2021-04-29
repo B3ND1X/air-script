@@ -239,13 +239,7 @@ sudo systemctl start NetworkManager
 checkServices 
 sleep 10
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
-cd dictionary
-echo "current directory"
-pwd
-ls
 crack
-
-
 }
 
 
@@ -262,10 +256,6 @@ sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 checkServices 
-cd dictionary
-echo "current directory"
-pwd
-ls
 crack
 
 }
@@ -313,10 +303,6 @@ sudo chmod -R 755 air-crack
 checkservices
 sleep 10
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
-cd dictionary
-echo "current directory"
-pwd
-ls
 crack
 }
 
@@ -333,10 +319,6 @@ sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
-cd dictionary
-echo "current directory"
-pwd
-ls
 crack
 }
 
@@ -393,7 +375,9 @@ sudo ./Wifite.py
 }
 
 crack() {
+echo "Your current directory:"
 pwd
+ls
 read -p "Enter path to wordlist : " wordlist
  $wordlist
 sudo aircrack-ng -w $wordlist *.cap
