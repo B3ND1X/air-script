@@ -56,7 +56,7 @@ Either install all or choose which tools to install to save space.
 							               
 PLEASE NOTE: 
 * NO JAILBREAK is required to SSH to your Pi from iOS device! Just download the "Terminus" app from AppStore	
-* NO ROOT is required to SSH to Pi from Android. Donwload a terminal of your choice from Google Play
+* NO ROOT is required to SSH to Pi from Android. Download a terminal of your choice from Google Play
 * For Raspberry Pi users, it's recomended to select only the tools you need to save on space. 
 		
 ## HOW TO INSTALL:
