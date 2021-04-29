@@ -225,7 +225,7 @@ echo "Enter your email address for notifications: " email
 read email
 echo "Remember to check your spam folder!"
 sleep 3
-./raspberry.sh
+PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
 #sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
@@ -250,7 +250,7 @@ crack
 
 
 attackNo () {
-./raspberry.sh
+PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake wlan0mon > /dev/null &
 #sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake wlan0mon > /dev/null &
@@ -301,7 +301,7 @@ echo "Enter your email address for notifications: " email
 read email
 sleep 3
 echo "Remeber to check your spam folder!"
-./raspberry2.sh
+PiPwn
 sudo airmon-ng check kill
 sudo airmon-ng
 sudo airmon-ng start wlan0
@@ -322,7 +322,7 @@ crack
 
 
 attackAllNo () {
-./raspberry2.sh
+PiPwn
 sudo airmon-ng check kill
 sudo airmon-ng
 sudo airmon-ng start wlan0
@@ -340,6 +340,39 @@ ls
 crack
 }
 
+PiScan () {
+echo "$(tput setaf 2)
+   .~~.   .~~.
+  '. \ ' ' / .'$(tput setaf 1)
+   .~ .~~~..~.
+  : .~.'~'.~. :
+ ~ (   ) (   ) ~
+( : '~'.~.'~' : )
+ ~ .~ (   ) ~. ~
+  (  : '~' :  ) $(tput sgr0)Raspberry Pi is scanning..$(tput setaf 1)
+   '~ .~~~. ~'  $(tput sgr0)Please wait!$(tput setaf 1)
+       '~'
+$(tput sgr0)"
+
+}
+
+
+
+PiPwn () {
+echo "$(tput setaf 2)
+   .~~.   .~~.
+  '. \ ' ' / .'$(tput setaf 1)
+   .~ .~~~..~.
+  : .~.'~'.~. :
+ ~ (   ) (   ) ~
+( : '~'.~.'~' : )
+ ~ .~ (   ) ~. ~
+  (  : '~' :  ) $(tput sgr0)Raspberry Pi is attacking..$(tput setaf 1)
+   '~ .~~~. ~'  $(tput sgr0)Please wait!$(tput setaf 1)
+       '~'
+$(tput sgr0)"
+
+}
 
 
 
