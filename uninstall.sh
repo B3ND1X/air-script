@@ -60,6 +60,8 @@ sudo apt-get remove kali-anonsurf
 sudo rm -r /usr/sbin/wifite
 sudo apt-get remove angry-ip-scanner
 sudo rm -r /usr/bin/ipscan
+sudo apt-get remove postfix
+sudo apt-get remove sendemail
 
 }
 
@@ -70,6 +72,8 @@ sudo apt-get remove kali-anonsurf
 sudo apt-get remove wifiphisher
 sudo apt-get remove angry-ip-scanner
 sudo rm -r /usr/bin/ipscan
+sudo apt-get remove postfix
+sudo apt-get remove sendemail
 }
 
 targeted () {
