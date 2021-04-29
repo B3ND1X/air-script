@@ -68,7 +68,9 @@ run commands:
 * cd
 * git clone https://github.com/B3ND1X/air-script
 * cd air-script 
-* chmod +x install.sh
+*  sudo chmod +x uninstall.sh
+* sudo chmod +x install.sh
+* sudo chmod +x air-script.sh
 * sudo ./install.sh
 
 
