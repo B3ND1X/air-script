@@ -239,6 +239,9 @@ sudo systemctl start NetworkManager
 checkServices 
 sleep 10
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP* "
+cd dictionary
+echo "current directory"
+pwd
 crack
 
 
@@ -258,6 +261,9 @@ sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 checkServices 
+cd dictionary
+echo "current directory"
+pwd
 crack
 
 }
@@ -302,10 +308,12 @@ sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
-echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
 sleep 10
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. Select option 3 to crack the password. This is a robot please do not reply. *BEEP BOOP*"
+cd dictionary
+echo "current directory"
+pwd
 crack
 }
 
@@ -322,6 +330,9 @@ sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
+cd dictionary
+echo "current directory"
+pwd
 crack
 }
 
