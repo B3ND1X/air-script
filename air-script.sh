@@ -7,6 +7,7 @@ if [ $(id -u) -ne 0 ]; then
 	exit 1
 fi
 
+chmod -R 755 *
 
 clear
 Red="\e[1;91m"      ##### Colors Used #####
