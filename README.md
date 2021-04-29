@@ -50,7 +50,7 @@ Either install all or choose which tools to install to save space.
 
 ## VIDEO:
 [![Alt text](https://i9.ytimg.com/vi/tYfI1idoYtQ/mq1.jpg?sqp=CNjTqYQG&rs=AOn4CLCZi04_n2-gPGm2cxm3u6xghQ9M9A)](https://youtu.be/tYfI1idoYtQ)
-Link: https://youtu.be/tYfI1idoYtQ
+
 
 ## Mobile & Raspberry Pi
 							               
