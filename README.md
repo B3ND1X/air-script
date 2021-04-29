@@ -49,7 +49,8 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
-![alt text](https://youtu.be/tYfI1idoYtQ)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tYfI1idoYtQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Link: https://youtu.be/tYfI1idoYtQ
 
 ## Mobile & Raspberry Pi
 							               
