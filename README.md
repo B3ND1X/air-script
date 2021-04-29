@@ -8,11 +8,17 @@ Air Script is an automated and automatic way to pwn wifi.
 Automated: Step by step user friendly interface, to improve work flow. Type less, attack more!
 
 
-Automatic: You can tell Air-Script to hack all wifi networks around you with Air Script attack. (Attack all option)
-Air-Script will automatically pwn every network in range in a matter of seconds to minutes with out any user input. When Air-Script is done. It will automatically turn off monitor mode, ask which wordlist to use and will crack the password for you.
+Automatic: You can tell Air-Script to hack all wifi networks around you with an Air Script attack. (Attack all option)
+Air Script will automatically pwn every network in range in a matter of seconds to minutes without any user input. When Air-Script is done. It will automatically turn off monitor mode, and send you an email notification. (Notifications are optional) Then Air Script will ask you what wordlist to use, and will to try and bruteforce the password for you. (When asked for wordlist, click enter or crl + c to skip.
 
+*If on Raspberry Pi, it's recommended to skip bruteforce and transfer handshakes from Pi to PC to decrypt the password.*
 
-*If on Raspberry Pi, it's recommended to transfer handshakes from Pi to PC.*
+*Create or upload your own wordlist to Air Script. More wordlists means a higher chance of getting the password!* 
+
+*Also note you will have to convert .cap files to .hccap yourself if you want to use hashcat* (This will be an automated option in the future)
+
+Use this if you don't know how to convert: https://hashcat.net/cap2hccapx/ (Convert handshake for hashcat, this is optional)
+
 
 To make things easier, do this all over SSH and Air Script will turn off monitor mode when it finishes scanning, deauth, flood, etc. 
 It automatically turns off monitor mode after every step to ensure you can stay connected via SSH. 
@@ -23,8 +29,13 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 
 *PLEASE NOTE: If youre on Raspberry Pi over SSH, VNC or Ad Hoc most tools will not work due to being disconnected when being put into monitor mode. ONLY Air Script Attacks work when connected over SSH or Ad Hoc. Air Script Wifi attacks were specifically built for a headless set up*
 
-Don't want to sit around and pay attention to whats happening? Yeah, me either... Thats why Air Script will ask you if you want an email notification when its done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest. Your email is never recorded or sent to any server. Don't belive me? Check the code! Air Script is 100% open sourced and safe to use.
+## EMAIL NOTIFICATIONS
+Don't want to sit around and pay attention to what's happening? Yeah, me either... Thats why Air Script will ask you if you want an email notification when its done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest. Your email is never recorded or sent to any server. Don't belive me? Check the code! Air Script is 100% open sourced and safe to use.
 
+
+## DONT WANT TO USE ONLY AIR SCRIPT?
+
+Thats okay, me either! Thats why Air Script comes with extra tools! See changelog for a list of added tools.
 Air Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
 
 *This script comes as is, there is no warranty.*
@@ -60,9 +71,6 @@ run commands:
 * cd air-script
 * sudo ./air-script.sh
 
-## DONT WANT TO USE ONLY AIR SCRIPT?
-
-Thats okay, me either! Thats why Air Script comes with extra tools! See changelog for a list of added tools.
 
 
 ## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
