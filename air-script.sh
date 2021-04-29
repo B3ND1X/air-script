@@ -835,7 +835,6 @@ php rhawk.php
 
 }
 
-
 Help()
 {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
@@ -843,7 +842,8 @@ echo -e "      ${Red}[${Blue}1${Red}] ${Green}How to set up for mobile"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Its not working :("
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Turn off monitor mode"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Uninstall"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Clean"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -864,6 +864,10 @@ case $option in
     uninstall
      exit 0
      ;; 
+  5) echo -e "\n[${Green}Selected${White}] Cleaning captured handshakes.."
+    clean
+     exit 0
+     ;; 
   5) echo -e "\n[${Green}Selected${White}] Going back.."
      exit 0
      ;;
@@ -871,6 +875,12 @@ case $option in
      ;;
 esac
 done
+}
+
+
+clean () {
+rm -r *cap
+
 }
 
 uninstall () {
