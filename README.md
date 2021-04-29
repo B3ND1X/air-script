@@ -36,7 +36,8 @@ Don't want to sit around and pay attention to what's happening? Yeah, me either.
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
 Thats okay, me either! Thats why Air Script comes with extra tools! See changelog for a list of added tools.
-Air Script also comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
+Air Script comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
+Either install all or choose which tools to install to save space. 
 
 *This script comes as is, there is no warranty.*
 *By using this script you agree to not hack, pwn or attack anything you do not own or have permission to hack, pwn or attack.*
