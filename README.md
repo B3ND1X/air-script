@@ -52,7 +52,7 @@ Either install all or choose which tools to install to save space.
 * https://drive.google.com/file/d/1JHz_qeq7M-sfPU6Nh0MtVoqs0EQeNFEt/view?usp=sharing (KALI PC)
 * https://drive.google.com/file/d/1F6777GA08joON5ZYYVb8gWt6bt6WNW-d/view?usp=sharing (KALI RASPBERRY PI SSH)
 							               
-		
+*Please note: NO JAILBREAK is required to SSH to your Pi from iOS! Just download "Terminus" app from AppStore		
 		
 ## HOW TO INSTALL:
 
