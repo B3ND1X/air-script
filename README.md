@@ -41,25 +41,24 @@ Either install all or choose which tools to install to save space.
 
 *This script comes as is, there is no warranty.*
 *By using this script you agree to not hack, pwn or attack anything you do not own or have permission to hack, pwn or attack.*
-*Hacking, pwning or attacking things you do not have permission to is illegal and punishable by law. I am not responsible for your actions, or  any damages caused by misuse of Air Script or any of it's tools.*
+*Hacking, pwning or attacking things you do not have permission to is illegal and punishable by law. I am not responsible for your actions, or  any damages caused by misuse of Air Script or any of it's tools.*
 
 ## IMAGES
-<center>
-	<img src="https://user-images.githubusercontent.com/48177481/116521705-4faf7800-a8a2-11eb-8fa0-95825b2506c3.png">
-        <img src="https://user-images.githubusercontent.com/48177481/116521705-4faf7800-a8a2-11eb-8fa0-95825b2506c3.png>">
-	<img src="https://user-images.githubusercontent.com/48177481/116521724-5342ff00-a8a2-11eb-8bea-75c74b228512.JPG">
-	<img src="https://user-images.githubusercontent.com/48177481/116692797-f1aa8f80-a98a-11eb-8d2b-d26b6179197d.jpg" width=2000>
-	<img src="https://user-images.githubusercontent.com/48177481/116521734-55a55900-a8a2-11eb-9656-27335d9979a3.JPG">
-</center>
+
+	![air-scriptv1 0 2](https://user-images.githubusercontent.com/48177481/116521705-4faf7800-a8a2-11eb-8fa0-95825b2506c3.png)
+	![IMG_0991](https://user-images.githubusercontent.com/48177481/116521724-5342ff00-a8a2-11eb-8bea-75c74b228512.JPG)
+	![IMG_1007](https://user-images.githubusercontent.com/48177481/116693807-68945800-a98c-11eb-94bf-a00e78fc0ac7.jpg)
+	![IMG1](https://user-images.githubusercontent.com/48177481/116521734-55a55900-a8a2-11eb-9656-27335d9979a3.JPG)
+
 
 ## VIDEO:
-	<center>
+
 	[![](https://media.giphy.com/media/oiPISdGcjvaUHDWSK3/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
 	[![](https://media.giphy.com/media/iqqPx0rj8KLOqqbdmn/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
-	</center>
+
 
 ## Mobile & Raspberry Pi
-							               
+							               
 PLEASE NOTE: 
 * NO JAILBREAK is required to SSH to your Pi from iOS device! Just download the "Terminus" app from AppStore	
 * NO ROOT is required to SSH to Pi from Android. Download a terminal of your choice from Google Play
