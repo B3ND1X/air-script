@@ -49,6 +49,8 @@ Either install all or choose which tools to install to save space.
 
 
 ## VIDEO:
+
+[![](https://media.giphy.com/media/oiPISdGcjvaUHDWSK3/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
 [![](https://media.giphy.com/media/iqqPx0rj8KLOqqbdmn/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
 
 
