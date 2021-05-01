@@ -887,8 +887,8 @@ done
 
 
 clean () {
-rm -r *cap
-
+sudo rm -r *cap> /dev/null 2>&1
+sudo rm -r ipscan_3.7.6_all.deb> /dev/null 2>&1
 }
 
 uninstall () {
