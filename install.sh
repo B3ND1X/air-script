@@ -214,7 +214,7 @@ cd ..
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
 sudo chmod +x ipscan_3.7.6_all.deb 
 sudo apt install ./ipscan_3.7.6_all.deb 
-cd ..
+sudo rm -r ipscan_3.7.6_all.deb> /dev/null 2>&1
 ################### RED HAWK ##########################
 git clone https://github.com/Tuhinshubhra/RED_HAWK
 echo "$(tput setaf 2) Red Hawk Download complete.."
