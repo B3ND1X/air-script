@@ -8,7 +8,7 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 chmod -R 755 *
-sudo postfix start
+sudo postfix start> /dev/null 2>&1
 clear
 Red="\e[1;91m"      ##### Colors Used #####
 Green="\e[0;92m"
