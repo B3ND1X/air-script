@@ -9,7 +9,7 @@ Automated: Step by step user friendly interface, to improve workflow. Type less,
 
 
 Automatic: You can tell Air-Script to hack all wifi networks around you with an Air Script attack. (Attack all option)
-Air Script will automatically pwn every network in range in a matter of seconds to minutes without any user input. When Air-Script is done. It will automatically turn off monitor mode, and send you an email notification. (Notifications are optional) Then Air Script will ask you what wordlist to use, and will try to bruteforce the password for you. (When asked for wordlist, click enter or crl + c to skip.
+Air Script will automatically pwn every network in range in a matter of seconds to minutes without any user input. When Air-Script is done. It will automatically turn off monitor mode, and send you an email notification. (Notifications are optional) Then Air Script will ask you what wordlist to use, and will try to bruteforce the password for you. (When asked for wordlist, click enter or crl + c to skip.)
 
 *If on Raspberry Pi, it's recommended to skip bruteforce and transfer handshakes from Pi to PC to decrypt the password.*
 
@@ -94,6 +94,9 @@ It's a shame to see you go. No hard feelings!
 </br>
 
 ### CHANGELOG
+
+v 1.0,6 
+Small bug fixes
 
 v 1.0.5
 * Email notifications for when Air Script is done attacking
