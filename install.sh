@@ -37,7 +37,7 @@ echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Install Minimum Required Dependencies"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Install Script And All Dependencies"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Install All Dependencies"
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Select What To Install To Save Space"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
 echo -e "      ${Red}[${Blue}5${Red}] ${Green}Exit\n\n"
@@ -49,15 +49,15 @@ case $option in
     installMin
     exit 0
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 1 Install Script And All Dependencies..."
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Install All Dependencies..."
     installAll
     exit 0
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install..."
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Select What To Install..."
     selectTool
     exit 0
      ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 2 Adding Air-Script Path..."
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Adding Air-Script Path..."
      AddPath
      exit 0
      ;;
