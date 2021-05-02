@@ -91,15 +91,17 @@ echo "$(tput setaf 2)Fixing permissions..."
 sleep 5
 cd
 chmod -R 755 air-script
-cd air-script
 clear
-echo "$(tput setaf 2)DONE!"
-sleep 3
-echo "$(tput setaf 2)Please type ./air-script to start!"
-sleep 3
-echo "$(tput setaf 2)Be safe and happy cracking! :) "
-sleep 3
-clear
+echo -e "Air Script and tools installed!"
+	sleep 2
+	echo -e "Cleaning.. please wait.."
+	sleep 1
+	sudo rm -r /home/$username/air-script
+	echo "$(tput setaf 2)DONE!"
+	sleep 3
+	echo "$(tput setaf 2)Be safe and happy cracking! :) "
+	sleep 3
+	clear
 }
 
 
@@ -108,8 +110,8 @@ clear
 echo "$(tput setaf 2)Installing everything for you! Please wait..."
 sleep 5
 clear
-cd tools
 apt-get update
+cd /bin/air-script/tools
 ##################### aircrack-ng ##################### 
 sudo apt-get install -y aircrack-ng
 ##################### macchanger ##################### 
@@ -276,6 +278,26 @@ clear
 }
 
 AddPath () { 
+	mkdir /bin/air-script
+	echo -e "Preparing to install..."
+	sleep 1
+	echo "Enter your username (e.g. 'root': " username
+	read username
+	echo -e "Copying files to /bin/air-script... please wait!"
+	sleep 2
+	cp /home/$username/air-script/* /bin/air-script
+	cp -R /home/$username/air-script/logs /bin/air-script
+	cp -R /home/$username/air-script/tools /bin/air-script
+	echo -e "Done"
+	clear
+	echo -e "Fixing permissions..."
+	sleep 1
+	sudo chmod -R 755 /bin/air-script/*
+	sudo chmod -R 755 /bin/air-script/logs/*
+	sudo chmod -R 755 /bin/air-script/tools/*
+	echo -e "Done"
+	sleep 1
+	clear
 	echo -e "Adding air-script to PATH so you can access it from anywhere"
 	sleep 1
 	export PATH=/bin/air-script:$PATH
@@ -284,17 +306,17 @@ AddPath () {
 	sleep 1
 	clear
 	break
-#done
-clear
-echo -e "DONE"
-sleep 1
-clear
-echo -e "All done here, type air-script in terminal or ./air-script.sh to start..."
-sleep  4
-cd air-script
-./air-script.sh
-exit
-
+	clear
+	echo -e "DONE"
+	sleep 1
+	clear
+	echo -e "All done here, type air-script in terminal to find it faster..."
+	sleep  3
+	echo -e "Please choose what tools air-script should install for you."
+	sleep 2
+	menu
+	
+	 
 }
 
 
@@ -327,7 +349,8 @@ echo -e "      ${Red}[${Blue}24${Red}] ${Green}Angry IP Scanner"
 echo -e "      ${Red}[${Blue}25${Red}] ${Green}Red Hawk"
 echo -e "      ${Red}[${Blue}26${Red}] ${Green}Setoolkit"
 echo -e "      ${Red}[${Blue}27${Red}] ${Green}Air Script Email Notifications"
-echo -e "      ${Red}[${Blue}28${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}28${Red}] ${Green}Fluxion"
+echo -e "      ${Red}[${Blue}29${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -432,15 +455,19 @@ case $option in
      redhawk
      exit 0
      ;;
-  26) echo -e "\n[${Green}Selected${White}] Option 25 Installing Red Hawk..."
+  26) echo -e "\n[${Green}Selected${White}] Option 26 Installing Red Hawk..."
      setoolkit
      exit 0
      ;;
-  27) echo -e "\n[${Green}Selected${White}] Option 25 Installing Postfix and Sendemail... Air Script needs this for notifications! Please wait..."
+  27) echo -e "\n[${Green}Selected${White}] Option 27 Installing Postfix and Sendemail... Air Script needs this for notifications! Please wait..."
      email
      exit 0
      ;;
-  28) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  28) echo -e "\n[${Green}Selected${White}] Option 28 Installing fluxion..."
+     fluxion
+     exit 0
+     ;;
+  29) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -455,7 +482,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get update
 sudo apt-get install -y aircrack-ng
 }
@@ -466,7 +493,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get update
 sudo apt-get install -y macchanger
 }
@@ -476,7 +503,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get update
 sudo apt-get install websploit
 }
@@ -486,7 +513,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get update
 sudo apt install -y wifiphisher 
 }
@@ -496,7 +523,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get update
 git clone https://github.com/Und3rf10w/kali-anonsurf
 chmod -R 755 kali-anonsurf
@@ -511,7 +538,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/derv82/wifite2.git
 
 }
@@ -521,7 +548,8 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+air-script
+cd /bin/air-script/tools
 git clone https://www.github.com/FluxionNetwork/fluxion.git
 chmod -R 755 fluxion
 cd fluxion
@@ -534,7 +562,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/4w4k3/BeeLogger.git
 cd BeeLogger
 sudo chmod +x install.sh
@@ -546,7 +574,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/pasahitz/zirikatu
 chmod -R 755 zirikatu
 }
@@ -556,7 +584,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 apt-get install python3-pip
 git clone https://www.github.com/threat9/routersploit
 cd routersploit
@@ -568,7 +596,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/Sleek1598/Zatacker.git
 cd Zatacker
 chmod +x setup.sh
@@ -582,7 +610,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/4shadoww/hakkuframework
 chmod -R 755 hakkuframework
 cd hakkuframework
@@ -594,7 +622,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/r00t-3xp10it/morpheus.git
 cd morpheus
 chmod -R +x *.sh
@@ -609,7 +637,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/XCHADXFAQ77X/XERXES
 cd XERXES
 chmod +x xerxes
@@ -621,7 +649,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/PowerScript/KatanaFramework.git
 cd KatanaFramework
 sudo sh dependencies
@@ -633,7 +661,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone htt
 git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
 cd airgeddon
@@ -645,7 +673,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/rand0m1ze/ezsploit
 chmod +x ezsploit.sh
 }
@@ -655,7 +683,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/Screetsec/TheFatRat.git
 cd TheFatRat
 sudo chmod +x setup.sh && ./setup.sh
@@ -669,7 +697,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/Mebus/cupp
 chmod -R 755 cupp
 }
@@ -679,7 +707,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/Screetsec/Dracnmap.git
 sudo chmod +x Dracnmap.sh 
 }
@@ -689,7 +717,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 sudo apt-get install nmap
 git clone https://github.com/k4m4/kickthemout.git
 cd kickthemout/
@@ -701,7 +729,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/savio-code/ghost-phisher
 }
 
@@ -710,7 +738,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/1N3/Sn1per
 cd Sn1per
 sudo bash install.sh
@@ -721,7 +749,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/toxic-ig/Trity.git
 cd Trity
 sudo python install.py
@@ -732,7 +760,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
 sudo chmod +x ipscan_3.7.6_all.deb 
 sudo apt install ./ipscan_3.7.6_all.deb 
@@ -743,7 +771,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/Tuhinshubhra/RED_HAWK
 echo "$(tput setaf 2) Red Hawk Download complete.."
 sleep 3
@@ -758,7 +786,7 @@ clear
 echo "$(tput setaf 2)Installing... Please wait..."
 sleep 5
 clear
-cd tools
+cd /bin/air-script/tools
 git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
 cd setoolkit
 pip3 install -r requirements.txt
@@ -791,7 +819,7 @@ sudo apt install sendemail
 
 targeted () {
 banner
-menu
+AddPath
 }
 
 targeted
