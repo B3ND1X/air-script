@@ -97,6 +97,7 @@ It's a shame to see you go. No hard feelings!
 
 v 1.0,6 
 Small bug fixes
+Updated installer script
 
 v 1.0.5
 * Email notifications for when Air Script is done attacking
