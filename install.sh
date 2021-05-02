@@ -36,27 +36,32 @@ echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
-echo -e "      ${Red}[${Blue}1${Red}] ${Green}Install Script And All Dependencies"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Select What To Install To Save Space"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Install Minimum Required Dependencies"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Install Script And All Dependencies"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Select What To Install To Save Space"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Make air-script accessible anywhere (THIS IS IN BETA BE CAREFUL)"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
 case $option in
-  1) echo -e "\n[${Green}Selected${White}] Option 1 Install Script And All Dependencies..."
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Install Minimum Required Dependencies..."
+    installMin
+    exit 0
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Option 1 Install Script And All Dependencies..."
     installAll
     exit 0
      ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install..."
+  3) echo -e "\n[${Green}Selected${White}] Option 2 Select What To Install..."
     selectTool
     exit 0
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 2 Adding Air-Script Path..."
+  4) echo -e "\n[${Green}Selected${White}] Option 2 Adding Air-Script Path..."
      AddPath
      exit 0
      ;;
-  4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  5) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -65,6 +70,37 @@ esac
 done
 }
 
+
+installMin () {
+clear
+echo "$(tput setaf 2)Installing everything for you! Please wait..."
+sleep 5
+clear
+apt-get update
+##################### aircrack-ng ##################### 
+sudo apt-get install -y aircrack-ng
+##################### macchanger ##################### 
+sudo apt-get install -y macchanger
+######################## email #########################
+sudo apt-get install postfix
+sudo apt-get install sendemail
+sudo apt install postfix
+sudo apt install sendemail
+clear
+echo "$(tput setaf 2)Fixing permissions..."
+sleep 5
+cd
+chmod -R 755 air-script
+cd air-script
+clear
+echo "$(tput setaf 2)DONE!"
+sleep 3
+echo "$(tput setaf 2)Please type ./air-script to start!"
+sleep 3
+echo "$(tput setaf 2)Be safe and happy cracking! :) "
+sleep 3
+clear
+}
 
 
 installAll () {
