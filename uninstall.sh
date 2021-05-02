@@ -60,6 +60,7 @@ done
 
 uninstallALL () {  
 cd ..
+sudo rm -r /bin/air-script
 sudo rm -r air-script
 sudo apt-get remove wifiphisher
 sudo apt-get remove kali-anonsurf
@@ -73,7 +74,7 @@ sudo apt-get remove sendemail
 
 
 uninstallTools () { 
-sudo rm -r tools
+sudo rm -r /bin/air-script/tools
 sudo apt-get remove kali-anonsurf
 sudo apt-get remove wifiphisher
 sudo apt-get remove angry-ip-scanner
