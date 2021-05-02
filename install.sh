@@ -94,9 +94,6 @@ chmod -R 755 air-script
 clear
 echo -e "Air Script and tools installed!"
 	sleep 2
-	echo -e "Cleaning.. please wait.."
-	sleep 1
-	sudo rm -r /home/$username/air-script
 	echo "$(tput setaf 2)DONE!"
 	sleep 3
 	echo "$(tput setaf 2)Be safe and happy cracking! :) "
