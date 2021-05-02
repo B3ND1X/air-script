@@ -95,9 +95,15 @@ It's a shame to see you go. No hard feelings!
 
 ### CHANGELOG
 
+v 1.07
+* Find Air Script from any directory by typing "air-script"
+* Huge update for install script
+* Updated uninstall script
+* Small bugs fixed 
+
 v 1.0.6
 * Small bug fixes
-* Updated installer script
+* Updated install script
 
 v 1.0.5
 * Email notifications for when Air Script is done attacking
