@@ -242,9 +242,8 @@ sudo python install.py
 cd ..
 ############### Angry IP Scanner ######################
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
-sudo chmod +x ipscan_3.7.6_all.deb 
-sudo apt install ./ipscan_3.7.6_all.deb 
-sudo rm -r ipscan_3.7.6_all.deb> /dev/null 2>&1
+sudo chmod +x *.deb 
+sudo dpkg -i *.deb
 ################### RED HAWK ##########################
 git clone https://github.com/Tuhinshubhra/RED_HAWK
 echo "$(tput setaf 2) Red Hawk Download complete.."
@@ -752,8 +751,8 @@ sleep 5
 clear
 cd /bin/air-script/tools
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
-sudo chmod +x ipscan_3.7.6_all.deb 
-sudo apt install ./ipscan_3.7.6_all.deb 
+sudo chmod +x *.deb
+sudo apt install ./*.deb 
 }
 
 redhawk () {
