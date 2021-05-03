@@ -68,7 +68,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0.7 Stable"
+echo -e "${Green}                         Version: 1.0.6 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -367,7 +367,7 @@ $(tput sgr0)"
 
 
 FluxionMenu() {
-cd tools
+cd /bin/air-script/tools
 cd fluxion
 sudo ./fluxion.sh
 }
@@ -377,7 +377,7 @@ sudo wifite
 }
 
 Wifite2 () {
-cd tools
+cd /bin/air-script/tools
 cd wifite2
 sudo ./Wifite.py
 }
@@ -407,7 +407,7 @@ sudo fern-wifi-cracker
 
 
 airogeddon () {
-cd tools
+cd /bin/air-script/tools
 cd airgeddon
 sudo bash airgeddon.sh
 }
@@ -705,33 +705,33 @@ done
 
 
 zirikatu () {
-cd tools
+cd /bin/air-script/tools
 cd zirikatu
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd tools
+cd /bin/air-script/tools
 cd routersploit
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd tools
+cd /bin/air-script/tools
 cd Zatacker
 ./ZT.sh
 }
 
 morpheus () {
-cd tools
+cd /bin/air-script/tools
 cd morpheus
 sudo ./morpheus.sh
 }
 
 Hakku () {
-cd tools
+cd /bin/air-script/tools
 cd hakkuframework
 ./hakku
 
@@ -743,13 +743,13 @@ trity
 }
 
 Cupp () {
-cd tools
+cd /bin/air-script/tools
 cd cupp
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd tools
+cd /bin/air-script/tools
 cd Dracnmap
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
@@ -757,7 +757,7 @@ sudo ./dracnmap-v2.2.sh
 }
 
 kickthemout () {
-cd tools
+cd /bin/air-script/tools
 cd kickthemout
 sudo python3 kickthemout.py
 
@@ -765,7 +765,7 @@ sudo python3 kickthemout.py
 
 
 ghostPhisher () {
-cd tools
+cd /bin/air-script/tools
 cd ghost-phisher
 cd Ghost-Phisher
 chmod +x ghost.py
@@ -774,7 +774,7 @@ sudo ./ghost.py
 
 
 Xerxes () {
-cd tools
+cd /bin/air-script/tools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
@@ -787,7 +787,7 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd tools
+cd /bin/air-script/tools
 cd KatanaFramework
 sudo ./ktf.run
 sudo ./ktf.run -h
@@ -803,14 +803,14 @@ sudo websploit
 
 
 BeeLogger () {
-cd tools
+cd /bin/air-script/tools
 cd BeeLogger
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd tools
+cd /bin/air-script/tools
 cd ezsploit
 sudo ./ezploit.sh
 
@@ -824,12 +824,11 @@ sudo fatrat
 
 AngryIpScanner () {
 sudo sh /usr/bin/ipscan
-
 }
 
 
 Sn1per () {
-cd tools
+cd /bin/air-script/tools
 cd Sn1per
 sudo sniper
 
@@ -837,7 +836,7 @@ sudo sniper
 
 
 redhawk () {
-cd tools
+cd /bin/air-script/tools
 cd RED_HAWK
 php rhawk.php
 
