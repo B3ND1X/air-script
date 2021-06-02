@@ -446,7 +446,7 @@ while [ ${targetNumber} -gt `wc -l generated-01.kismet.csv | cut -d " " -f 1` ] 
 echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
 read -p "└─────►$(tput setaf 7) " targetNumber
 done
-airmon-ng start $foo > /dev/null 2>&1 
+airmon-ng start $foo 
 targetName=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 3 `
 bssid=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 4 `
 channel=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 6 `
