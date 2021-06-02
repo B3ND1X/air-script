@@ -75,7 +75,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 1.0.6 Stable"
+echo -e "${Green}                         Version: 1.0.8 Stable"
 }
 
 menu () {        ##### Display available options #####
