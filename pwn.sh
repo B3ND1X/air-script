@@ -898,11 +898,31 @@ sudo ./uninstall.sh
 }
 
 stopMon () {
-sudo airmon-ng stop $foo
-sudo service network-mamager start
-sudo service network-mamager restart
-sudo ifconfig $foo up
-sudo wpa_suplicant
+sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+sudo airmon-ng stop wlan1mon > /dev/null 2>&1
+sudo airmon-ng stop wlan2mon > /dev/null 2>&1
+sudo airmon-ng stop wlan3mon > /dev/null 2>&1
+sudo airmon-ng stop wlan4mon > /dev/null 2>&1
+sudo airmon-ng stop wlan5mon > /dev/null 2>&1
+sudo airmon-ng stop wlan7mon > /dev/null 2>&1
+sudo airmon-ng stop wlan8mon > /dev/null 2>&1
+sudo airmon-ng stop wlan9mon > /dev/null 2>&1
+sudo airmon-ng stop wlan10mon > /dev/null 2>&1
+sudo service network-mamager start > /dev/null 2>&1
+sudo service network-mamager restart > /dev/null 2>&1
+sudo ifconfig wlan0 up > /dev/null 2>&1
+sudo ifconfig wlan1 up > /dev/null 2>&1
+sudo ifconfig wlan2 up > /dev/null 2>&1
+sudo ifconfig wlan3 up > /dev/null 2>&1
+sudo ifconfig wlan4 up > /dev/null 2>&1
+sudo ifconfig wlan6 up > /dev/null 2>&1
+sudo ifconfig wlan7 up > /dev/null 2>&1
+sudo ifconfig wlan8 up > /dev/null 2>&1
+sudo ifconfig wlan9 up > /dev/null 2>&1
+sudo ifconfig wlan10 up > /dev/null 2>&1
+
+
+sudo wpa_suplicant > /dev/null 2>&1
 
 }
 
@@ -916,7 +936,7 @@ echo "$(tput setaf 2)INSTRUCTIONS:
 METHOD 1: (SSH/AD HOC METHOD)
 
 Step 1: Once established connection to Pi via Hotspot or Ad Hoc
-run command "sudo ./air-script.sh"
+run command "sudo ./pwn"
 Step 2: Select an attack
 --------------------------------------------------
 
