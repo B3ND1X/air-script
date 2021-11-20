@@ -509,7 +509,6 @@ sudo macchanger -s $foo
 
 showMAC() {
 networkselect
-macchanger -s eth0
 macchanger -s $foo
 
 
