@@ -2,7 +2,7 @@
 
 ## WHAT IS AIR SCRIPT?
 
-Air Script is WiFi pwning Swiss Army knife
+Air Script is Wi-Fi pwning Swiss Army knife that also has optional email notifications for when handshakes have been captured. 
 
 
 Air Script is an automated and automatic way to pwn wifi. 
