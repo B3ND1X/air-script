@@ -448,6 +448,14 @@ rm generated-01.kismet.csv 2> /dev/null
 echo -e "\n[${Green}${targetName}${White}] Preparing for attack..."
 }
 
+
+networkselect () {
+echo "Please, select a network interface:"
+cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
+
+}
+
+
 macChange() {
      ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
@@ -482,31 +490,25 @@ done
 
 
 spoofMAC(){
-macchanger -s eth0
+networkselect
 macchanger -s $foo
-sudo ifconfig eth0 down
 sudo ifconfig $foo down
-sudo macchanger -r eth0
 sudo macchanger -r $foo
-sudo ifconfig eth0 up
 sudo ifconfig $foo up
-macchanger -s eth0
 macchanger -s $foo
 }
 
 RestoreMAC(){
-sudo ifconfig eth0 down
+networkselect
 sudo ifconfig $foo down
-sudo macchanger -p eth0
 sudo macchanger -p $foo
-sudo ifconfig eth0 up
 sudo ifconfig $foo up
-sudo macchanger -s eth0
 sudo macchanger -s $foo
 
 }
 
 showMAC() {
+networkselect
 macchanger -s eth0
 macchanger -s $foo
 
@@ -936,7 +938,7 @@ echo "$(tput setaf 2)INSTRUCTIONS:
 METHOD 1: (SSH/AD HOC METHOD)
 
 Step 1: Once established connection to Pi via Hotspot or Ad Hoc
-run command "sudo ./pwn"
+run command "sudo ./air-script.sh"
 Step 2: Select an attack
 --------------------------------------------------
 
