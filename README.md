@@ -14,6 +14,11 @@ Automated: Step by step user friendly interface, to improve workflow. Type less,
 Automatic: You can tell Air-Script to hack all wifi networks around you with an Air Script attack. (Attack all option)
 Air Script will automatically pwn every network in range in a matter of seconds to minutes without any user input. When Air-Script is done. It will automatically turn off monitor mode, and send you an email notification. (Notifications are optional) Then Air Script will ask you what wordlist to use, and will try to bruteforce the password for you. (When asked for wordlist, click enter or crl + c to skip.)
 
+
+Air Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
+Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
+
+
 *If on Raspberry Pi, it's recommended to skip bruteforce and transfer handshakes from Pi to PC to decrypt the password.*
 
 *Create or upload your own wordlist to Air Script. More wordlists means a higher chance of getting the password!* 
@@ -22,10 +27,6 @@ Air Script will automatically pwn every network in range in a matter of seconds 
 
 Use this if you don't know how to convert: https://hashcat.net/cap2hccapx/ (Convert handshake for hashcat, this is optional)
 
-
-
-Air Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
-Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
 ## EMAIL NOTIFICATIONS
 Don't want to sit around and pay attention to what's happening? Yeah, me either... That's why Air Script will ask you if you want an email notification when it's done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest. Your email is never recorded or sent to any server. Don't believe me? Check the code! Air Script is 100% open sourced and safe to use.
