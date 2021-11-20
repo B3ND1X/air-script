@@ -92,6 +92,15 @@ It's a shame to see you go. No hard feelings!
 <br>
 </br>
 
+
+
+## HELP 
+
+* Select 'Help' (option 8)
+* Email for support (liam@liambendix.com)
+
+
+
 ### CHANGELOG
 
 v 1.0.9
