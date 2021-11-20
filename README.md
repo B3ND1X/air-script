@@ -93,9 +93,14 @@ It's a shame to see you go. No hard feelings!
 
 ### CHANGELOG
 
+v 1.0.9
+* Bug fixes
+* Fixed macchanger
+* Added option to select which network interface to change/show MAC address
+
 v 1.0.8 
 * Select which network interface to use
-* Bug Fixes
+* Bug fixes
 
 v 1.0.7
 * Find Air Script from any directory by typing "air-script"
