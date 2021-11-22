@@ -807,13 +807,15 @@ sudo apt install sendemail
 
 
 ############# End of tools ########################################################
-
+clean () {
 cd /home/$username/
 sudo rm -rf air-script
+}
 
 targeted () {
 banner
 AddPath
+clean
 }
 
 targeted
