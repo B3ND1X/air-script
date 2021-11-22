@@ -289,9 +289,9 @@ AddPath () {
 	clear
 	echo -e "Adding air-script to PATH so you can access it from anywhere"
 	sleep 1
-	export PATH=/bin/air-script/:$PATH
+	export PATH=/bin/air-script:$PATH
 	sleep 1
-	echo "export PATH=/bin/air-script/:$PATH" >> ~/.bashrc
+	echo "export PATH=/bin/air-script:$PATH" >> ~/.bashrc
 	sleep 1
 	clear
 	break
@@ -299,9 +299,7 @@ AddPath () {
 	echo -e "DONE"
 	sleep 1
 	clear
-	echo -e "air-script can be found at /bin/air-script"
-	sleep  3
-	echo -e "Type 'air-script' in terminal to find it"
+	echo -e "All done here, type air-script in terminal to find it faster..."
 	sleep  3
 	echo -e "Please choose what tools air-script should install for you."
 	sleep 2
@@ -807,7 +805,6 @@ sudo apt install sendemail
 
 
 ############# End of tools ########################################################
-
 
 targeted () {
 banner
