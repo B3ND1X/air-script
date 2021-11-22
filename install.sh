@@ -299,7 +299,9 @@ AddPath () {
 	echo -e "DONE"
 	sleep 1
 	clear
-	echo -e "DONE"
+	echo -e "air-script can be found at /bin/air-script"
+	sleep  3
+	echo -e "Type 'air-script' in terminal to find it"
 	sleep  3
 	echo -e "Please choose what tools air-script should install for you."
 	sleep 2
@@ -805,6 +807,9 @@ sudo apt install sendemail
 
 
 ############# End of tools ########################################################
+
+cd /home/$username/
+sudo rm -rf air-script
 
 targeted () {
 banner
