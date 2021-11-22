@@ -277,6 +277,7 @@ AddPath () {
 	cp /home/$username/air-script/* /bin/air-script
 	cp -R /home/$username/air-script/logs /bin/air-script
 	cp -R /home/$username/air-script/tools /bin/air-script
+	cp -R /home/$username/air-script/img /bin/air-script
 	echo -e "Done"
 	clear
 	echo -e "Fixing permissions..."
@@ -284,6 +285,7 @@ AddPath () {
 	sudo chmod -R 755 /bin/air-script/*
 	sudo chmod -R 755 /bin/air-script/logs/*
 	sudo chmod -R 755 /bin/air-script/tools/*
+	sudo chmod -R 755 /bin/air-script/img/*
 	echo -e "Done"
 	sleep 1
 	clear
