@@ -101,6 +101,12 @@ It's a shame to see you go. No hard feelings!
 
 ### CHANGELOG
 
+v 2.0.0
+* Bug fixes
+* Added shortcut/launcher option in install script 
+* Added img directory 
+
+
 v 1.0.9
 * Bug fixes
 * Fixed macchanger
