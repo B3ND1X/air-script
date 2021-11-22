@@ -289,9 +289,9 @@ AddPath () {
 	clear
 	echo -e "Adding air-script to PATH so you can access it from anywhere"
 	sleep 1
-	export PATH=/bin/air-script:$PATH
+	export PATH=/bin/air-script/pwn.sh:$PATH
 	sleep 1
-	echo "export PATH=/bin/air-script:$PATH" >> ~/.bashrc
+	echo "export PATH=/bin/air-script/pwn.sh:$PATH" >> ~/.bashrc
 	sleep 1
 	clear
 	break
