@@ -66,6 +66,8 @@ done
 }
 
 
+
+
 installMin () {
 clear
 echo "$(tput setaf 2)Installing everything for you! Please wait..."
@@ -94,6 +96,7 @@ echo -e "Air Script and tools installed!"
 	echo "$(tput setaf 2)Be safe and happy cracking! :) "
 	sleep 3
 	clear
+	shortcut
 }
 
 
@@ -262,9 +265,36 @@ sleep 3
 echo "$(tput setaf 2)Be safe and happy cracking! :) "
 sleep 2
 clear
-
+shortcut
 
 }
+
+
+shortcut () {
+while true; do
+    read -p "Do you want to add a Desktop shortcut so air-script is easier to find and launch? (You can move and delete it later)" yn
+    case $yn in
+        [Yy]* ) shortcutYes; break;;
+        [Nn]* ) shortcutNo;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+}
+
+shortcutYes () {
+echo "$(tput setaf 2)Adding AIR-SCRIPT.desktop to /home/$username/Desktop"
+sleep 2
+cd /home/$username/Desktop
+wget https://github.com/B3ND1X/air-script/releases/download/air-script.desktop/AIR-SCRIPT.desktop
+sudo chmod -R 755 AIR-SCRIPT.desktop
+
+}
+
+shortcutNo () {
+exit
+
+}
+
 
 AddPath () { 
 	mkdir /bin/air-script
