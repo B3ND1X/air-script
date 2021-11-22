@@ -282,9 +282,11 @@ done
 }
 
 shortcutYes () {
-echo "$(tput setaf 2)Adding AIR-SCRIPT.desktop to /home/$username/Desktop"
-sleep 2
-cd /home/$username/Desktop
+echo "Your current directory:"
+pwd
+read -p "Where do you want the launcher? : " launcher
+launcher
+cd $launcher
 wget https://github.com/B3ND1X/air-script/releases/download/air-script.desktop/AIR-SCRIPT.desktop
 sudo chmod -R 755 AIR-SCRIPT.desktop
 
