@@ -84,6 +84,7 @@ METHOD 2:
 If on a Debian based distro. Feel free to install the air-script Debian package. 
 
 * To install see releases and install the latest release of air-script.deb 
+*Please note: this is a pre-release and might have issues* 
 
 
 ## HOW TO RUN:
