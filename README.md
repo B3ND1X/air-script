@@ -65,6 +65,9 @@ PLEASE NOTE:
 * Raspberry Pi has not been thoroughly tested but it should work. Keep an eye out for any updates.		
 ## HOW TO INSTALL:
 
+
+METHOD 1:
+
 Open Terminal
 
 run commands: 
@@ -74,6 +77,14 @@ run commands:
 * cd air-script 
 *  sudo chmod -R 755 *
 * sudo ./install.sh
+
+
+METHOD 2: 
+
+* If on a Debian based distro. Feel free to install air-script Debian package. 
+* Air-Script will be added to your applications. 
+
+* To install see releases and install the latest release of air-script.deb 
 
 
 ## HOW TO RUN:
