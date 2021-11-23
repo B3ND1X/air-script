@@ -101,6 +101,9 @@ It's a shame to see you go. No hard feelings!
 * Please go to "Help" (Option 8)
 * Select "Uninstall" (Option 4)
 
+If you installed deb package: 
+
+* sudo apt remove air-script 
 
 
 ## HELP 
