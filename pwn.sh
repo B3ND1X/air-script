@@ -426,7 +426,7 @@ aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
 monitor () {        ##### Monitor mode, scan available networks & select target #####
-airmon-ng check kill
+#airmon-ng check kill
 spinner &
 airmon-ng start $foo > /dev/null
 trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv 2> /dev/null" EXIT 
