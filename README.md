@@ -81,8 +81,7 @@ run commands:
 
 METHOD 2: 
 
-* If on a Debian based distro. Feel free to install air-script Debian package. 
-* Air-Script will be added to your applications. 
+If on a Debian based distro. Feel free to install the air-script Debian package. 
 
 * To install see releases and install the latest release of air-script.deb 
 
