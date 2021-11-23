@@ -91,7 +91,7 @@ If on a Debian based distro. Feel free to install the air-script Debian package.
 * cd air-script
 * sudo ./pwn.sh
 
-* If installed as a deb package. You can find air-script in your toolbar under applications. *
+*If installed as a deb package, you can find air-script in your toolbar under applications.*
 
 
 ## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
