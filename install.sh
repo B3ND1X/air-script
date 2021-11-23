@@ -287,7 +287,7 @@ pwd
 read -p "Where do you want the launcher? : " launcher
 launcher
 cd $launcher
-wget https://github.com/B3ND1X/air-script/releases/download/air-script.desktop/AIR-SCRIPT.desktop
+wget https://github.com/B3ND1X/air-script-img/releases/download/desktop/air-script.desktop
 sudo chmod -R 755 AIR-SCRIPT.desktop
 
 }
