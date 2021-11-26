@@ -326,7 +326,7 @@ AddPath () {
 	export PATH=/bin/air-script/pwn.sh:$PATH
         source ~/.bashrc
 	sleep 1
-	echo "export PATH=/bin/air-script:$PATH" >>  
+	echo "export PATH=/bin/air-script:$PATH" >> ~/.bashrc
 	sleep 1
 	clear
 	break
