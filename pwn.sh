@@ -832,7 +832,7 @@ case $option in
     clean
      exit 0
      ;; 
-  5) echo -e "\n[${Green}Selected${White}] Going back.."
+  6) echo -e "\n[${Green}Selected${White}] Going back.."
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
