@@ -78,7 +78,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 2.0 Stable"
+echo -e "${Green}                         Version: 2.0.1 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -370,6 +370,7 @@ sudo wifite
 }
 
 Wifite2 () {
+wifite
 cd /bin/air-script/tools
 cd wifite2
 sudo ./Wifite.py
@@ -605,90 +606,52 @@ sudo anonsurf myip
 
       tools () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
-echo -e "      ${Red}[${Blue}1${Red}] ${Green}Zirikatu"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Routersploit"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Zatacker"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}Morpheus"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}Hakku"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}Trity"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}Cupp"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Dracnmap"
-echo -e "      ${Red}[${Blue}9${Red}] ${Green}KickThemOut"
-echo -e "      ${Red}[${Blue}10${Red}] ${Green}Ghost-Phisher"
-echo -e "      ${Red}[${Blue}11${Red}] ${Green}Xerxes"
-echo -e "      ${Red}[${Blue}12${Red}] ${Green}Katana"
-echo -e "      ${Red}[${Blue}13${Red}] ${Green}Websploit"
-echo -e "      ${Red}[${Blue}14${Red}] ${Green}BeeLogger"
-echo -e "      ${Red}[${Blue}15${Red}] ${Green}Ezsploit"
-echo -e "      ${Red}[${Blue}16${Red}] ${Green}TheFatRat"
-echo -e "      ${Red}[${Blue}17${Red}] ${Green}Angry IP Scanner"
-echo -e "      ${Red}[${Blue}18${Red}] ${Green}Sn1per"
-echo -e "      ${Red}[${Blue}19${Red}] ${Green}Red Hawk"
-echo -e "      ${Red}[${Blue}20${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}Routersploit"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}Zatacker"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}Morpheus"
+echo -e "      ${Red}[${Blue}4${Red}] ${Green}Cupp"
+echo -e "      ${Red}[${Blue}5${Red}] ${Green}Dracnmap"
+echo -e "      ${Red}[${Blue}6${Red}] ${Green}KickThemOut"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Ghost-Phisher"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Xerxes"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Websploit"
+echo -e "      ${Red}[${Blue}10${Red}] ${Green}Angry IP Scanner"
+echo -e "      ${Red}[${Blue}11${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
 case $option in
-  1) echo -e "\n[${Green}Selected${White}] Option 1 Zirikaru"
-  zirikatu
-     ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Routersploit"
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Routersploit"
   routersploit
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 3 Zatacker"
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Zatacker"
   Zatacker
      ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 4 Morpheus"
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Morpheus"
   morpheus
      ;;
-  5) echo -e "\n[${Green}Selected${White}] Option 5 Hakku"
-  Hakku
-     ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 6 Trity"
-  Trity
-     ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 7 Cupp"
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Cupp"
   Cupp
      ;;
-  8) echo -e "\n[${Green}Selected${White}] Option 8 Dracnmap"
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Dracnmap"
   dracnmap
      ;;
-  9) echo -e "\n[${Green}Selected${White}] Option 9 KickThemOut"
+  6) echo -e "\n[${Green}Selected${White}] Option 6 KickThemOut"
   kickthemout
      ;;
-  10) echo -e "\n[${Green}Selected${White}] Option 10 Ghost-Phisher"
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Ghost-Phisher"
   ghostPhisher
      ;;
-  11) echo -e "\n[${Green}Selected${White}] Option 11 Xerxes"
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Xerxes"
   Xerxes
      ;;
-  12) echo -e "\n[${Green}Selected${White}] Option 12 Katana"
-  Katana
-     ;;
-  13) echo -e "\n[${Green}Selected${White}] Option 13 Websploit"
+  9) echo -e "\n[${Green}Selected${White}] Option 9 Websploit"
   websploit
      ;;
-  14) echo -e "\n[${Green}Selected${White}] Option 13 Websploit"
-  BeeLogger
-     ;;
-  15) echo -e "\n[${Green}Selected${White}] Option 15 Ezsploit"
-  Ezsploit
-     ;;
-  16) echo -e "\n[${Green}Selected${White}] Option 16 TheFatRat"
-  TheFatRat
-     ;;
-  17) echo -e "\n[${Green}Selected${White}] Option 17 Angry IP Scanner"
+  10) echo -e "\n[${Green}Selected${White}] Option 10 Angry IP Scanner"
   AngryIpScanner
      ;;
-  18) echo -e "\n[${Green}Selected${White}] Option 18 Sn1per"
-  Sn1per
-  exit 0
-     ;;
-  19) echo -e "\n[${Green}Selected${White}] Option 19 Red Hawk"
-  redhawk
-  exit 0
-     ;;
-  20) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  11) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -839,8 +802,8 @@ php rhawk.php
 Help()
 {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
-echo -e "      ${Red}[${Blue}1${Red}] ${Green}How to set up for mobile"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Its not working :("
+echo -e "      ${Red}[${Blue}1${Red}] ${Green}How to set up ad hoc network on my Pi?"
+echo -e "      ${Red}[${Blue}2${Red}] ${Green}My tool(s) are not working :("
 echo -e "      ${Red}[${Blue}3${Red}] ${Green}Turn off monitor mode"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Uninstall"
 echo -e "      ${Red}[${Blue}5${Red}] ${Green}Clean"
@@ -849,7 +812,7 @@ while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
 case $option in
-  1) echo -e "\n[${Green}Selected${White}] How to set up mobile?"
+  1) echo -e "\n[${Green}Selected${White}] How to set up ad hoc network?"
      instructions
      exit 0
      ;;
@@ -899,19 +862,9 @@ systemctl start wpa_supplicant  > /dev/null 2>&1
 
 instructions(){
 
-echo "$(tput setaf 2)INSTRUCTIONS:
+echo " I know you are a lazy noob, this will do it for you:"
+echo " https://github.com/B3ND1X/nm4n00bz
 
-METHOD 1: (SSH/AD HOC METHOD)
-
-Step 1: Once established connection to Pi via Hotspot or Ad Hoc
-run command "sudo ./pwn.sh"
-Step 2: Select an attack
---------------------------------------------------
-
-METHOD 2:
-
-With Raspberry Pi using screen, mouse and keyboard:
-You can use method one, without the need of SSH or Ad Hoc. "
 }
 
 fix(){
@@ -946,6 +899,5 @@ checkServices
 }
 
 targeted
-
 
 
