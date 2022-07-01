@@ -863,7 +863,7 @@ systemctl start wpa_supplicant  > /dev/null 2>&1
 instructions(){
 
 echo " I know you are a lazy noob, this will do it for you:"
-echo " https://github.com/B3ND1X/nm4n00bz
+echo " https://github.com/B3ND1X/nm4n00bz"
 
 }
 
