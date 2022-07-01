@@ -72,12 +72,14 @@ Open Terminal
 
 run commands: 
 
+<pre>
 * cd
 * git clone https://github.com/B3ND1X/air-script
 * cd air-script 
-*  sudo chmod -R 755 *
+* sudo chmod +x install.sh && chmod +x pwn.sh
+* sudo chmod +x uninstall.sh 
 * sudo ./install.sh
-
+</pre>
 
 METHOD 2: 
 
@@ -90,8 +92,10 @@ If on a Debian based distro. Feel free to install the air-script Debian package.
 
 ## HOW TO RUN:
 
+<pre>
 * cd air-script
 * sudo ./pwn.sh
+</pre>
 
 *If installed as a deb package, you can find air-script in your toolbar under applications.*
 
