@@ -145,15 +145,6 @@ chmod -R 755 fluxion
 cd fluxion
 sudo ./fluxion.sh -i
 cd ..
-################# BeeLogger ####################
-git clone https://github.com/4w4k3/BeeLogger.git
-cd BeeLogger
-sudo chmod +x install.sh
-./install.sh
-cd ..
-############### Zirikatu #########################
-git clone https://github.com/pasahitz/zirikatu
-chmod -R 755 zirikatu
 ################ Routersploit ##############################
 apt-get install python3-pip
 git clone https://www.github.com/threat9/routersploit
@@ -168,12 +159,6 @@ echo "$(tput setaf 2)When asked for filepath, please specify or click enter for 
 sleep 3
 ./setup.sh
 cd ..
-############################## Hakku ###################################
-git clone https://github.com/4shadoww/hakkuframework
-chmod -R 755 hakkuframework
-cd hakkuframework
-./isntall
-cd ..
 ######################### morpheus ################################
 git clone https://github.com/r00t-3xp10it/morpheus.git
 cd morpheus
@@ -183,33 +168,10 @@ echo "$(tput setaf 2)Edit morpheus settings... click Crtl + X when done. Please 
 sleep 5
 nano settings
 cd ..
-############## XERXES #########################################
-git clone https://github.com/XCHADXFAQ77X/XERXES
-cd XERXES
-chmod +x xerxes
-sudo gcc -o xerxes xerxes.c
-cd ..
-############## Katana ########################################
-git clone https://github.com/PowerScript/KatanaFramework.git
-cd KatanaFramework
-sudo sh dependencies
-sudo python install
-cd ..
 ############## Airogedden ########################################
 git clone --depth 1 https://github.com/v1s1t0r1sh3r3/airgeddon.git
 cd airgeddon
 #sudo bash airgeddon.sh
-cd ..
-################# EZSPLOIT #####################################
-git clone https://github.com/rand0m1ze/ezsploit
-chmod +x ezsploit.sh
-###################### TheFatRat ############################
-git clone https://github.com/Screetsec/TheFatRat.git
-cd TheFatRat
-sudo chmod +x setup.sh && ./setup.sh
-./update && chmod +x setup.sh && ./setup.sh
-chmod +x chk_tools 
-./chk_too
 cd ..
 ############## Cupp #############################################
 git clone https://github.com/Mebus/cupp
@@ -225,40 +187,19 @@ git clone https://github.com/k4m4/kickthemout.git
 cd kickthemout/
 sudo -H pip3 install -r requirements.txt
 cd ..
-########################## SETOOLKIT #############################
-git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
-cd setoolkit
-pip3 install -r requirements.txt
-python setup.py
-cd ..
 ##################### Ghost-Phisher ##############################
 git clone https://github.com/savio-code/ghost-phisher
-#################### Sniper #######################################
-git clone https://github.com/1N3/Sn1per
-cd Sn1per
-sudo bash install.sh
-cd ..
-################### Trity #######################################
-git clone https://github.com/toxic-ig/Trity.git
-cd Trity
-sudo python install.py
-cd ..
 ############### Angry IP Scanner ######################
 sudo wget https://github.com/angryip/ipscan/releases/download/3.7.6/ipscan_3.7.6_all.deb
 sudo chmod +x *.deb 
 sudo dpkg -i *.deb
-################### RED HAWK ##########################
-git clone https://github.com/Tuhinshubhra/RED_HAWK
-echo "$(tput setaf 2) Red Hawk Download complete.."
-sleep 3
-echo "$(tput setaf 2) Run Fix option in Red Hawk to install.."
 ############# DONE ###################
 clear
 echo "$(tput setaf 2)Fixing permissions..."
 sleep 5
-cd
-chmod -R 755 air-script
-cd air-script
+cd /bin/air-script/
+chmod -R 755 *
+cd /home/*/air-script
 clear
 echo "$(tput setaf 2)DONE!"
 sleep 3
@@ -352,29 +293,18 @@ echo -e "      ${Red}[${Blue}3${Red}] ${Green}Websploit"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Wifiphisher"
 echo -e "      ${Red}[${Blue}5${Red}] ${Green}Anonsurf"
 echo -e "      ${Red}[${Blue}6${Red}] ${Green}Wifite"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}BeeLogger"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Zirikatu"
-echo -e "      ${Red}[${Blue}9${Red}] ${Green}Routersploit"
-echo -e "      ${Red}[${Blue}10${Red}] ${Green}Zatacker"
-echo -e "      ${Red}[${Blue}11${Red}] ${Green}Hakku"
-echo -e "      ${Red}[${Blue}12${Red}] ${Green}Morpheus"
-echo -e "      ${Red}[${Blue}13${Red}] ${Green}Xerxes"
-echo -e "      ${Red}[${Blue}14${Red}] ${Green}Katana"
-echo -e "      ${Red}[${Blue}15${Red}] ${Green}Airogeddon"
-echo -e "      ${Red}[${Blue}16${Red}] ${Green}Ezsploit"
-echo -e "      ${Red}[${Blue}17${Red}] ${Green}TheFatRat"
-echo -e "      ${Red}[${Blue}18${Red}] ${Green}Cupp"
-echo -e "      ${Red}[${Blue}19${Red}] ${Green}Dracnmap"
-echo -e "      ${Red}[${Blue}20${Red}] ${Green}KickThemOut"
-echo -e "      ${Red}[${Blue}21${Red}] ${Green}Ghost-Phisher"
-echo -e "      ${Red}[${Blue}22${Red}] ${Green}Sn1per"
-echo -e "      ${Red}[${Blue}23${Red}] ${Green}Trity"
-echo -e "      ${Red}[${Blue}24${Red}] ${Green}Angry IP Scanner"
-echo -e "      ${Red}[${Blue}25${Red}] ${Green}Red Hawk"
-echo -e "      ${Red}[${Blue}26${Red}] ${Green}Setoolkit"
-echo -e "      ${Red}[${Blue}27${Red}] ${Green}Air Script Email Notifications"
-echo -e "      ${Red}[${Blue}28${Red}] ${Green}Fluxion"
-echo -e "      ${Red}[${Blue}29${Red}] ${Green}Exit\n\n"
+echo -e "      ${Red}[${Blue}7${Red}] ${Green}Fluxion"
+echo -e "      ${Red}[${Blue}8${Red}] ${Green}Routersploit"
+echo -e "      ${Red}[${Blue}9${Red}] ${Green}Zatacker"
+echo -e "      ${Red}[${Blue}10${Red}] ${Green}Morpheus"
+echo -e "      ${Red}[${Blue}11${Red}] ${Green}Airogeddon"
+echo -e "      ${Red}[${Blue}12${Red}] ${Green}Cupp"
+echo -e "      ${Red}[${Blue}13${Red}] ${Green}Dracnmap"
+echo -e "      ${Red}[${Blue}14${Red}] ${Green}KickThemOut"
+echo -e "      ${Red}[${Blue}15${Red}] ${Green}Ghost-Phisher"
+echo -e "      ${Red}[${Blue}16${Red}] ${Green}Angry IP Scanner"
+echo -e "      ${Red}[${Blue}17${Red}] ${Green}Air Script Email Notifications"
+echo -e "      ${Red}[${Blue}18${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
 read -p "└─────►$(tput setaf 7) " option
@@ -398,7 +328,7 @@ case $option in
   5) echo -e "\n[${Green}Selected${White}] Option 5 Installing Anonsurf..."
      anonsurf
      exit 0
-     ;;
+     ;;    
   6) echo -e "\n[${Green}Selected${White}] Option 6 Installing Wifite..."
      wifite
      exit 0
@@ -407,91 +337,48 @@ case $option in
      fluxion
      exit 0
      ;;
-  8) echo -e "\n[${Green}Selected${White}] Option 8 Installing BeeLogger..."
-     beelogger
-     exit 0
-     ;;
-  9) echo -e "\n[${Green}Selected${White}] Option 9 Installing Zirikatu..."
-     zirikatu
-     exit 0
-     ;;
-  10) echo -e "\n[${Green}Selected${White}] Option 10 Installing Zatacker..."
-     zatacker
-     exit 0
-     ;;
-  11) echo -e "\n[${Green}Selected${White}] Option 11 Installing Hakku..."
-     hakku
-     exit 0
-     ;;
-  12) echo -e "\n[${Green}Selected${White}] Option 12 Installing Morpheus..."
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Installing Routersploit..."
      morpheus
      exit 0
      ;;
-  13) echo -e "\n[${Green}Selected${White}] Option 13 Installing Xerxes..."
-     xerxes
+
+  9) echo -e "\n[${Green}Selected${White}] Option 9 Installing Zatacker..."
+     zatacker
      exit 0
      ;;
-  14) echo -e "\n[${Green}Selected${White}] Option 14 Installing Katana..."
-     katana
+  10) echo -e "\n[${Green}Selected${White}] Option 10 Installing Morpheus..."
+     morpheus
      exit 0
      ;;
-  15) echo -e "\n[${Green}Selected${White}] Option 15 Installing Airogeddon..."
+  11) echo -e "\n[${Green}Selected${White}] Option 11 Installing Airogeddon..."
      airogeddon
      exit 0
      ;;
-  16) echo -e "\n[${Green}Selected${White}] Option 16 Installing Ezsploit..."
-     ezsploit
-     exit 0
-     ;;
-  17) echo -e "\n[${Green}Selected${White}] Option 17 Installing TheFatRat..."
-     thefatrat
-     exit 0
-     ;;
-  18) echo -e "\n[${Green}Selected${White}] Option 18 Installing Cupp..."
+  12) echo -e "\n[${Green}Selected${White}] Option 12 Installing Cupp..."
      cupp
      exit 0
      ;;
-  19) echo -e "\n[${Green}Selected${White}] Option 19 Installing Dracnmap..."
+  13) echo -e "\n[${Green}Selected${White}] Option 13 Installing Dracnmap..."
      dracnmap
      exit 0
      ;;
-  20) echo -e "\n[${Green}Selected${White}] Option 20 Installing KickThemOut..."
+  14) echo -e "\n[${Green}Selected${White}] Option 14 Installing KickThemOut..."
      kickthemout
      exit 0
      ;;
-  21) echo -e "\n[${Green}Selected${White}] Option 21 Installing Ghost-Phisher..."
+  15) echo -e "\n[${Green}Selected${White}] Option 15 Installing Ghost-Phisher..."
      ghostphisher
      exit 0
      ;;
-  22) echo -e "\n[${Green}Selected${White}] Option 22 Installing Sn1per..."
-     sn1per
-     exit 0
-     ;;
-  23) echo -e "\n[${Green}Selected${White}] Option 23 Installing Trity..."
-     trity
-     exit 0
-     ;;
-  24) echo -e "\n[${Green}Selected${White}] Option 24 Installing Angry IP Scanner..."
+  16) echo -e "\n[${Green}Selected${White}] Option 16 Installing Angry IP Scanner..."
       angryipscanner
      exit 0
      ;;
-  25) echo -e "\n[${Green}Selected${White}] Option 25 Installing Red Hawk..."
-     redhawk
-     exit 0
-     ;;
-  26) echo -e "\n[${Green}Selected${White}] Option 26 Installing Red Hawk..."
-     setoolkit
-     exit 0
-     ;;
-  27) echo -e "\n[${Green}Selected${White}] Option 27 Installing Postfix and Sendemail... Air Script needs this for notifications! Please wait..."
+  17) echo -e "\n[${Green}Selected${White}] Option 17 Installing Postfix and Sendemail... Air Script needs this for notifications! Please wait..."
      email
      exit 0
      ;;
-  28) echo -e "\n[${Green}Selected${White}] Option 28 Installing fluxion..."
-     fluxion
-     exit 0
-     ;;
-  29) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+  18) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
@@ -587,29 +474,6 @@ selectTool
 }
 
 
-beelogger () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/4w4k3/BeeLogger.git
-cd BeeLogger
-sudo chmod +x install.sh
-./install.sh
-selectTool
-}
-
-zirikatu () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/pasahitz/zirikatu
-chmod -R 755 zirikatu
-selectTool
-}
 
 routersploit () {
 clear
@@ -639,18 +503,6 @@ sleep 3
 selectTool
 }
 
-hakku () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/4shadoww/hakkuframework
-chmod -R 755 hakkuframework
-cd hakkuframework
-./isntall
-selectTool
-}
 
 morpheus () {
 clear
@@ -668,31 +520,9 @@ nano settings
 selectTool
 }
 
-xerxes () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/XCHADXFAQ77X/XERXES
-cd XERXES
-chmod +x xerxes
-sudo gcc -o xerxes xerxes.c
-selectTool
-}
 
-katana () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/PowerScript/KatanaFramework.git
-cd KatanaFramework
-sudo sh dependencies
-sudo python install
-selectTool
-}
+
+
 
 airogeddon () {
 clear
@@ -707,31 +537,9 @@ sudo bash airgeddon.sh
 selectTool
 }
 
-ezsploit () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/rand0m1ze/ezsploit
-chmod +x ezsploit.sh
-selectTool
-}
 
-thefatrat () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/Screetsec/TheFatRat.git
-cd TheFatRat
-sudo chmod +x setup.sh && ./setup.sh
-./update && chmod +x setup.sh && ./setup.sh
-chmod +x chk_tools 
-./chk_too
-selectTool
-}
+
+
 
 cupp () {
 clear
@@ -778,18 +586,6 @@ git clone https://github.com/savio-code/ghost-phisher
 selectTool
 }
 
-sn1per () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/1N3/Sn1per
-cd Sn1per
-sudo bash install.sh
-selectTool
-}
-
 trity () {
 clear
 echo "$(tput setaf 2)Installing... Please wait..."
@@ -814,35 +610,8 @@ sudo apt install ./*.deb
 selectTool
 }
 
-redhawk () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/Tuhinshubhra/RED_HAWK
-echo "$(tput setaf 2) Red Hawk Download complete.."
-sleep 3
-echo "$(tput setaf 2) Run Fix option in Red Hawk to install.."
-selectTool
-
-}
 
 
-
-setoolkit () {
-clear
-echo "$(tput setaf 2)Installing... Please wait..."
-sleep 5
-clear
-cd /bin/air-script/tools
-git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
-cd setoolkit
-pip3 install -r requirements.txt
-python setup.py
-selectTool
-
-}
 
 
 
