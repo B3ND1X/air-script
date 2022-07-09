@@ -1,5 +1,4 @@
-![air-script logo](https://raw.githubusercontent.com/B3ND1X/air-script-img/main/IMG_0992.jpg)
-
+![1A47ABD8-879A-41F3-9BA9-5F0E41ED7135](https://user-images.githubusercontent.com/48177481/178115591-d92f47f8-bbf7-4a06-8106-500d61b3fcd2.jpeg)
 ## WHAT IS AIR SCRIPT?
 
 Air Script is Wi-Fi pwning Swiss Army knife that also has optional email notifications for when handshakes have been captured. 
