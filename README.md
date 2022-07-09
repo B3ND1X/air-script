@@ -100,18 +100,11 @@ If you installed deb package:
 
 ## IMAGES
 
-![air-scriptv1 0 2](https://user-images.githubusercontent.com/48177481/116521705-4faf7800-a8a2-11eb-8fa0-95825b2506c3.png)
-![IMG_0991](https://user-images.githubusercontent.com/48177481/116521724-5342ff00-a8a2-11eb-8bea-75c74b228512.JPG)
-![IMG_1010](https://user-images.githubusercontent.com/48177481/116695031-03416680-a98e-11eb-908b-5da887d69f46.jpg)
-![IMG1](https://user-images.githubusercontent.com/48177481/116521734-55a55900-a8a2-11eb-9656-27335d9979a3.JPG)
-
-
-## VIDEO:
-
-[![](https://media.giphy.com/media/oiPISdGcjvaUHDWSK3/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
-[![](https://media.giphy.com/media/iqqPx0rj8KLOqqbdmn/giphy.gif)](https://youtu.be/tYfI1idoYtQ)
-
-
+![image](https://user-images.githubusercontent.com/48177481/178114991-719f18d2-52a4-481d-b68d-df460a122e34.png)
+![image](https://user-images.githubusercontent.com/48177481/178114995-5237cabc-afcd-4eef-a5bc-d6796e10fdc5.jpeg)
+![image](https://user-images.githubusercontent.com/48177481/178115000-c358b504-f5ba-4f60-9e3b-27d9e1388d42.jpeg)
+![image](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
+![image](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
 
 
 ### CHANGELOG
