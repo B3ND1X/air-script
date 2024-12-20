@@ -108,6 +108,9 @@ If you installed deb package:
 
 ### CHANGELOG
 
+v 2.0.3
+* Added function to check for valid .cap files with EAPOL data present before decrypting handshakes or sending email notifications.
+
 v 2.0.2
 * Bug fixes
 
