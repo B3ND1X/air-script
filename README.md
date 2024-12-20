@@ -110,6 +110,9 @@ If you installed deb package:
 
 v 2.0.1
 * Bug fixes
+
+v 2.0.1
+* Bug fixes
 * Changes to install script
 * Removed the following tools: (they will be added to a separate script, check back later)
 * Hakku
