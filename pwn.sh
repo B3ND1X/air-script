@@ -397,7 +397,7 @@ aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 
 monitor() {
     #foo="wlan0"   # Example interface, replace with the correct one if needed
-
+   airmon-ng check kill
     # Check if the interface exists
     if ! iwconfig $foo > /dev/null 2>&1; then
         echo "Interface $foo not found. Please check your device."
