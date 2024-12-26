@@ -65,7 +65,7 @@ sudo apt-get remove angry-ip-scanner
 sudo rm -rf /usr/bin/ipscan
 sudo apt-get remove postfix
 sudo apt-get remove sendemail
-uninstallTools
+sudo rm /usr/local/bin/airscript
 }
 
 
