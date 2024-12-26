@@ -122,8 +122,8 @@ echo "All tools have been cloned into $TOOLS_DIR and have been set with the corr
 
 
     # Set permissions for all cloned tools
-    chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
-
+    sudo chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
+    sudo chmod +x /air-script/*.sh
     clear
     permissions
     echo "$(tput setaf 2)All tools installed successfully!"
@@ -216,8 +216,8 @@ permissions (){
     clear
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
-    chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
-        sudo chmod -R 775 /home/*/air-script
+    sudo chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
+    sudo chmod -R 775 /home/*/air-script
     
     
 }
