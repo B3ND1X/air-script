@@ -14,22 +14,15 @@ Blue="\e[1;94m"
 White="\e[0;97m"
 
 # Banner function for introduction
-banner() {
-    echo -e "${Green}
+banner () {        ##### Banner #####
+    echo -e "${Red}                    __   __   __   __     __  ___    "
+    echo -e "${Red}             /\  | |__) /__\` /  \` |__) | |__)  |     "
+    echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
 
- ██▓ ███▄    █   ██████ ▄▄▄█████▓ ▄▄▄       ██▓     ██▓    
-▓██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██▒    ▓██▒    
-▒██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒██░    ▒██░    
-░██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ▒██░    ▒██░    
-░██░▒██░   ▓██░▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░██████▒░██████▒
-░▓  ░ ▒░   ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▓  ░
- ▒ ░░ ░░   ░ ▒░░ ░▒  ░ ░    ░      ▒   ▒▒ ░░ ░ ▒  ░░ ░ ▒  ░
- ▒ ░   ░   ░ ░ ░  ░  ░    ░        ░   ░     ░ ░     ░ ░   
- ░           ░       ░                 ░  ░    ░  ░    ░  ░
-                                                             "
     echo -e "${Yellow} \n            Install Tool"
     echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 }
+
 
 # Main menu for selecting options
 menu() {
@@ -80,6 +73,7 @@ installMin() {
     echo "$(tput setaf 2)The command 'airscript' is now available from any directory and will open pwn.sh."
     sleep 3
     clear
+    permissions
     echo "$(tput setaf 2)Installation of minimal tools complete!"
     shortcut
 }
@@ -115,6 +109,7 @@ installAll() {
     chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
 
     clear
+    permissions
     echo "$(tput setaf 2)All tools installed successfully!"
     shortcut
 }
@@ -200,6 +195,16 @@ installTool() {
     shortcut
 }
 
+
+permissions (){
+    clear
+    echo "$(tput setaf 2)Fixing permissions..."
+    sleep 5
+    chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
+        sudo chmod -R 775 /home/*/air-script
+    
+    
+}
 # Run the banner and main menu
 banner
 menu
