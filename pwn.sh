@@ -1502,7 +1502,7 @@ echo " https://github.com/B3ND1X/nm4n00bz"
 fix(){
 echo "$(tput setaf 2)Attempting to fix! Please wait..."
 ./install.sh
-
+./setup_postfix.sh
 }
 
 
