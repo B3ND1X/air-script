@@ -1152,7 +1152,7 @@ menu
 showMAC() {
 networkselect
 macchanger -s $foo
-menu
+macChange
 
 
 }
