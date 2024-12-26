@@ -15,23 +15,19 @@ Blue="\e[1;94m"
 White="\e[0;97m"
 
 
+
+# Banner function for introduction
 banner () {        ##### Banner #####
-echo -e "${Red}
- █    ██  ███▄    █  ██▓ ███▄    █   ██████ ▄▄▄█████▓ ▄▄▄       ██▓     ██▓    
- ██  ▓██▒ ██ ▀█   █ ▓██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██▒    ▓██▒    
-▓██  ▒██░▓██  ▀█ ██▒▒██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒██░    ▒██░    
-▓▓█  ░██░▓██▒  ▐▌██▒░██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ▒██░    ▒██░    
-▒▒█████▓ ▒██░   ▓██░░██░▒██░   ▓██░▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░██████▒░██████▒
-░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ░▓  ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▓  ░
-░░▒░ ░ ░ ░ ░░   ░ ▒░ ▒ ░░ ░░   ░ ▒░░ ░▒  ░ ░    ░      ▒   ▒▒ ░░ ░ ▒  ░░ ░ ▒  ░
- ░░░ ░ ░    ░   ░ ░  ▒ ░   ░   ░ ░ ░  ░  ░    ░        ░   ▒     ░ ░     ░ ░   
-   ░              ░  ░           ░       ░                 ░  ░    ░  ░    ░  ░
-                                                                                "
+    echo -e "${Red}                    __   __   __   __     __  ___    "
+    echo -e "${Red}             /\  | |__) /__\` /  \` |__) | |__)  |     "
+    echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
+
 echo -e "${Yellow} \n            Uninstall Tool"
 echo -e "${Green}\n           It's sad to see you go :("
 echo -e "${Green}           If there anything I can do to make this script better feel free to contact me!"
 echo -e "${Green}           Email me liam@liambendix.com"
 }
+
 
 menu () {        ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
@@ -69,7 +65,7 @@ sudo apt-get remove angry-ip-scanner
 sudo rm -rf /usr/bin/ipscan
 sudo apt-get remove postfix
 sudo apt-get remove sendemail
-
+uninstallTools
 }
 
 
