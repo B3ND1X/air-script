@@ -85,25 +85,41 @@ installAll() {
     apt-get update
 
     # Install common tools
-    tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
+# Ensure the tools directory exists
+TOOLS_DIR="$HOME/air-script/tools"
+mkdir -p $TOOLS_DIR  # Create the tools directory if it doesn't exist
 
-    for tool in "${tools[@]}"; do
-        echo "Installing $tool..."
-        apt-get install -y $tool
-    done
+# Install required system dependencies
+tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
 
-    # Clone and set up additional tools
-    git clone https://github.com/Und3rf10w/kali-anonsurf
-    git clone https://github.com/derv82/wifite2.git
-    git clone https://github.com/FluxionNetwork/fluxion.git
-    git clone https://github.com/threat9/routersploit.git
-    git clone https://github.com/Sleek1598/Zatacker.git
-    git clone https://github.com/r00t-3xp10it/morpheus.git
-    git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-    git clone https://github.com/Mebus/cupp
-    git clone https://github.com/k4m4/kickthemout.git
-    git clone https://github.com/savio-code/ghost-phisher.git
-    git clone https://github.com/angryip/ipscan.git
+for tool in "${tools[@]}"; do
+    echo "Installing $tool..."
+    apt-get install -y $tool
+done
+
+# Change to the tools directory
+cd $TOOLS_DIR
+
+# Clone additional tools into the tools directory
+echo "Cloning additional tools into $TOOLS_DIR..."
+
+git clone https://github.com/Und3rf10w/kali-anonsurf
+git clone https://github.com/derv82/wifite2.git
+git clone https://github.com/FluxionNetwork/fluxion.git
+git clone https://github.com/threat9/routersploit.git
+git clone https://github.com/Sleek1598/Zatacker.git
+git clone https://github.com/r00t-3xp10it/morpheus.git
+git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+git clone https://github.com/Mebus/cupp
+git clone https://github.com/k4m4/kickthemout.git
+git clone https://github.com/savio-code/ghost-phisher.git
+git clone https://github.com/angryip/ipscan.git
+
+# Set the proper permissions for the tools
+chmod -R 755 $TOOLS_DIR
+
+echo "All tools have been cloned into $TOOLS_DIR and have been set with the correct permissions."
+
 
     # Set permissions for all cloned tools
     chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
