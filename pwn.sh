@@ -328,7 +328,7 @@ attackAllNo () {
 
 
 FluxionMenu() {
-cd /bin/air-script/tools
+cd /tools
 cd fluxion
 sudo ./fluxion.sh
 }
@@ -339,7 +339,7 @@ sudo wifite
 
 Wifite2 () {
 wifite
-cd /bin/air-script/tools
+cd /tools
 cd wifite2
 sudo ./Wifite.py
 }
@@ -418,7 +418,7 @@ sudo fern-wifi-cracker
 
 
 airogeddon () {
-cd /bin/air-script/tools
+cd /tools
 cd airgeddon
 sudo bash airgeddon.sh
 }
@@ -1028,33 +1028,33 @@ done
 
 
 zirikatu () {
-cd /bin/air-script/tools
+cd /tools
 cd zirikatu
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd /bin/air-script/tools
+cd /tools
 cd routersploit
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd /bin/air-script/tools
+cd /tools
 cd Zatacker
 ./ZT.sh
 }
 
 morpheus () {
-cd /bin/air-script/tools
+cd /tools
 cd morpheus
 sudo ./morpheus.sh
 }
 
 Hakku () {
-cd /bin/air-script/tools
+cd /tools
 cd hakkuframework
 ./hakku
 
@@ -1066,13 +1066,13 @@ trity
 }
 
 Cupp () {
-cd /bin/air-script/tools
+cd /tools
 cd cupp
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd /bin/air-script/tools
+cd /tools
 cd Dracnmap
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
@@ -1080,7 +1080,7 @@ sudo ./dracnmap-v2.2.sh
 }
 
 kickthemout () {
-cd /bin/air-script/tools
+cd /tools
 cd kickthemout
 sudo python3 kickthemout.py
 
@@ -1088,7 +1088,7 @@ sudo python3 kickthemout.py
 
 
 ghostPhisher () {
-cd /bin/air-script/tools
+cd /tools
 cd ghost-phisher
 cd Ghost-Phisher
 chmod +x ghost.py
@@ -1097,7 +1097,7 @@ sudo ./ghost.py
 
 
 Xerxes () {
-cd /bin/air-script/tools
+cd /tools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
@@ -1110,7 +1110,7 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd /bin/air-script/tools
+cd /tools
 cd KatanaFramework
 sudo ./ktf.run
 sudo ./ktf.run -h
@@ -1126,14 +1126,14 @@ sudo websploit
 
 
 BeeLogger () {
-cd /bin/air-script/tools
+cd /tools
 cd BeeLogger
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd /bin/air-script/tools
+cd /tools
 cd ezsploit
 sudo ./ezploit.sh
 
@@ -1151,7 +1151,7 @@ sudo sh /usr/bin/ipscan
 
 
 Sn1per () {
-cd /bin/air-script/tools
+cd /tools
 cd Sn1per
 sudo sniper
 
@@ -1159,7 +1159,7 @@ sudo sniper
 
 
 redhawk () {
-cd /bin/air-script/tools
+cd /tools
 cd RED_HAWK
 php rhawk.php
 
@@ -1215,7 +1215,9 @@ cleanup
 }
 
 uninstall () {
-sudo ./uninstall.sh 
+
+run_script_if_exists "uninstall.sh"
+
 }
 
 stopMon () {
@@ -1237,11 +1239,36 @@ echo " https://github.com/B3ND1X/nm4n00bz"
 
 }
 
-fix(){
-echo "$(tput setaf 2)Attempting to fix! Please wait..."
-./install.sh
 
+
+
+
+
+# Script path
+SCRIPT_DIR="/home/superuser/air-script"  # Define the air-script directory path
+
+# Function to check if the script exists and run it
+run_script_if_exists() {
+    local script_name=$1
+    if [ -f "$SCRIPT_DIR/$script_name" ]; then
+        echo "$(tput setaf 2)Running $script_name..."
+        bash "$SCRIPT_DIR/$script_name"
+    else
+        echo "$(tput setaf 1)$script_name not found!"
+    fi
 }
+
+fix() {
+# Menu logic
+echo "Running install tool..."
+run_script_if_exists "install.sh"
+run_script_if_exists "setup_postfix.sh"
+}
+
+
+
+
+
 
 
 
