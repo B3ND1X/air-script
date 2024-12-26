@@ -1482,9 +1482,11 @@ sudo ./uninstall.sh
 
 stopMon () {
 sudo airmon-ng stop $foo > /dev/null 2>&1
+sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
 sudo systemctl start NetworkManager > /dev/null 2>&1
 systemctl start wpa_supplicant  > /dev/null 2>&1
-echo -e "\e[32mmonitor mode disabled for $foo\e[0m"
+echo -e "\e[32mmonitor mode disabled.\e[0m"
 }
 
 
