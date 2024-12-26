@@ -54,94 +54,71 @@ sudo systemctl start postfix > /dev/null 2>&1
 sudo postfix start > /dev/null 2>&1
 sudo systemctl start postfix > /dev/null 2>&1
 
-}
 
+
+}
 banner () {        ##### Banner #####
-echo -e "${Red}
+    echo -e "${Red}                    __   __   __   __     __  ___    "
+    echo -e "${Red}             /\  | |__) /__\` /  \` |__) | |__)  |     "
+    echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
 
-
-
-
- ▄▄▄       ██▓ ██▀███                            
-▒████▄    ▓██▒▓██ ▒ ██▒                          
-▒██  ▀█▄  ▒██▒▓██ ░▄█ ▒                          
-░██▄▄▄▄██ ░██░▒██▀▀█▄                            
- ▓█   ▓██▒░██░░██▓ ▒██▒                          
- ▒▒   ▓▒█░░▓  ░ ▒▓ ░▒▓░                          
-  ▒   ▒▒ ░ ▒ ░  ░▒ ░ ▒░                          
-  ░   ▒    ▒ ░  ░░   ░                           
-      ░  ░ ░     ░                               
-                                                 
-  ██████  ▄████▄   ██▀███   ██▓ ██▓███  ▄▄▄█████▓
-▒██    ▒ ▒██▀ ▀█  ▓██ ▒ ██▒▓██▒▓██░  ██▒▓  ██▒ ▓▒
-░ ▓██▄   ▒▓█    ▄ ▓██ ░▄█ ▒▒██▒▓██░ ██▓▒▒ ▓██░ ▒░
-  ▒   ██▒▒▓▓▄ ▄██▒▒██▀▀█▄  ░██░▒██▄█▓▒ ▒░ ▓██▓ ░ 
-▒██████▒▒▒ ▓███▀ ░░██▓ ▒██▒░██░▒██▒ ░  ░  ▒██▒ ░ 
-▒ ▒▓▒ ▒ ░░ ░▒ ▒  ░░ ▒▓ ░▒▓░░▓  ▒▓▒░ ░  ░  ▒ ░░   
-░ ░▒  ░ ░  ░  ▒     ░▒ ░ ▒░ ▒ ░░▒ ░         ░    
-░  ░  ░  ░          ░░   ░  ▒ ░░░         ░      
-      ░  ░ ░         ░      ░                    
-         ░                                  "
-echo -e "${Yellow} \n             Hack the world!!!     "
-echo -e "${Green}\n                    Developed by: Liam Bendix"
-echo -e "${Green}                         Version: 2.0.5 Stable"
+    #echo -e "${Yellow} \n                     Hack the world!!!     "
+    echo -e "${Green}\n   [Version: 2.0.5 Stable] Developed by: Liam Bendix"
+  
 }
-
-menu () {        ##### Display available options #####
-echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
-echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack Wifi"
-echo -e "      ${Red}[${Blue}2${Red}] ${Green}Decrypt Passowrd(s)"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifi Jammer"
-echo -e "      ${Red}[${Blue}4${Red}] ${Green}Change MAC Address"
-echo -e "      ${Red}[${Blue}5${Red}] ${Green}Change IP Address"
-echo -e "      ${Red}[${Blue}6${Red}] ${Green}View log file"
-echo -e "      ${Red}[${Blue}7${Red}] ${Green}Extra Tools"
-echo -e "      ${Red}[${Blue}8${Red}] ${Green}Help"
-echo -e "      ${Red}[${Blue}9${Red}] ${Green}Exit\n\n"
-while true; do
-echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
-read -p "└─────►$(tput setaf 7) " option
-case $option in
-  1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
-     wifiHacking
-     ;;
-  2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Passowrd(s).."
-     crack
-     exit 0
-     ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 3 Wifi Jammer..."
-     wifiJammer
-     exit 0
-     ;;
-  4) echo -e "\n[${Green}Selected${White}] Option 4 Changing MAC Address..."
-     macChange
-     exit 0
-     ;;
-  5) echo -e "\n[${Green}Selected${White}] Option 5 Anonsurf..."
-     anonsurf
-     exit 0
-     ;;
-  6) echo -e "\n[${Green}Selected${White}] Option 6 View log of cracked networks..."
-     log
-     exit 0
-     ;;
-  7) echo -e "\n[${Green}Selected${White}] Option 7 Extra Tools..."
-     tools
-     exit 0
-     ;;
-  8) echo -e "\n[${Green}Selected${White}] Option 8 Help..."
-     Help
-     exit 0
-     ;;
-  9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
-     exit 0
-     ;;
-  *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
-     ;;
-esac
-done
+menu () {        ##### Display available options in two columns #####
+    echo -e "\n${Yellow}               [ Select Option To Continue ]\n\n"
+    
+    # First column
+    echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack Wifi             ${Red}[${Blue}6${Red}] ${Green}View log file"
+    echo -e "      ${Red}[${Blue}2${Red}] ${Green}Decrypt Password(s)   ${Red}[${Blue}7${Red}] ${Green}Extra Tools"
+    echo -e "      ${Red}[${Blue}3${Red}] ${Green}Wifi Jammer           ${Red}[${Blue}8${Red}] ${Green}Help"
+    echo -e "      ${Red}[${Blue}4${Red}] ${Green}Change MAC Address    ${Red}[${Blue}9${Red}] ${Green}Exit"
+    echo -e "      ${Red}[${Blue}5${Red}] ${Green}Change IP Address\n"
+    
+    while true; do
+        echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
+        read -p "└─────►$(tput setaf 7) " option
+        case $option in
+            1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
+               wifiHacking
+               ;;
+            2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Passowrd(s).."
+               crack
+               exit 0
+               ;;
+            3) echo -e "\n[${Green}Selected${White}] Option 3 Wifi Jammer..."
+               wifiJammer
+               exit 0
+               ;;
+            4) echo -e "\n[${Green}Selected${White}] Option 4 Changing MAC Address..."
+               macChange
+               exit 0
+               ;;
+            5) echo -e "\n[${Green}Selected${White}] Option 5 Anonsurf..."
+               anonsurf
+               exit 0
+               ;;
+            6) echo -e "\n[${Green}Selected${White}] Option 6 View log of cracked networks..."
+               log
+               exit 0
+               ;;
+            7) echo -e "\n[${Green}Selected${White}] Option 7 Extra Tools..."
+               tools
+               exit 0
+               ;;
+            8) echo -e "\n[${Green}Selected${White}] Option 8 Help..."
+               Help
+               exit 0
+               ;;
+            9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+               exit 0
+               ;;
+            *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
+               ;;
+        esac
+    done
 }
-
 wifiHacking () {        ##### Sending DeAuth and capture handshake #####
         ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
