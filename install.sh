@@ -76,8 +76,9 @@ installMin() {
     ln -sf $(pwd)/pwn.sh /usr/local/bin/airscript
 
     # Confirmation
+    clear
     echo "$(tput setaf 2)The command 'airscript' is now available from any directory and will open pwn.sh."
-
+    sleep 3
     clear
     echo "$(tput setaf 2)Installation of minimal tools complete!"
     shortcut
@@ -124,7 +125,7 @@ shortcut() {
         read -p "Do you want to add a desktop shortcut for easy access? (y/n): " yn
         case $yn in
             [Yy]*) addShortcut; break ;;
-            [Nn]*) echo "$(tput setaf 2)Goodbye!"; exit 0 ;;
+            [Nn]*) echo "$(tput setaf 2)Install script done... Hack the world!"; exit 0 ;;
             *) echo "Please answer with 'y' or 'n'." ;;
         esac
     done
