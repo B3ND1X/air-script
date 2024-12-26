@@ -114,7 +114,7 @@ If you installed deb package:
 
 
 * A device with a compatible Linux distribution, such as Kali Linux
-* Wireless network interface controller (NIC) that supports raw monitoring mode
+* Wireless network interface controller (NIC) that supports raw monitoring mode & packet injection
 * NIC capable of sniffing 802.11a, 802.11b, and 802.11g packets
 
 
