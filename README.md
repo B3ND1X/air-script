@@ -105,8 +105,20 @@ If you installed deb package:
 ![image](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
 ![image](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
 
-
 ### CHANGELOG
+
+v 2.0.5
+* Fixed all air-script attacks
+* Fixed postfix and added a postfix setup script
+* Added more efficient attack method by extracting client MAC address on an AP and sending deAuth packets to target to capture handshakes faster
+
+v 2.0.4
+* Added loop for attacking until valid EAPOL data is found. 
+v 2.0.3
+* Added function to check for valid .cap files with EAPOL data present before decrypting handshakes or sending email notifications
+
+v 2.0.2
+* Bug fixes
 
 v 2.0.1
 * Bug fixes
@@ -192,6 +204,14 @@ v 1.0.2
 
 v. 1.0.1
 
+
+* Anonsurf added to tools
+* MAC Changer added tools
+* Fluxion added to tools
+
+
+v 1.0
+* Initial Release
 
 * Anonsurf added to tools
 * MAC Changer added tools
