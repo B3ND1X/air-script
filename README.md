@@ -30,6 +30,9 @@ Use this if you don't know how to convert: https://hashcat.net/cap2hccapx/ (Conv
 ## EMAIL NOTIFICATIONS
 Don't want to sit around and pay attention to what's happening? Yeah, me either... That's why Air Script will ask you if you want an email notification when it's done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest.
 
+*Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
+
+
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
 That's okay, me either! That's why Air Script comes with extra tools! See changelog for a list of added tools.
@@ -55,8 +58,7 @@ run commands:
 * cd
 * git clone https://github.com/B3ND1X/air-script
 * cd air-script 
-* sudo chmod +x install.sh && chmod +x pwn.sh
-* sudo chmod +x uninstall.sh 
+* sudo chmod +x install.sh 
 * sudo ./install.sh
 </pre>
 
@@ -66,7 +68,7 @@ If on a Debian based distro. Feel free to install the air-script Debian package.
 
 * To install see releases and install the latest release of air-script.deb 
 
-*Please note: this is a pre-release and might have issues* 
+*Please note: this is a pre-release and might have issues it is not reccomended to install.* 
 
 
 ## HOW TO RUN:
@@ -74,6 +76,8 @@ If on a Debian based distro. Feel free to install the air-script Debian package.
 <pre>
 * cd air-script
 * sudo ./pwn.sh
+OR 
+* sudo aircrack (from any directory)  
 </pre>
 
 *If installed as a deb package, you can find air-script in your toolbar under applications.*
@@ -104,6 +108,15 @@ If you installed deb package:
 ![image](https://user-images.githubusercontent.com/48177481/178115000-c358b504-f5ba-4f60-9e3b-27d9e1388d42.jpeg)
 ![image](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
 ![image](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
+
+
+### REQUIREMENTS 
+
+
+* A device with a compatible Linux distribution, such as Kali Linux
+* Wireless network interface controller (NIC) that supports raw monitoring mode
+* NIC capable of sniffing 802.11a, 802.11b, and 802.11g packets
+
 
 ### CHANGELOG
 
