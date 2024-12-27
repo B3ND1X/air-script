@@ -349,8 +349,8 @@ sudo ./Wifite.py
 
 crack () {
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
-cleanup 
 crack_hashes
+cleanup
 }
 
 #!/bin/bash
