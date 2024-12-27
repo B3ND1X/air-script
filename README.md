@@ -30,7 +30,7 @@ Use this if you don't know how to convert: https://hashcat.net/cap2hccapx/ (Conv
 ## EMAIL NOTIFICATIONS
 Don't want to sit around and pay attention to what's happening? Yeah, me either... That's why Air Script will ask you if you want an email notification when it's done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest.
 
-*Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
+*UPDATE: Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
 
 
 ## DONT WANT TO USE ONLY AIR SCRIPT?
