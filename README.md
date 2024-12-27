@@ -18,13 +18,11 @@ Air Script is a great tool for lazy people, script kiddies, and anyone who wants
 Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
 
-*If on Raspberry Pi, it's recommended to skip bruteforce and transfer handshakes from Pi to PC to decrypt the password.*
+*If on Raspberry Pi, it's recommended to use cloud cracking to decrypt the password.*
 
-*Create or upload your own wordlist to Air Script. More wordlists means a higher chance of getting the password!* 
+*Create or upload your own wordlist to Air Script if you want to crack local. More wordlists means a higher chance of getting the password!* 
 
-*Also note you will have to convert .cap files to .hccap yourself if you want to use hashcat* (This will be an automated option in the future)
-
-Use this if you don't know how to convert: https://hashcat.net/cap2hccapx/ (Convert handshake for hashcat, this is optional)
+*Use cloud cracking to crack passwords: .cap files are automatically converted and sent to https://www.onlinehashcrack.com/*
 
 
 ## EMAIL NOTIFICATIONS
@@ -119,6 +117,10 @@ If you installed deb package:
 
 
 ### CHANGELOG
+
+v 2.0.6
+* Cracking logic updated. Users can now select if they want to crack on their device locally or send capture files to the cloud to crack handshakes online.
+* If cloud cracking is selected .cap files are automatically converted and sent to the cloud, you will recive an email with any passwords found.
 
 v 2.0.5
 * Fixed all air-script attacks
