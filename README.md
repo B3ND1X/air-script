@@ -127,6 +127,7 @@ v 2.0.5
 
 v 2.0.4
 * Added loop for attacking until valid EAPOL data is found. 
+
 v 2.0.3
 * Added function to check for valid .cap files with EAPOL data present before decrypting handshakes or sending email notifications
 
