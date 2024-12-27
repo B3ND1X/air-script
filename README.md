@@ -77,7 +77,7 @@ If on a Debian based distro. Feel free to install the air-script Debian package.
 * cd air-script
 * sudo ./pwn.sh
 OR 
-* sudo aircrack (from any directory)  
+* sudo airscript (from any directory)  
 </pre>
 
 *If installed as a deb package, you can find air-script in your toolbar under applications.*
