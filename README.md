@@ -22,7 +22,7 @@ Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc a
 
 *Create or upload your own wordlist if you want to crack local. More wordlists means a higher chance of getting the password!* 
 
-*Handshakes can sent to https://wpa-sec.stanev.org for cracking online. You will be emailed if any passwords are found.*
+*Handshakes can be sent to https://wpa-sec.stanev.org for cracking online. You will be emailed if any passwords are found.*
 
 
 ## EMAIL NOTIFICATIONS
