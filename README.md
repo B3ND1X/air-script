@@ -18,11 +18,11 @@ Air Script is a great tool for lazy people, script kiddies, and anyone who wants
 Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
 
-*If on Raspberry Pi, it's recommended to use cloud cracking to decrypt the password.*
+*If on Raspberry Pi, it's recommended to NOT crack passwords locally*
 
-*Create or upload your own wordlist to Air Script if you want to crack local. More wordlists means a higher chance of getting the password!* 
+*Create or upload your own wordlist if you want to crack local. More wordlists means a higher chance of getting the password!* 
 
-*Use cloud cracking to crack passwords: .cap files are automatically converted and sent to https://www.onlinehashcrack.com/*
+*Handshakes can sent to https://wpa-sec.stanev.org for cracking online. You will be emailed if any passwords are found.*
 
 
 ## EMAIL NOTIFICATIONS
@@ -30,6 +30,9 @@ Don't want to sit around and pay attention to what's happening? Yeah, me either.
 
 *UPDATE: Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
 
+## SUBMIT HANDSHAKES ONLINE
+
+Please go to https://wpa-sec.stanev.org/ and get a key. Once you have obtained your key, place that key into the key.txt file. 
 
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
@@ -119,8 +122,8 @@ If you installed deb package:
 ### CHANGELOG
 
 v 2.0.6
-* Cracking logic updated. Users can now select if they want to crack on their device locally or send capture files to the cloud to crack handshakes online.
-* If cloud cracking is selected .cap files are automatically converted and sent to the cloud, you will recive an email with any passwords found.
+* Cracking logic updated. Users can now select if they want to crack on their device locally or upload capture files to crack handshakes online.
+* Capture files are sent to https://wpa-sec.stanev.org and you will recive an email if any passwords are found.
 
 v 2.0.5
 * Fixed all air-script attacks
