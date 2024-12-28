@@ -356,8 +356,8 @@ crack_hashes
 
 
 crack_hashes() {
-    echo "Do you want to crack hashes on your device or with the cloud?"
-    select method in "Local (Device)" "Cloud (WPA-Sec)"; do
+    echo "Do you want to crack hashes from your device or from the web?"
+    select method in "Local (Device)" "Upload (WPA-Sec)"; do
         case $method in
             "Local (Device)")
                 # Local cracking with Hashcat or other methods (you can extend this part)
@@ -372,8 +372,8 @@ crack_hashes() {
                 cleanup
                 exit
                 ;;
-            "Cloud (WPA-Sec)")
-                # Ask for the user's email for cloud cracking (optional, based on the site)
+            "Upload (WPA-Sec)")
+                # Ask for the user's email for cracking (optional, based on the site)
                 echo "Please provide your email for WPA-Sec service:"
                 read -p "Email: " user_email
 
@@ -442,7 +442,7 @@ crack_hashes() {
                 break
                 ;;
             *)
-                echo "Invalid option. Please select either 'Local' or 'Cloud'."
+                echo "Invalid option. Please select either 'Local' or 'Upload'."
                 ;;
         esac
     done
