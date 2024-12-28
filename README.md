@@ -31,9 +31,11 @@ Don't want to sit around and pay attention to what's happening? Yeah, me either.
 *UPDATE: Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
 
 ## SUBMIT HANDSHAKES ONLINE
-
 Please go to https://wpa-sec.stanev.org/ and get a key. Once you have obtained your key, place that key into the key.txt file. 
+* Cracking logic updated: Users can now upload capture files to crack handshakes online.
+* Capture files are sent to https://wpa-sec.stanev.org and you will recive an email if any passwords are found.
 
+  
 ## DONT WANT TO USE ONLY AIR SCRIPT?
 
 That's okay, me either! That's why Air Script comes with extra tools! See changelog for a list of added tools.
