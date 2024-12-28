@@ -18,7 +18,7 @@ Air Script is a great tool for lazy people, script kiddies, and anyone who wants
 Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
 
 
-*If on Raspberry Pi, it's recommended to NOT crack passwords locally*
+*If on Raspberry Pi, it's recommended to NOT crack passwords locally.*
 
 *Create or upload your own wordlist if you want to crack local. More wordlists means a higher chance of getting the password!* 
 
