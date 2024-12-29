@@ -118,9 +118,9 @@ For support or assistance, you can:
 ## Images
 
 
-| ![img1](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img1.PNG) | ![img2](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img2.PNG) | ![img3](https://raw.githubusercontent.com/B3ND1X/air-script/main/assets/img3.png) |
+| ![img1](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img1.PNG) | ![img2](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img2.PNG) | ![img3](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img3.PNG) |
 |----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| ![img4](https://raw.githubusercontent.com/B3ND1X/air-script/main/assets/img4.png) | ![img5](https://raw.githubusercontent.com/B3ND1X/air-script/main/assets/img5.png) | ![img6](https://raw.githubusercontent.com/B3ND1X/air-script/main/assets/img6.png) |
+| ![img4](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img4.PNG) | ![img5](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img5.JPG) | ![img6](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img6.jpeg) |
 
 
 ![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
