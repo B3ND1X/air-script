@@ -5,7 +5,6 @@
 </p>
 
 ## What is Air Script?
-[*Air Script is Wi-Fi pwning Swiss Army knife that also has optional email notifications for when handshakes have been captured.*]
 
 Air Script is an automated tool designed to facilitate Wi-Fi network penetration testing. It streamlines the process of identifying and exploiting Wi-Fi networks by automating tasks such as network scanning, handshake capture, and brute-force password cracking. Key features include:
 
