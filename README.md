@@ -160,10 +160,13 @@ For support or assistance, you can:
 This project is licensed under the terms of the MIT License.
 
 ---
-Ethical Use: Always ensure you have authorization to test the networks you are targeting.
+## Ethical Use:
+Always ensure you have authorization to test the networks you are targeting.
 
-Disclaimer: Air Script is intended for educational purposes and authorized penetration testing only. Unauthorized use against networks without explicit permission is illegal and unethical.
+## Disclaimer: 
+Air Script is intended for educational purposes and authorized penetration testing only. Unauthorized use against networks without explicit permission is illegal and unethical.
 
-Data Sharing: By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
+## Data Sharing: 
+By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
 
 This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
