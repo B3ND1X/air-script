@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        /* Container for the gallery */
+        .gallery-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Image styling */
+        .gallery-images {
+            display: flex;
+            transition: transform 1s ease;
+        }
+
+        .gallery-images img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Add some styling for navigation (optional) */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-container">
+        <div class="gallery-images">
+            <!-- Use raw GitHub image URLs for the images -->
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img1.PNG" alt="Image 1">
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img2.PNG" alt="Image 2">
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img3.PNG" alt="Image 3">
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img4.PNG" alt="Image 4">
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img5.JPG" alt="Image 5">
+            <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img6.jpeg" alt="Image 6">
+        </div>
+
+        <!-- Optional: Add navigation buttons -->
+        <div class="prev" onclick="moveSlide(-1)">&#10094;</div>
+        <div class="next" onclick="moveSlide(1)">&#10095;</div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        // Function to move to the next or previous image
+        function moveSlide(step) {
+            const images = document.querySelectorAll('.gallery-images img');
+            const totalImages = images.length;
+            currentIndex = (currentIndex + step + totalImages) % totalImages;
+            updateGallery();
+        }
+
+        // Function to update the gallery's display position
+        function updateGallery() {
+            const galleryImages = document.querySelector('.gallery-images');
+            const imageWidth = document.querySelector('.gallery-images img').clientWidth;
+            galleryImages.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+        }
+
+        // Auto move to the next image every 3 seconds
+        setInterval(function() {
+            moveSlide(1);
+        }, 3000);
+
+        // Initial gallery update
+        updateGallery();
+    </script>
+
+</body>
+</html>
+
