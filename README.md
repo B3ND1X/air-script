@@ -143,7 +143,7 @@ For support or assistance, you can:
 ## Changelog
 
 **v2.0.7**
-Added PMKID attack method
+- Added PMKID attack method
 
 **v2.0.6**
 - Cracking logic updated: Users can choose to crack handshakes locally or upload capture files for online cracking.
