@@ -117,9 +117,16 @@ For support or assistance, you can:
 
 ## Images
 
-![Air Script Interface](https://user-images.githubusercontent.com/48177481/178114991-719f18d2-52a4-481d-b68d-df460a122e34.png)
-![Wi-Fi Network Capture](https://user-images.githubusercontent.com/48177481/178114995-5237cabc-afcd-4eef-a5bc-d6796e10fdc5.jpeg)
-![Brute-Force Cracking](https://user-images.githubusercontent.com/48177481/178115000-c358b504-f5ba-4f60-9e3b-27d9e1388d42.jpeg)
+## Screenshots
+
+### View of the application
+
+| ![Screenshot 1](assets/img1.png) | ![Screenshot 2](assets/img2.png) | ![Screenshot 3](assets/img3.png) |
+|----------------------------------|----------------------------------|----------------------------------|
+|                                  |                                  |                                  | 
+| ![Screenshot 4](assets/img4.png) | ![Screenshot 5](assets/img5.png) | ![Screenshot 6](images/img6.png) |
+|                                  |                                  |                                  |
+|                                  |                                  |                                  |
 ![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
 ![Email Notification](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
 
