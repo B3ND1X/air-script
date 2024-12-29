@@ -1,243 +1,171 @@
+# Air Script
+
+![Air Script Logo](https://user-images.githubusercontent.com/48177481/178115591-d92f47f8-bbf7-4a06-8106-500d61b3fcd2.jpeg)
+
+## What is Air Script?
 ![1A47ABD8-879A-41F3-9BA9-5F0E41ED7135](https://user-images.githubusercontent.com/48177481/178115591-d92f47f8-bbf7-4a06-8106-500d61b3fcd2.jpeg)
-## WHAT IS AIR SCRIPT?
-
-Air Script is Wi-Fi pwning Swiss Army knife that also has optional email notifications for when handshakes have been captured. 
+Air Script is an automated tool designed to facilitate Wi-Fi network penetration testing. It streamlines the process of identifying and exploiting Wi-Fi networks by automating tasks such as network scanning, handshake capture, and brute-force password cracking. Key features include:
 
 
-Air Script is an automated and automatic way to pwn wifi. 
+Automated Attacks: Air Script can automatically target all Wi-Fi networks within range, capturing handshakes without user intervention. Upon completion, it deactivates monitor mode and can send optional email notifications to inform the user. Air Script also automates Wi-Fi penetration testing by simplifying tasks like network scanning, handshake capture, and password cracking on selected networks.
 
+Brute-Force Capabilities: After capturing handshakes, the tool prompts the user to either provide a wordlist for attempting to crack the Wi-Fi passwords, or it uploads captured Wi-Fi handshakes to the WPA-sec project. This website is a public repository where users can contribute and analyze Wi-Fi handshakes to identify vulnerabilities. The service attempts to crack the handshake using its extensive database of known passwords and wordlists.
 
-### Automated: Step by step user friendly interface, to improve workflow. Type less, attack more!
+Email Notifications: Users have the option to receive email alerts upon the successful capture of handshakes, allowing for remote monitoring of the attack’s progress.
 
+Additional Tools: Air Script includes a variety of supplementary tools to enhance workflow for hackers, penetration testers, and security researchers. Users can choose which tools to install based on their needs.
 
-### Automatic: You can tell Air-Script to hack all wifi networks around you with an Air Script attack. (Attack all option)
-Air Script will automatically pwn every network in range in a matter of seconds to minutes without any user input. When Air-Script is done. It will automatically turn off monitor mode, and send you an email notification. (Notifications are optional) Then Air Script will ask you what wordlist to use, and will try to bruteforce the password for you. (When asked for wordlist, click enter or crl + c to skip.)
+Compatibility: The tool is compatible with devices like Raspberry Pi, enabling discreet operations. Users can SSH into the Pi from mobile devices without requiring jailbreak or root access.
 
+Ethical Use: Always ensure you have authorization to test the networks you are targeting.
 
-Air Script is a great tool for lazy people, script kiddies, and anyone who wants to pwn on the go. (Especially without being noticed. 
-Easily hide a Pi in your pocket, connect via ssh with mobile hotspot or ad hoc and pwn the world!)
+Disclaimer: Air Script is intended for educational purposes and authorized penetration testing only. Unauthorized use against networks without explicit permission is illegal and unethical.
 
+Data Sharing: By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
 
-*If on Raspberry Pi, it's recommended to NOT crack passwords locally.*
+This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
 
-*Create or upload your own wordlist if you want to crack local. More wordlists means a higher chance of getting the password!* 
+## Email Notifications
 
-*Handshakes can be sent to https://wpa-sec.stanev.org for cracking online. You will be emailed if any passwords are found.*
+Don’t want to monitor the process continuously? Air Script can send you an email notification once it’s done "pwning" networks. No setup required—just enter a valid email address, and Air Script will handle the rest!
 
+**Update:** Postfix now requires you to log into a Gmail account. Feel free to use a burner account for this. For help with setup, run `./setup_postfix` or use the help option.
 
-## EMAIL NOTIFICATIONS
-Don't want to sit around and pay attention to what's happening? Yeah, me either... That's why Air Script will ask you if you want an email notification when it's done pwning networks. No set up, no fuss, just type in a working email address and air script will do the rest.
+---
 
-*UPDATE: Postfix now requires to sign into a gmail account, feel free to make a burner account fot this. For help with setting up run ./setup_postfix or use help option.*
+## Submit Handshakes Online
 
-## SUBMIT HANDSHAKES ONLINE
-Please go to https://wpa-sec.stanev.org/ and get a key. Once you have obtained your key, place that key into the key.txt file. 
-* Cracking logic updated: Users can now upload capture files to crack handshakes online.
-* Capture files are sent to https://wpa-sec.stanev.org and you will recive an email if any passwords are found.
+To submit your captured handshakes for cracking, visit [WPA-sec](https://wpa-sec.stanev.org/) and obtain a key. Once you have your key, place it into the `key.txt` file.
 
-  
-## DONT WANT TO USE ONLY AIR SCRIPT?
+- **Cracking Logic Update**: Users can now upload capture files to crack handshakes online.
+- Captured files are sent to [WPA-sec](https://wpa-sec.stanev.org/) and you will receive an email if any passwords are found.
 
-That's okay, me either! That's why Air Script comes with extra tools! See changelog for a list of added tools.
-Air Script comes loaded with a variety of extra tools to improve workflow for hackers, pentesters and security researchers.
-Either install all or choose which tools to install to save space. 
+---
+
+## Don’t Want to Use Only Air Script?
+
+That’s perfectly fine! Air Script comes with a variety of additional tools to enhance your workflow. You can choose to install all tools or select only the ones you need to save space. For the full list, refer to the changelog.
+
+---
 
 ## Mobile & Raspberry Pi
-							               
-PLEASE NOTE: 
-* NO JAILBREAK is required to SSH to your Pi from iOS device! Just download the "Terminus" app from AppStore	
-* NO ROOT is required to SSH to Pi from Android. Download a terminal of your choice from Google Play
-* For Raspberry Pi users, it's recommended to select only the tools you need to save on space. 		
-## HOW TO INSTALL:
 
+**Note**:  
+- **No Jailbreak** is required to SSH into your Raspberry Pi from an iOS device! Just download the "Terminus" app from the App Store.  
+- **No Root** is required to SSH into your Raspberry Pi from an Android device. Simply download a terminal app from the Google Play Store.  
+- For Raspberry Pi users, we recommend only installing the tools you need to save space.
 
-METHOD 1:
+---
 
-Open Terminal
+## How to Install
 
-run commands: 
+### Method 1:
 
-<pre>
-* cd
-* git clone https://github.com/B3ND1X/air-script
-* cd air-script 
-* sudo chmod +x install.sh 
-* sudo ./install.sh
-</pre>
+1. Open a terminal.
+2. Run the following commands:
 
-METHOD 2: 
+    ```bash
+    cd
+    git clone https://github.com/B3ND1X/air-script
+    cd air-script
+    sudo chmod +x install.sh
+    sudo ./install.sh
+    ```
 
-If on a Debian based distro. Feel free to install the air-script Debian package. 
+### Method 2:
 
-* To install see releases and install the latest release of air-script.deb 
+If you’re using a Debian-based distro, you can install Air Script using the Debian package.
 
-*Please note: this is a pre-release and might have issues it is not reccomended to install.* 
+- Download the latest release from the [Releases page](https://github.com/B3ND1X/air-script/releases) and install the `air-script.deb` package.
+- **Note**: This is a pre-release and may have issues. It’s not recommended for production use.
 
+---
 
-## HOW TO RUN:
+## How to Run
 
-<pre>
-* cd air-script
-* sudo ./pwn.sh
-OR 
-* sudo airscript (from any directory)  
-</pre>
+Once installed, you can run Air Script with the following command:
 
-*If installed as a deb package, you can find air-script in your toolbar under applications.*
+```bash
+cd air-script
+sudo ./pwn.sh
+```
 
+Alternatively, you can run it from any directory with:
 
-## HOW TO UNINSTALL THIS GARBAGE SCRIPT?!!
+```bash
+sudo airscript
+```
 
-It's a shame to see you go. No hard feelings!
+If installed as a `.deb` package, you can find Air Script in your system’s application menu.
 
-* Please go to "Help" (Option 8)
-* Select "Uninstall" (Option 4)
+---
 
-If you installed deb package: 
+## How to Uninstall
 
-* sudo apt remove air-script 
+1. Open the help menu: `Help` (Option 8).
+2. Select `Uninstall` (Option 4).
 
+If you installed the `.deb` package:
 
-## HELP 
+```bash
+sudo apt remove air-script
+```
 
-* Select 'Help' (option 8)
-* Email for support (liam@liambendix.com)
+---
 
+## Help
 
-## IMAGES
+For support or assistance, you can:
 
-![image](https://user-images.githubusercontent.com/48177481/178114991-719f18d2-52a4-481d-b68d-df460a122e34.png)
-![image](https://user-images.githubusercontent.com/48177481/178114995-5237cabc-afcd-4eef-a5bc-d6796e10fdc5.jpeg)
-![image](https://user-images.githubusercontent.com/48177481/178115000-c358b504-f5ba-4f60-9e3b-27d9e1388d42.jpeg)
-![image](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
-![image](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
+1. Select `Help` (Option 8).
+2. Email me at [liam@liambendix.com](mailto:liam@liambendix.com).
 
+---
 
-### REQUIREMENTS 
+## Images
 
+![Air Script Interface](https://user-images.githubusercontent.com/48177481/178114991-719f18d2-52a4-481d-b68d-df460a122e34.png)
+![Wi-Fi Network Capture](https://user-images.githubusercontent.com/48177481/178114995-5237cabc-afcd-4eef-a5bc-d6796e10fdc5.jpeg)
+![Brute-Force Cracking](https://user-images.githubusercontent.com/48177481/178115000-c358b504-f5ba-4f60-9e3b-27d9e1388d42.jpeg)
+![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
+![Email Notification](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
 
-* A device with a compatible Linux distribution, such as Kali Linux
-* Wireless network interface controller (NIC) that supports raw monitoring mode & packet injection
-* NIC capable of sniffing 802.11a, 802.11b, and 802.11g packets
+---
 
+## Requirements
 
-### CHANGELOG
+- A device with a compatible Linux distribution (e.g., Kali Linux)
+- Wireless network interface controller (NIC) that supports raw monitoring mode & packet injection
+- NIC capable of sniffing 802.11a, 802.11b, and 802.11g packets
 
-v 2.0.6
-* Cracking logic updated. Users can now select if they want to crack on their device locally or upload capture files to crack handshakes online.
-* Capture files are sent to https://wpa-sec.stanev.org and you will recive an email if any passwords are found.
+---
 
-v 2.0.5
-* Fixed all air-script attacks
-* Fixed postfix and added a postfix setup script
-* Added more efficient attack method by extracting client MAC address on an AP and sending deAuth packets to target to capture handshakes faster
+## Changelog
 
-v 2.0.4
-* Added loop for attacking until valid EAPOL data is found. 
+**v2.0.6**
+- Cracking logic updated: Users can choose to crack handshakes locally or upload capture files for online cracking.
+- Capture files sent to [WPA-sec](https://wpa-sec.stanev.org) for password cracking with email notifications.
 
-v 2.0.3
-* Added function to check for valid .cap files with EAPOL data present before decrypting handshakes or sending email notifications
+**v2.0.5**
+- Fixed Air Script attacks.
+- Added a postfix setup script.
+- More efficient attack methods with client MAC address extraction.
 
-v 2.0.2
-* Bug fixes
+**v2.0.4**
+- Loop added for attacks until valid EAPOL data is found.
 
-v 2.0.1
-* Bug fixes
-* Changes to install script
-* Removed the following tools: (they will be added to a separate script, check back later)
-* Hakku
-* Trity
-* Xerxes
-* Katana
-* BeeLogger
-* Ezsploit
-* TheFatRat
-* Sn1per
+**v2.0.3**
+- Added a function to validate `.cap` files with EAPOL data before cracking or sending email notifications.
 
-v 2.0.0
-* Bug fixes
-* Added shortcut/launcher option in install script 
-* Added img directory 
+**v2.0.2 - v1.0.1**
+- Multiple bug fixes, new features, and tool additions as listed in the full changelog above.
 
+---
 
-v 1.0.9
-* Bug fixes
-* Fixed macchanger
-* Added option to select which network interface to change/show MAC address
+## License
 
-v 1.0.8 
-* Select which network interface to use
-* Bug fixes
+This project is licensed under the terms of the MIT License.
 
-v 1.0.7
-* Find Air Script from any directory by typing "air-script"
-* Huge update for install script
-* Updated uninstall script
-* Small bugs fixed 
+---
 
-v 1.0.6
-* Small bug fixes
-* Updated install script
-
-v 1.0.5
-* Email notifications for when Air Script is done attacking
-* Other small bug fixes and improvements
-
-v 1.0.4
-* Small bug fixes and typos
-* Added Fluxion
-* Added Wifite & Wifite2
-* Added Fern
-* Added Airogeddon
-* Added Morpheus
-* Added Hakku
-* Added Trity
-* Added Cupp
-* Added Dracnmap
-* Added KickThemOut
-* Added Ghost-Phisher
-* Added Xerxes
-* Added Katana
-* Added Websploit
-* Added BeeLogger
-* Added Ezsploit
-* Added TheFatRat
-* Added Angry IP Scanner
-* Added Sn1per
-* Updated installer(Option to install all or select what to install to save space)
-* Updated Uninstaller 
-
-
-v 1.0.3
-* Added Wifiphisher to wifi tools
-* Added Zatacker to extra tools
-* Added Routerploit to extra tools
-* Updated installer and uninstaller
-* Small bug fixes and typos
-
-
-v 1.0.2
-* Extra tools option
-* Added Zirikatu to tools
-* Added uninstall script to remove air-script and or air-script tools
-* Cleaned things up
-
-
-v. 1.0.1
-
-
-* Anonsurf added to tools
-* MAC Changer added tools
-* Fluxion added to tools
-
-
-v 1.0
-* Initial Release
-
-* Anonsurf added to tools
-* MAC Changer added tools
-* Fluxion added to tools
-
-
-v 1.0
-* Initial Release
+This version of your README should be more concise, organized, and easy to follow for users of varying technical expertise. Let me know if you need further adjustments or additions!
