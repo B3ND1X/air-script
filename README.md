@@ -18,14 +18,6 @@ Additional Tools: Air Script includes a variety of supplementary tools to enhanc
 
 Compatibility: The tool is compatible with devices like Raspberry Pi, enabling discreet operations. Users can SSH into the Pi from mobile devices without requiring jailbreak or root access.
 
-Ethical Use: Always ensure you have authorization to test the networks you are targeting.
-
-Disclaimer: Air Script is intended for educational purposes and authorized penetration testing only. Unauthorized use against networks without explicit permission is illegal and unethical.
-
-Data Sharing: By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
-
-This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
-
 ## Email Notifications
 
 Don’t want to monitor the process continuously? Air Script can send you an email notification once it’s done "pwning" networks. No setup required—just enter a valid email address, and Air Script will handle the rest!
@@ -168,5 +160,10 @@ For support or assistance, you can:
 This project is licensed under the terms of the MIT License.
 
 ---
+Ethical Use: Always ensure you have authorization to test the networks you are targeting.
 
-This version of your README should be more concise, organized, and easy to follow for users of varying technical expertise. Let me know if you need further adjustments or additions!
+Disclaimer: Air Script is intended for educational purposes and authorized penetration testing only. Unauthorized use against networks without explicit permission is illegal and unethical.
+
+Data Sharing: By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
+
+This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
