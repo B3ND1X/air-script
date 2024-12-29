@@ -1,7 +1,7 @@
 # Air Script
-
+<p align="center">
 ![Air Script Logo](https://user-images.githubusercontent.com/48177481/178115591-d92f47f8-bbf7-4a06-8106-500d61b3fcd2.jpeg)
-
+</p>
 ## What is Air Script?
 [*Air Script is Wi-Fi pwning Swiss Army knife that also has optional email notifications for when handshakes have been captured.*]
 
@@ -127,10 +127,10 @@ For support or assistance, you can:
 </div>
 
 
-
+<p align="center">
 ![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
 ![Email Notification](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
-
+</p>
 ---
 
 ## Requirements
