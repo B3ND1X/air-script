@@ -119,14 +119,10 @@ For support or assistance, you can:
 
 ## Screenshots
 
-### View of the application
+| ![img1](assets/img1.png) | ![img2](assets/img2.png) | ![img3](assets/img3.png) |
+|--------------------------|--------------------------|--------------------------|
+| ![img4](assets/img4.png) | ![img5](assets/img5.png) | ![img6](assets/img6.png) |
 
-| ![Screenshot 1](assets/img1.png) | ![Screenshot 2](assets/img2.png) | ![Screenshot 3](assets/img3.png) |
-|----------------------------------|----------------------------------|----------------------------------|
-|                                  |                                  |                                  | 
-| ![Screenshot 4](assets/img4.png) | ![Screenshot 5](assets/img5.png) | ![Screenshot 6](images/img6.png) |
-|                                  |                                  |                                  |
-|                                  |                                  |                                  |
 ![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
 ![Email Notification](https://user-images.githubusercontent.com/48177481/178115007-07096162-6b75-4e41-b713-af08b56e0c28.gif)
 
