@@ -9,7 +9,7 @@
 Air Script is an automated tool designed to facilitate Wi-Fi network penetration testing. It streamlines the process of identifying and exploiting Wi-Fi networks by automating tasks such as network scanning, handshake capture, and brute-force password cracking. Key features include:
 
 
-**Automated Attacks:** Air Script can automatically target all Wi-Fi networks within range, capturing handshakes without user intervention. Upon completion, it deactivates monitor mode and can send optional email notifications to inform the user. Air Script also automates Wi-Fi penetration testing by simplifying tasks like network scanning, handshake capture, and password cracking on selected networks.
+**Automated Attacks:** Air Script can automatically target all Wi-Fi networks within range, capturing handshakes without user intervention. Upon completion, it deactivates monitor mode and can send optional email notifications to inform the user. Air Script also automates Wi-Fi penetration testing by simplifying tasks like network scanning, handshake capture, and password cracking on selected networks for a targeted deauthentication.
 
 **Brute-Force Capabilities:** After capturing handshakes, the tool prompts the user to either provide a wordlist for attempting to crack the Wi-Fi passwords, or it uploads captured Wi-Fi handshakes to the WPA-sec project. This website is a public repository where users can contribute and analyze Wi-Fi handshakes to identify vulnerabilities. The service attempts to crack the handshake using its extensive database of known passwords and wordlists.
 
