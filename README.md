@@ -117,8 +117,15 @@ For support or assistance, you can:
 
 ## Images
 
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img1.PNG" alt="img1" width="500" />
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img2.PNG" alt="img2" width="300" />
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img3.PNG" alt="img3" width="300" />
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img4.PNG" alt="img4" width="500" />
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img5.JPG" alt="img5" width="300" />
+    <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/img6.jpeg" alt="img6" width="300" />
+</div>
 
-[View the Gallery](https://b3nd1x.github.io/debpkgs/)
 
 
 ![Air Script in Action](https://user-images.githubusercontent.com/48177481/178115004-2ae3f097-c0d4-4f85-acf4-1cd135533416.gif)
