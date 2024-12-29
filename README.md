@@ -142,6 +142,9 @@ For support or assistance, you can:
 
 ## Changelog
 
+**v2.0.7**
+Added PMKID attack method
+
 **v2.0.6**
 - Cracking logic updated: Users can choose to crack handshakes locally or upload capture files for online cracking.
 - Capture files sent to [WPA-sec](https://wpa-sec.stanev.org) for password cracking with email notifications.
