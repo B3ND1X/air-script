@@ -97,6 +97,9 @@ installAll() {
     TOOLS_DIR="/home/$(whoami)/air-script/tools"
     mkdir -p "$TOOLS_DIR"  # Create the tools directory if it doesn't exist
 
+    # Create a symbolic link for airscript to open pwn.sh from anywhere
+    ln -sf $(pwd)/pwn.sh /usr/local/bin/airscript
+
     # Install required system dependencies
     tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
 
