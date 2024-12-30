@@ -142,6 +142,9 @@ For support or assistance, you can:
 
 ## Changelog
 
+**v2.0.8**
+- Multiple bug fixes
+
 **v2.0.7**
 - Added PMKID attack method
 
