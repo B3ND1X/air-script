@@ -5,7 +5,8 @@ if [ $(id -u) -ne 0 ]; then
     echo "This script must be run as root"
     exit 1
 fi
-
+echo "Please eneter your username (eg: Pi) " username
+read username
 # Color Definitions
 Red="\e[1;91m"
 Green="\e[0;92m"
@@ -93,26 +94,19 @@ installAll() {
     echo "$(tput setaf 2)Installing postfix..."
     apt-get install -y postfix
 
-    # Ensure the tools directory exists
-    TOOLS_DIR="/home/$(whoami)/air-script/tools"
-    mkdir -p "$TOOLS_DIR"  # Create the tools directory if it doesn't exist
-
-    # Create a symbolic link for airscript to open pwn.sh from anywhere
+ # Create a symbolic link for airscript to open pwn.sh from anywhere
     ln -sf $(pwd)/pwn.sh /usr/local/bin/airscript
 
-    # Install required system dependencies
-    tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
+    # Ensure the tools directory exists
+  
+  
 
-    for tool in "${tools[@]}"; do
-        echo "Installing $tool..."
-        apt-get install -y $tool
-    done
 
     # Change to the tools directory
-    cd "$TOOLS_DIR"
+    cd tools
 
     # Clone additional tools into the tools directory
-    echo "Cloning additional tools into $TOOLS_DIR..."
+    echo "Cloning additional tools into 
 
     git clone https://github.com/Und3rf10w/kali-anonsurf
     git clone https://github.com/derv82/wifite2.git
@@ -127,45 +121,24 @@ installAll() {
     git clone https://github.com/angryip/ipscan.git
 
     # Set the proper permissions for the tools
-    chmod -R 755 "$TOOLS_DIR"
+    chmod -R 755 *
 
-    echo "All tools have been cloned into $TOOLS_DIR and have been set with the correct permissions."
+    echo "All tools have been cloned into tools directory
+    echo "Please go to tools directory and set up tools."
+    sleep 5
 
-    # Set permissions for all cloned tools
-    sudo chmod -R 755 "$TOOLS_DIR" && cd /bin/air-script && sudo chmod -R 755 *
-    sudo chmod +x /air-script/*.sh
 
     clear
     permissions  # Ensure the 'permissions' function exists
-    echo "$(tput setaf 2)All tools installed successfully!"
-    shortcut  # Ensure the 'shortcut' function exists
+    
+    echo "$(tput setaf 2)Installed successfully!"
+    sleep 3
 }
 
-# Shortcut creation function
-shortcut() {
-    while true; do
-        read -p "Do you want to add a desktop shortcut for easy access? (y/n): " yn
-        case $yn in
-            [Yy]*) addShortcut; break ;;
-            [Nn]*) echo "$(tput setaf 2)Install script done... Hack the world!"; menu ;;
-            *) echo "Please answer with 'y' or 'n'." ;;
-        esac
-    done
-}
-
-# Add Desktop Shortcut
-addShortcut() {
-    clear
-    echo "Adding shortcut to desktop..."
-    cp -r /bin/air-script ~/Desktop
-    chmod -R 755 ~/Desktop/air-script
-    clear
-    echo "$(tput setaf 2)Shortcut added to Desktop."
-    menu  # Return to the menu after adding the shortcut
-}
 
 # Tool selection for individual installation
 selectTools() {
+    cd /home/$username/air-script/tools
     echo -e "\n${Yellow}         Select the tools you want to install:\n"
     tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "fluxion" "wifite2" "anonsurf" "dracnmap" "morpheus" "kickthemout" "routersploit" "ghost-phisher" "zattacker" "airgeddon" "angryip")
     for i in "${!tools[@]}"; do
@@ -198,6 +171,7 @@ selectTools() {
 
 # Function to install a specific tool
 installTool() {
+    cd /home/$username/air-script/tools
     tool=$1
     echo "Installing $tool..."
     case $tool in
@@ -218,17 +192,20 @@ installTool() {
         "angryip") git clone https://github.com/angryip/ipscan.git ;;
         *) echo -e "${Red}Invalid tool specified."; return ;;
     esac
-    echo "$tool installed successfully!"
-    shortcut
+    echo "$tool Download successfully!"
+      echo  "Please go to tools directory and set up tools."
+    sleep 5
 }
 
 # Permissions function
-permissions (){
+permissions () {
     clear
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
-    sudo chmod -R 755 * && cd /bin/air-script && sudo chmod -R 755 *
-    sudo chmod -R 775 /home/*/air-script
+    cd /home/$username/air-script
+    sudo chmod -R 755 
+    sudo chmod -R 775 /home/$username/air-script
+    sudo chmod -R 775 /home/$username/air-script/tools
 }
 
 # Run the banner and main menu
