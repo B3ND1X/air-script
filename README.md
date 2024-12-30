@@ -185,6 +185,6 @@ This software is a powerful tool for security researchers, but unauthorized use 
 
 If you like what I'm doing, feel free to support me with a small donation! 
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](crypto:3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
 
 
