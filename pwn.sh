@@ -324,37 +324,15 @@ attackAllNo () {
 }
 
 
-
-
-
-
-
-
-FluxionMenu() {
-cd /tools
-cd fluxion
-sudo ./fluxion.sh
-}
-
-Wifite () {
-sudo wifite
-}
-
-Wifite2 () {
-wifite
-cd /tools
-cd wifite2
-sudo ./Wifite.py
-}
-
-
 crack () {
-echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
-crack_hashes
+    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
+    # Check if there are any .cap files in the current directory
+    if ! ls *.cap &>/dev/null; then
+        # If no .cap files found, change to /handshakes directory without output
+        cd handshakes &>/dev/null
+    fi
+    crack_hashes
 }
-
-
-
 
 crack_hashes() {
     echo "Do you want to crack hashes from your device or from the web?"
@@ -365,9 +343,8 @@ crack_hashes() {
                 echo "You have selected local cracking."
                 echo "Your current directory:"
                 pwd
-                ls *.txt
+                ls *.txt &>/dev/null
                 read -p "Enter path to wordlist : " wordlist
-                $wordlist
                 sudo aircrack-ng -w "$wordlist" *.cap
                 cleanup_handshakes
                 cleanup
@@ -450,52 +427,62 @@ crack_hashes() {
 }
 
 cleanup () {
-#$sudo airmon-ng stop $foo
-#checkDependencies
-#checkWiFiStatus
-#checkServices
-sudo rm -f *.csv > /dev/null 2>&1
-sudo rm -f *.netxml > /dev/null 2>&1
-sudo rm -f airodump_output.log > /dev/null 2>&1
-sudo rm -f *.ivs > /dev/null 2>&1
-sudo rm -f *.hc22000 > /dev/null 2>&1
-sudo rm -f essidlist > /dev/null 2>&1
-cleanup_handshakes
-sudo mv *pcapng /handshakes > /dev/null 2>&1
-#exit
-
+    sudo rm -f *.csv > /dev/null 2>&1
+    sudo rm -f *.netxml > /dev/null 2>&1
+    sudo rm -f airodump_output.log > /dev/null 2>&1
+    sudo rm -f *.ivs > /dev/null 2>&1
+    sudo rm -f *.hc22000 > /dev/null 2>&1
+    sudo rm -f essidlist > /dev/null 2>&1
+    cleanup_handshakes
+    sudo mv *pcapng /handshakes > /dev/null 2>&1
 }
 
 
 cleanup_handshakes() {
-    cd /home/*/air-script/
-  # Check if the handshakes folder exists, if not create it
-  if [ ! -d "handshakes" ]; then
-    echo "Creating handshakes directory..."
-    cd /home/*/air-script
-    mkdir handshakes
-  fi
+    # Define the directory path explicitly
+    local script_dir="/home/superuser/air-script"  # Adjust the path to your actual script location
 
-  # Find and move all .cap files to the handshakes directory
-  echo "Renaming and moving .cap files to handshakes folder..."
-
-  # Iterate over all .cap files and move them to the handshakes folder with a timestamp
-  for cap_file in *.cap; do
-    if [ -f "$cap_file" ]; then  # Ensure it's a valid file
-      # Generate a timestamp in the format YYYY-MM-DD_HH-MM-SS
-      timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-      
-      # Create a new filename with the timestamp
-      new_file="handshakes/${timestamp}_$(basename "$cap_file")"
-      
-      # Rename and move the file
-      echo "Renaming $cap_file to $new_file"
-      mv "$cap_file" "$new_file"
+    # Ensure you're in the correct directory
+    if [ ! -d "$script_dir/handshakes" ]; then
+        echo "Creating handshakes directory..."
+        mkdir -p "$script_dir/handshakes"
     fi
-  done
 
-  # Confirm the cleanup is done
-  echo "Cleanup complete. All .cap files renamed and moved to handshakes."
+    echo "Renaming and moving .cap files to handshakes folder..."
+    # Change to the script directory
+    cd "$script_dir" || { echo "Failed to change directory to $script_dir"; exit 1; }
+
+    for cap_file in *.cap; do
+        if [ -f "$cap_file" ]; then
+            timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+            new_file="handshakes/${timestamp}_$(basename "$cap_file")"
+            mv "$cap_file" "$new_file"
+        fi
+    done
+
+    echo "Cleanup complete. All .cap files renamed and moved to handshakes."
+}
+
+
+
+
+
+
+FluxionMenu() {
+cd /tools
+cd fluxion
+sudo ./fluxion.sh
+}
+
+Wifite () {
+sudo wifite
+}
+
+Wifite2 () {
+wifite
+cd /tools
+cd wifite2
+sudo ./Wifite.py
 }
 
 
