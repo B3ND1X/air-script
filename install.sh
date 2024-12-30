@@ -78,59 +78,59 @@ installMin() {
 }
 
 # Install All Dependencies
-installAll() {
-    clear
-    echo "$(tput setaf 2)Installing all selected dependencies, please wait..."
-    apt-get update
-    apt-get install -y aircrack-ng macchanger
 
-    # Check if sendemail is installed, and remove it if found
-    if dpkg -l | grep -q sendemail; then
-        echo "$(tput setaf 2)Removing sendemail as it's incompatible with postfix..."
-        apt-get remove --purge -y sendemail
-    fi
+InstallAll() {
+   InstallMin
 
-    # Install postfix
-    echo "$(tput setaf 2)Installing postfix..."
-    apt-get install -y postfix
-
- # Create a symbolic link for airscript to open pwn.sh from anywhere
-    ln -sf $(pwd)/pwn.sh /usr/local/bin/airscript
+    # Define the tools directory
+    tools_dir="/home/$username/air-script/tools"
 
     # Ensure the tools directory exists
-  
-  
-
+    mkdir -p "$tools_dir"
 
     # Change to the tools directory
-    cd /home/$username/air-script/tools
+    if ! cd "$tools_dir"; then
+        echo "Failed to change directory to $tools_dir"
+        return 1
+    fi
 
     # Clone additional tools into the tools directory
-    echo "Cloning additional tools into 
+    echo "Cloning additional tools into $tools_dir"
+    repositories=(
+        "https://github.com/Und3rf10w/kali-anonsurf"
+        "https://github.com/derv82/wifite2.git"
+        "https://github.com/FluxionNetwork/fluxion.git"
+        "https://github.com/threat9/routersploit.git"
+        "https://github.com/Sleek1598/Zatacker.git"
+        "https://github.com/r00t-3xp10it/morpheus.git"
+        "https://github.com/v1s1t0r1sh3r3/airgeddon.git"
+        "https://github.com/Mebus/cupp"
+        "https://github.com/k4m4/kickthemout.git"
+        "https://github.com/savio-code/ghost-phisher.git"
+        "https://github.com/angryip/ipscan.git"
+    )
 
-    git clone https://github.com/Und3rf10w/kali-anonsurf
-    git clone https://github.com/derv82/wifite2.git
-    git clone https://github.com/FluxionNetwork/fluxion.git
-    git clone https://github.com/threat9/routersploit.git
-    git clone https://github.com/Sleek1598/Zatacker.git
-    git clone https://github.com/r00t-3xp10it/morpheus.git
-    git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-    git clone https://github.com/Mebus/cupp
-    git clone https://github.com/k4m4/kickthemout.git
-    git clone https://github.com/savio-code/ghost-phisher.git
-    git clone https://github.com/angryip/ipscan.git
+    for repo in "${repositories[@]}"; do
+        git clone "$repo" || echo "Failed to clone $repo"
+    done
 
-    # Set the proper permissions for the tools
-    chmod -R 755 *
+    # Set proper permissions for the tools
+    echo "Setting permissions for all tools..."
+    chmod -R 755 "$tools_dir"
 
-    echo "All tools have been cloned into tools directory
-    echo "Please go to tools directory and set up tools."
+    echo "All tools have been cloned into the tools directory."
+    echo "Please go to the tools directory and set up tools if necessary."
     sleep 5
 
-
     clear
-    permissions  # Ensure the 'permissions' function exists
-    
+
+    # Ensure the 'permissions' function exists and call it
+    if type permissions &>/dev/null; then
+        permissions
+    else
+        echo "Warning: 'permissions' function not found."
+    fi
+
     echo "$(tput setaf 2)Installed successfully!"
     sleep 3
 }
