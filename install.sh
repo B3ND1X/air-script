@@ -79,7 +79,8 @@ installMin() {
 
 # Install All Dependencies
 
-InstallAll() {
+installAll () {
+    
    InstallMin
 
     # Define the tools directory
