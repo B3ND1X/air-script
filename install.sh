@@ -14,15 +14,13 @@ Blue="\e[1;94m"
 White="\e[0;97m"
 
 # Banner function for introduction
-banner () {        ##### Banner #####
+banner () {
     echo -e "${Red}                    __   __   __   __     __  ___    "
     echo -e "${Red}             /\  | |__) /__\` /  \` |__) | |__)  |     "
     echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
-
     echo -e "${Yellow} \n            Install Tool"
     echo -e "${Green}\n           WELCOME! HACK THE WORLD! HAPPY CRACKING!"
 }
-
 
 # Main menu for selecting options
 menu() {
@@ -83,51 +81,61 @@ installAll() {
     clear
     echo "$(tput setaf 2)Installing all selected dependencies, please wait..."
     apt-get update
+    apt-get install -y aircrack-ng macchanger
 
-    # Install common tools
-# Ensure the tools directory exists
-TOOLS_DIR="$HOME/air-script/tools"
-mkdir -p $TOOLS_DIR  # Create the tools directory if it doesn't exist
+    # Check if sendemail is installed, and remove it if found
+    if dpkg -l | grep -q sendemail; then
+        echo "$(tput setaf 2)Removing sendemail as it's incompatible with postfix..."
+        apt-get remove --purge -y sendemail
+    fi
 
-# Install required system dependencies
-tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
+    # Install postfix
+    echo "$(tput setaf 2)Installing postfix..."
+    apt-get install -y postfix
 
-for tool in "${tools[@]}"; do
-    echo "Installing $tool..."
-    apt-get install -y $tool
-done
+    # Ensure the tools directory exists
+    TOOLS_DIR="/home/$(whoami)/air-script/tools"
+    mkdir -p "$TOOLS_DIR"  # Create the tools directory if it doesn't exist
 
-# Change to the tools directory
-cd $TOOLS_DIR
+    # Install required system dependencies
+    tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "python3-pyqt4" "libqt4-dev" "python-qt4" "sip")
 
-# Clone additional tools into the tools directory
-echo "Cloning additional tools into $TOOLS_DIR..."
+    for tool in "${tools[@]}"; do
+        echo "Installing $tool..."
+        apt-get install -y $tool
+    done
 
-git clone https://github.com/Und3rf10w/kali-anonsurf
-git clone https://github.com/derv82/wifite2.git
-git clone https://github.com/FluxionNetwork/fluxion.git
-git clone https://github.com/threat9/routersploit.git
-git clone https://github.com/Sleek1598/Zatacker.git
-git clone https://github.com/r00t-3xp10it/morpheus.git
-git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
-git clone https://github.com/Mebus/cupp
-git clone https://github.com/k4m4/kickthemout.git
-git clone https://github.com/savio-code/ghost-phisher.git
-git clone https://github.com/angryip/ipscan.git
+    # Change to the tools directory
+    cd "$TOOLS_DIR"
 
-# Set the proper permissions for the tools
-chmod -R 755 $TOOLS_DIR
+    # Clone additional tools into the tools directory
+    echo "Cloning additional tools into $TOOLS_DIR..."
 
-echo "All tools have been cloned into $TOOLS_DIR and have been set with the correct permissions."
+    git clone https://github.com/Und3rf10w/kali-anonsurf
+    git clone https://github.com/derv82/wifite2.git
+    git clone https://github.com/FluxionNetwork/fluxion.git
+    git clone https://github.com/threat9/routersploit.git
+    git clone https://github.com/Sleek1598/Zatacker.git
+    git clone https://github.com/r00t-3xp10it/morpheus.git
+    git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+    git clone https://github.com/Mebus/cupp
+    git clone https://github.com/k4m4/kickthemout.git
+    git clone https://github.com/savio-code/ghost-phisher.git
+    git clone https://github.com/angryip/ipscan.git
 
+    # Set the proper permissions for the tools
+    chmod -R 755 "$TOOLS_DIR"
+
+    echo "All tools have been cloned into $TOOLS_DIR and have been set with the correct permissions."
 
     # Set permissions for all cloned tools
-    sudo chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
+    sudo chmod -R 755 "$TOOLS_DIR" && cd /bin/air-script && sudo chmod -R 755 *
     sudo chmod +x /air-script/*.sh
+
     clear
-    permissions
+    permissions  # Ensure the 'permissions' function exists
     echo "$(tput setaf 2)All tools installed successfully!"
-    shortcut
+    shortcut  # Ensure the 'shortcut' function exists
 }
 
 # Shortcut creation function
@@ -136,7 +144,7 @@ shortcut() {
         read -p "Do you want to add a desktop shortcut for easy access? (y/n): " yn
         case $yn in
             [Yy]*) addShortcut; break ;;
-            [Nn]*) echo "$(tput setaf 2)Install script done... Hack the world!"; exit 0 ;;
+            [Nn]*) echo "$(tput setaf 2)Install script done... Hack the world!"; menu ;;
             *) echo "Please answer with 'y' or 'n'." ;;
         esac
     done
@@ -150,7 +158,7 @@ addShortcut() {
     chmod -R 755 ~/Desktop/air-script
     clear
     echo "$(tput setaf 2)Shortcut added to Desktop."
-    exit 0
+    menu  # Return to the menu after adding the shortcut
 }
 
 # Tool selection for individual installation
@@ -211,16 +219,15 @@ installTool() {
     shortcut
 }
 
-
+# Permissions function
 permissions (){
     clear
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
-    sudo chmod -R 755 * && cd /bin/air-script && chmod -R 755 *
+    sudo chmod -R 755 * && cd /bin/air-script && sudo chmod -R 755 *
     sudo chmod -R 775 /home/*/air-script
-    
-    
 }
+
 # Run the banner and main menu
 banner
 menu
