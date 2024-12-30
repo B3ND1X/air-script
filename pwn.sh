@@ -306,6 +306,7 @@ attackAllYes() {
     echo -e "${Green}Handshakes capture complete. Saved in ~/handshakes/"
     stopMon 
     echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
+				crack 
 }
 
 
