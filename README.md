@@ -180,3 +180,11 @@ Air Script is intended for educational purposes and authorized penetration testi
 By uploading handshakes, you are sharing information with a public platform, which could pose ethical and privacy concerns if done without consent.
 
 This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
+
+### Buy Me a Coffee
+
+If you like what I'm doing, feel free to support me with a small donation! 
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](bitcoin:3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+
+
