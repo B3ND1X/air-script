@@ -81,7 +81,7 @@ installMin() {
 
 installAll () {
     
-   InstallMin
+   installMin
 
     # Define the tools directory
     tools_dir="/home/$username/air-script/tools"
