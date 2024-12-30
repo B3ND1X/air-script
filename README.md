@@ -181,6 +181,7 @@ By uploading handshakes, you are sharing information with a public platform, whi
 
 This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
 
+---
 ### Buy Me a Coffee ☕️
 
 If you appreciate my work, consider supporting me with a donation! 
