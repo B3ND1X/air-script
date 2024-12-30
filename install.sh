@@ -103,7 +103,7 @@ installAll() {
 
 
     # Change to the tools directory
-    cd tools
+    cd /home/$username/air-script/tools
 
     # Clone additional tools into the tools directory
     echo "Cloning additional tools into 
@@ -203,10 +203,7 @@ permissions () {
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
     cd /home/$username/air-script
-    sudo chmod -R 755 
-    sudo chmod -R 775 /home/$username/air-script
-    sudo chmod -R 775 /home/$username/air-script/tools
-}
+    }
 
 # Run the banner and main menu
 banner
