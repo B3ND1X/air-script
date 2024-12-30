@@ -186,8 +186,6 @@ This software is a powerful tool for security researchers, but unauthorized use 
 
 If you appreciate my work, consider supporting me with a donation! 
 
-[![Buy Me a Coffee]()
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg" width="100"/>
 </p>
