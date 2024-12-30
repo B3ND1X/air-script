@@ -189,10 +189,10 @@ If you appreciate my work, consider supporting me with a donation!
 [![Buy Me a Coffee]()
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg" width="300"/>
+  <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg" width="100"/>
 </p>
 
-Or send crypto directly to my wallet address: 3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x
+Or send Bitcoin directly to my wallet address: 3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x
 
 
 
