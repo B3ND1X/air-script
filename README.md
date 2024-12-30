@@ -181,10 +181,14 @@ By uploading handshakes, you are sharing information with a public platform, whi
 
 This software is a powerful tool for security researchers, but unauthorized use is both unethical and illegal.
 
-### Buy Me a Coffee
+### Buy Me a Coffee ☕️
 
-If you like what I'm doing, feel free to support me with a small donation! 
+If you appreciate my work, consider supporting me with a donation! 🙏
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](crypto:3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](https://www.paywithcrypto.com/3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+
+Or send crypto directly to my wallet address: 3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x
+
+
 
 
