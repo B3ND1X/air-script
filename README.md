@@ -183,9 +183,9 @@ This software is a powerful tool for security researchers, but unauthorized use 
 
 ### Buy Me a Coffee ☕️
 
-If you appreciate my work, consider supporting me with a donation! 🙏
+If you appreciate my work, consider supporting me with a donation! 
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge)](https://www.paywithcrypto.com/3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+[![Buy Me a Coffee](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg)](https://www.paywithcrypto.com/3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
 
 Or send crypto directly to my wallet address: 3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x
 
