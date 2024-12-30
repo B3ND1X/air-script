@@ -142,6 +142,9 @@ For support or assistance, you can:
 
 ## Changelog
 
+**v2.0.8b**
+- Fixed install script 
+
 **v2.0.8**
 - Multiple bug fixes
 
