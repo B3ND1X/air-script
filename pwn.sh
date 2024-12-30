@@ -347,7 +347,6 @@ crack_hashes() {
                 read -p "Enter path to wordlist : " wordlist
                 sudo aircrack-ng -w "$wordlist" *.cap
                 cleanup_handshakes
-                cleanup
                 exit
                 ;;
             "Upload (WPA-Sec)")
