@@ -185,7 +185,11 @@ This software is a powerful tool for security researchers, but unauthorized use 
 
 If you appreciate my work, consider supporting me with a donation! 
 
-[![Buy Me a Coffee](https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg)](https://www.paywithcrypto.com/3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x)
+[![Buy Me a Coffee]()
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/B3ND1X/air-script/refs/heads/main/assets/QR.jpeg)](https://www.paywithcrypto.com/3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x" width="300"/>
+</p>
 
 Or send crypto directly to my wallet address: 3828Gmqku4jbvdf45sKmS8P8FtDaT1tw5x
 
