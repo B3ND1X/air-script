@@ -74,7 +74,7 @@ installMin() {
     clear
     permissions
     echo "$(tput setaf 2)Installation of minimal tools complete!"
-    shortcut
+    
 }
 
 # Install All Dependencies
