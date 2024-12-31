@@ -80,7 +80,7 @@ To improve performance, particularly with wireless network interfaces, it can be
 
     force_turbo=1
 
-Disable Wi-Fi Power Saving:
+### Disable Wi-Fi Power Saving:
 
     If you are using a static IP configuration, edit the network interfaces file:
 
@@ -98,7 +98,7 @@ Add:
 
 iwconfig wlan0 power off
 
-Disable USB Suspend:
+### Disable USB Suspend:
 
     Edit the rc.local file:
 
@@ -109,7 +109,7 @@ Add the following lines before exit 0:
     echo on > /sys/bus/usb/devices/usb1/power/control
     echo on > /sys/bus/usb/devices/usb2/power/control
 
-Disable HDMI Power Saving:
+### Disable HDMI Power Saving:
 
     Edit the config file:
 
@@ -119,13 +119,13 @@ Add:
 
     hdmi_blanking=0
 
-Disable Display Power Management Signaling (DPMS):
+### Disable Display Power Management Signaling (DPMS):
 
     Run the following command to disable DPMS:
 
     xset -dpms
 
-Reboot the Raspberry Pi:
+### Reboot the Raspberry Pi:
 
 To apply all the changes, reboot your Raspberry Pi:
 
@@ -134,7 +134,7 @@ sudo reboot
     Important Notes:
     Use power-saving features sparingly: Disabling power-saving can improve performance but may increase energy consumption, so only disable these features when necessary.
 
-How to Set Up a Headless Pi with SSH
+### How to Set Up a Headless Pi with SSH
 Prerequisites:
 
     A Raspberry Pi (any model)
