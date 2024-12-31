@@ -48,7 +48,7 @@ That’s perfectly fine! Air Script comes with a variety of additional tools to 
 - **No Jailbreak** is required to SSH into your Raspberry Pi from an iOS device! Just download the "Terminus" app from the App Store.  
 - **No Root** is required to SSH into your Raspberry Pi from an Android device. Simply download a terminal app from the Google Play Store.  
 - For Raspberry Pi users, it's recommend only installing the tools you need to save space.
-- ** For Raspberry Pi, please read the [FAQ section](https://github.com/B3ND1X/air-script/blob/main/FAQ.md) 
+- ** For Raspberry Pi, please read the [FAQ section](https://github.com/B3ND1X/air-script/blob/main/FAQ.md) **
 ---
 
 ## How to Install
