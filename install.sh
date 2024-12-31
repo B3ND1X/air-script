@@ -5,8 +5,25 @@ if [ $(id -u) -ne 0 ]; then
     echo "This script must be run as root"
     exit 1
 fi
-echo "Please eneter your username (eg: Pi) " username
+    sudo chmod 755 /home/$username/air-script > /dev/null 2>&1
+    sudo chown 755 /home/$username/air-script > /dev/null 2>&1
+    sudo chmod 755 /home/$username/air-script/* > /dev/null 2>&1
+    sudo chown 755 /home/$username/air-script/* > /dev/null 2>&1
+    
+# Prompt user to enter username
+echo "Please enter your username (e.g., Pi):"
 read username
+
+# Ensure the username is not empty
+if [ -z "$username" ]; then
+  echo "Username cannot be empty!"
+  exit 1
+fi
+
+# Update pwn.sh to replace /home/*/ with /home/$username/
+sed -i "s|/home/\*/|/home/$username/|g" pwn.sh
+
+echo "pwn.sh has been updated with the username: $username"
 # Color Definitions
 Red="\e[1;91m"
 Green="\e[0;92m"
@@ -207,6 +224,10 @@ permissions () {
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
     cd /home/$username/air-script
+    sudo chmod 755 /home/$username/air-script > /dev/null 2>&1
+    sudo chown 755 /home/$username/air-script > /dev/null 2>&1
+    sudo chmod 755 /home/$username/air-script/* > /dev/null 2>&1
+    sudo chown 755 /home/$username/air-script/* > /dev/null 2>&1
     }
 
 # Run the banner and main menu
