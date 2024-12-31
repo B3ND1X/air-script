@@ -10,7 +10,7 @@
     - [Preventing airodump-ng from Killing Processes](#preventing-airodump-ng-from-killing-processes)
     - [Disabling Power Saving for Better Performance](#disabling-power-saving-for-better-performance)
     - [Reboot the Raspberry Pi](#reboot-the-raspberry-pi)
-3. [Setting Up SSH on a Headless Raspberry Pi](#setting-up-ssh-on-a-headless-raspberry-pi)
+
 
 ---
 
