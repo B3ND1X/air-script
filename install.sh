@@ -116,20 +116,85 @@ installAll () {
     fi
 
     # Clone additional tools into the tools directory
+     # Clone additional tools into the tools directory
     echo "Cloning additional tools into $tools_dir"
-    repositories=(
-        "https://github.com/Und3rf10w/kali-anonsurf"
-        "https://github.com/derv82/wifite2.git"
-        "https://github.com/FluxionNetwork/fluxion.git"
-        "https://github.com/threat9/routersploit.git"
-        "https://github.com/Sleek1598/Zatacker.git"
-        "https://github.com/r00t-3xp10it/morpheus.git"
-        "https://github.com/v1s1t0r1sh3r3/airgeddon.git"
-        "https://github.com/Mebus/cupp"
-        "https://github.com/k4m4/kickthemout.git"
-        "https://github.com/savio-code/ghost-phisher.git"
-        "https://github.com/angryip/ipscan.git"
-    )
+
+
+# 1. kali-anonsurf
+git clone https://github.com/Und3rf10w/kali-anonsurf.git
+cd kali-anonsurf
+chmod +x kali-anonsurf.sh
+cd ..
+
+# 2. wifite2
+git clone https://github.com/derv82/wifite2.git
+cd wifite2
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 3. fluxion
+git clone https://github.com/FluxionNetwork/fluxion.git
+cd fluxion
+cd ..
+
+# 4. routersploit
+git clone https://github.com/threat9/routersploit.git
+cd routersploit
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 5. Zatacker
+git clone https://github.com/Sleek1598/Zatacker.git
+cd Zatacker
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 6. morpheus
+git clone https://github.com/r00t-3xp10it/morpheus.git
+cd morpheus
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 7. airgeddon
+git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git
+cd airgeddon
+chmod +x airgeddon.sh
+cd ..
+
+# 8. cupp
+git clone https://github.com/Mebus/cupp.git
+cd cupp
+chmod +x cupp.py
+cd ..
+
+# 9. kickthemout
+git clone https://github.com/k4m4/kickthemout.git
+cd kickthemout
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 10. ghost-phisher
+git clone https://github.com/savio-code/ghost-phisher.git
+cd ghost-phisher
+sudo apt install python3-pip
+sudo pip3 install -r requirements.txt
+cd ..
+
+# 11. angryip
+git clone https://github.com/angryip/ipscan.git
+cd ipscan
+sudo apt install qt5-qmake qtbase5-dev-tools qtchooser qtbase5-dev
+qmake
+make
+cd ..
+
+    
+
 
     for repo in "${repositories[@]}"; do
         git clone "$repo" || echo "Failed to clone $repo"
@@ -140,7 +205,6 @@ installAll () {
     chmod -R 755 "$tools_dir"
 
     echo "All tools have been cloned into the tools directory."
-    echo "Please go to the tools directory and set up tools if necessary."
     sleep 5
 
     clear
