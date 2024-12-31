@@ -144,10 +144,12 @@ For more details and frequently asked questions, check out the [FAQ section](htt
 
 ---
 
-## Changelog
+## Changelog 
 
-**v2.0.8b**
-- Fixed install script 
+**v2.0.9**
+- Resolved various bugs for improved performance and reliability.
+- Enhanced the installation script for a smoother setup experience.
+- Successfully completed testing on multiple devices, ensuring stability across diverse hardware and operating systems.
 
 **v2.0.8**
 - Multiple bug fixes
