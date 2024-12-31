@@ -2,7 +2,6 @@
 
 ## Table of Contents
 1. [Setting Up and Usage of Air Script](#setting-up-and-usage-of-air-script)
-    - [Modify the pwn.sh Script](#modify-the-pwnsh-script)
     - [Modify the airmon-ng Check Kill Command](#modify-the-airmon-ng-check-kill-command)
     - [Run the Air Script](#run-the-air-script)
 2. [Wireless Adapter Interface Naming and Monitor Mode](#wireless-adapter-interface-naming-and-monitor-mode)
@@ -33,18 +32,6 @@
 ---
 
 ## Setting Up and Usage of Air Script
-
-### Modify the pwn.sh Script:
-1. Open the `pwn.sh` script and navigate to line 15.
-2. Change the line from:
-    ```bash
-    cd /home/*/air-script
-    ```
-    to:
-    ```bash
-    cd /home/YOURUSERNAME/air-script
-    ```
-    Replace `YOURUSERNAME` with the username you use to log into your Raspberry Pi.
 
 ### Modify the airmon-ng Check Kill Command:
 1. Locate the line containing `airmon-ng check kill` and either remove it or comment it out by adding a `#` at the beginning of the line.
