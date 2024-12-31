@@ -56,6 +56,9 @@ installMin() {
         echo "$(tput setaf 2)Removing sendemail as it's incompatible with postfix..."
         apt-get remove --purge -y sendemail
     fi
+        sudo apt install xterm
+        sudo apt install tshark
+        sudo apt install tmux
 
     # Install postfix
     echo "$(tput setaf 2)Installing postfix..."
