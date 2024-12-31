@@ -468,7 +468,7 @@ cleanup_handshakes() {
 
 
 FluxionMenu() {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd fluxion
 sudo ./fluxion.sh
 }
@@ -479,7 +479,7 @@ sudo wifite
 
 Wifite2 () {
 wifite
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd wifite2
 sudo ./Wifite.py
 }
@@ -496,7 +496,7 @@ sudo fern-wifi-cracker
 
 
 airogeddon () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd airgeddon
 sudo bash airgeddon.sh
 }
@@ -1240,33 +1240,33 @@ done
 
 
 zirikatu () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd zirikatu
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd routersploit
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd Zatacker
 ./ZT.sh
 }
 
 morpheus () {
-cd /home/*/toolshome/*/tools
+cd /home/*/air-script/toolshome/air-script/tools
 cd morpheus
 sudo ./morpheus.sh
 }
 
 Hakku () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd hakkuframework
 ./hakku
 
@@ -1278,13 +1278,13 @@ trity
 }
 
 Cupp () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd cupp
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd Dracnmap
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
@@ -1292,7 +1292,7 @@ sudo ./dracnmap-v2.2.sh
 }
 
 kickthemout () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd kickthemout
 sudo python3 kickthemout.py
 
@@ -1300,7 +1300,7 @@ sudo python3 kickthemout.py
 
 
 ghostPhisher () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd ghost-phisher
 cd Ghost-Phisher
 chmod +x ghost.py
@@ -1309,7 +1309,7 @@ sudo ./ghost.py
 
 
 Xerxes () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
@@ -1322,7 +1322,7 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd KatanaFramework
 sudo ./ktf.run
 sudo ./ktf.run -h
@@ -1338,14 +1338,14 @@ sudo websploit
 
 
 BeeLogger () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd BeeLogger
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd ezsploit
 sudo ./ezploit.sh
 
@@ -1363,7 +1363,7 @@ sudo sh /usr/bin/ipscan
 
 
 Sn1per () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd Sn1per
 sudo sniper
 
@@ -1371,7 +1371,7 @@ sudo sniper
 
 
 redhawk () {
-cd /home/*/tools
+cd /home/*/air-script/tools
 cd RED_HAWK
 php rhawk.php
 
