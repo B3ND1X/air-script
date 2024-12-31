@@ -117,6 +117,7 @@ For support or assistance, you can:
 ## FAQ
 
 For more details and frequently asked questions, check out the [FAQ section](https://github.com/B3ND1X/air-script/blob/main/FAQ.md) on the official GitHub repository
+
 ---
 
 ## Images
