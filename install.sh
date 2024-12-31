@@ -115,7 +115,6 @@ installAll () {
         return 1
     fi
 
-    # Clone additional tools into the tools directory
      # Clone additional tools into the tools directory
     echo "Cloning additional tools into $tools_dir"
 
@@ -194,11 +193,6 @@ make
 cd ..
 
     
-
-
-    for repo in "${repositories[@]}"; do
-        git clone "$repo" || echo "Failed to clone $repo"
-    done
 
     # Set proper permissions for the tools
     echo "Setting permissions for all tools..."
