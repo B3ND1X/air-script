@@ -51,7 +51,7 @@ Some wireless adapters may have unusual names, which can make it difficult or fr
 ```bash
 sudo ip link set YOURINTERFACE down
 sudo ip link set YOURINTERFACE name wlan1
-sudo ip link set wlan1 up
+sudo ip link set wlan1 up ```
 
 
 You can replace `wlan1` with any name you prefer. This is just an example.
