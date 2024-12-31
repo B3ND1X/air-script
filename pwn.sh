@@ -334,6 +334,7 @@ crack () {
     crack_hashes
 }
 
+
 crack_hashes() {
     echo "Do you want to crack hashes from your device or from the web?"
     select method in "Local (Device)" "Upload (WPA-Sec)"; do
@@ -381,14 +382,15 @@ crack_hashes() {
                     exit 1
                 fi
 
-                # Read the key from key.txt
-                if [[ ! -f "key.txt" ]]; then
+                    key_file="/home/*/air-script/key.txt"
+
+                if [[ ! -f "$key_file" ]]; then
                     echo "key.txt file not found. Exiting."
                     exit 1
                 fi
 
-                # Get the key from key.txt
-                key=$(cat key.txt)
+                # Get the key from key.txt using the correct path
+                key=$(cat "$key_file")
 
                 # Check if the key is empty
                 if [[ -z "$key" ]]; then
@@ -398,12 +400,11 @@ crack_hashes() {
 
                 # Upload to WPA-Sec
                 echo "Uploading $cap_file to WPA-Sec..."
-                response=$(curl -s -w "%{http_code}" -X POST "https://wpa-sec.stanev.org/?submit" \
-                    -F "email=$user_email" \
-                    -F "file=@$cap_file" \
-                    -F "key=$key" \
-                    -F "submit=Submit")
-
+                response=$(curl --progress-bar -X POST "https://wpa-sec.stanev.org/?submit" \
+                -F "email=$user_email" \
+                -F "file=@$cap_file" \
+                -F "key=$key" \
+                -F "submit=Submit")
                 # Output the response status code and body for debugging
                 echo "Response: $response" 
                 echo "This capture is legacy but will still work..."
