@@ -1240,21 +1240,21 @@ done
 
 
 zirikatu () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd zirikatu
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd routersploit
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd Zatacker
 ./ZT.sh
 }
@@ -1266,7 +1266,7 @@ sudo ./morpheus.sh
 }
 
 Hakku () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd hakkuframework
 ./hakku
 
@@ -1278,13 +1278,13 @@ trity
 }
 
 Cupp () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd cupp
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd Dracnmap
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
@@ -1292,7 +1292,7 @@ sudo ./dracnmap-v2.2.sh
 }
 
 kickthemout () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd kickthemout
 sudo python3 kickthemout.py
 
@@ -1300,7 +1300,7 @@ sudo python3 kickthemout.py
 
 
 ghostPhisher () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd ghost-phisher
 cd Ghost-Phisher
 chmod +x ghost.py
@@ -1309,7 +1309,7 @@ sudo ./ghost.py
 
 
 Xerxes () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
@@ -1322,7 +1322,7 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd KatanaFramework
 sudo ./ktf.run
 sudo ./ktf.run -h
@@ -1338,14 +1338,14 @@ sudo websploit
 
 
 BeeLogger () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd BeeLogger
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd ezsploit
 sudo ./ezploit.sh
 
@@ -1363,7 +1363,7 @@ sudo sh /usr/bin/ipscan
 
 
 Sn1per () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd Sn1per
 sudo sniper
 
@@ -1371,7 +1371,7 @@ sudo sniper
 
 
 redhawk () {
-cd /home/*/toolstools
+cd /home/*/tools
 cd RED_HAWK
 php rhawk.php
 
