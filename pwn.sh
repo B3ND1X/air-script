@@ -468,7 +468,7 @@ cleanup_handshakes() {
 
 
 FluxionMenu() {
-cd /tools
+cd /home/*/tools
 cd fluxion
 sudo ./fluxion.sh
 }
@@ -479,7 +479,7 @@ sudo wifite
 
 Wifite2 () {
 wifite
-cd /tools
+cd /home/*/tools
 cd wifite2
 sudo ./Wifite.py
 }
@@ -496,7 +496,7 @@ sudo fern-wifi-cracker
 
 
 airogeddon () {
-cd /tools
+cd /home/*/tools
 cd airgeddon
 sudo bash airgeddon.sh
 }
@@ -1240,33 +1240,33 @@ done
 
 
 zirikatu () {
-cd /tools
+cd /home/*/toolstools
 cd zirikatu
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd /tools
+cd /home/*/toolstools
 cd routersploit
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd /tools
+cd /home/*/toolstools
 cd Zatacker
 ./ZT.sh
 }
 
 morpheus () {
-cd /tools
+cd /home/*/toolshome/*/tools
 cd morpheus
 sudo ./morpheus.sh
 }
 
 Hakku () {
-cd /tools
+cd /home/*/toolstools
 cd hakkuframework
 ./hakku
 
@@ -1278,13 +1278,13 @@ trity
 }
 
 Cupp () {
-cd /tools
+cd /home/*/toolstools
 cd cupp
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd /tools
+cd /home/*/toolstools
 cd Dracnmap
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
@@ -1292,7 +1292,7 @@ sudo ./dracnmap-v2.2.sh
 }
 
 kickthemout () {
-cd /tools
+cd /home/*/toolstools
 cd kickthemout
 sudo python3 kickthemout.py
 
@@ -1300,7 +1300,7 @@ sudo python3 kickthemout.py
 
 
 ghostPhisher () {
-cd /tools
+cd /home/*/toolstools
 cd ghost-phisher
 cd Ghost-Phisher
 chmod +x ghost.py
@@ -1309,7 +1309,7 @@ sudo ./ghost.py
 
 
 Xerxes () {
-cd /tools
+cd /home/*/toolstools
 cd XERXES
 echo "Xerxes DoS Attack"
 sleep 3
@@ -1322,7 +1322,7 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd /tools
+cd /home/*/toolstools
 cd KatanaFramework
 sudo ./ktf.run
 sudo ./ktf.run -h
@@ -1338,14 +1338,14 @@ sudo websploit
 
 
 BeeLogger () {
-cd /tools
+cd /home/*/toolstools
 cd BeeLogger
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd /tools
+cd /home/*/toolstools
 cd ezsploit
 sudo ./ezploit.sh
 
@@ -1363,7 +1363,7 @@ sudo sh /usr/bin/ipscan
 
 
 Sn1per () {
-cd /tools
+cd /home/*/toolstools
 cd Sn1per
 sudo sniper
 
@@ -1371,7 +1371,7 @@ sudo sniper
 
 
 redhawk () {
-cd /tools
+cd /home/*/toolstools
 cd RED_HAWK
 php rhawk.php
 
