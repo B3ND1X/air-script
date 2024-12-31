@@ -114,6 +114,9 @@ For support or assistance, you can:
 1. Select `Help` (Option 8).
 2. Email me at [liam@liambendix.com](mailto:liam@liambendix.com).
 
+## FAQ
+
+For more details and frequently asked questions, check out the [FAQ section](https://github.com/B3ND1X/air-script/blob/main/FAQ.md) on the official GitHub repository
 ---
 
 ## Images
