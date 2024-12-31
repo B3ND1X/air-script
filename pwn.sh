@@ -63,7 +63,7 @@ banner () {        ##### Banner #####
     echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
 
     #echo -e "${Yellow} \n                     Hack the world!!!     "
-    echo -e "${Green}\n   [Version: 2.0.8 Stable] Developed by: Liam Bendix"
+    echo -e "${Green}\n   [Version: 2.0.9 Stable] Developed by: Liam Bendix"
   
 }
 menu () {        ##### Display available options in two columns #####
