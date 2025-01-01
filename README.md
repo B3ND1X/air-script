@@ -44,7 +44,7 @@ That’s perfectly fine! Air Script comes with a variety of additional tools to 
 
 ## Mobile & Raspberry Pi
 
-** IF USING HEADLESS PI OR DEVICE WITH NO DISPLAY **
+**IF USING HEADLESS PI OR DEVICE WITH NO DISPLAY**
 
 ```bash
 sudo xvfb-run ./pwn.sh 
