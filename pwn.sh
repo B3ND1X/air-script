@@ -325,12 +325,19 @@ attackAllNo () {
 
 
 crack () {
+	sudo airmon-ng stop $foo > /dev/null 2>&1
+sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
+sudo systemctl start NetworkManager > /dev/null 2>&1
+systemctl start wpa_supplicant  > /dev/null 2>&
+sleep 2
     echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
     # Check if there are any .cap files in the current directory
     if ! ls *.cap &>/dev/null; then
         # If no .cap files found, change to /handshakes directory without output
         cd handshakes &>/dev/null
     fi
+				
     crack_hashes
 }
 
