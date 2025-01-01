@@ -325,6 +325,7 @@ attackAllNo () {
 
 
 crack () {
+checkServices
 	sudo airmon-ng stop $foo > /dev/null 2>&1
 sudo airmon-ng stop wlan0mon > /dev/null 2>&1
 sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
