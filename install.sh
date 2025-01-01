@@ -24,6 +24,66 @@ fi
 sed -i "s|/home/\*/|/home/$username/|g" pwn.sh
 
 echo "pwn.sh has been updated with the username: $username"
+
+# Check if the device is a Raspberry Pi
+if grep -q "Raspberry Pi" /proc/cpuinfo; then
+  echo "Raspberry Pi detected. Installing Raspberry Pi specific packages..."
+
+  # Install necessary packages for Raspberry Pi (e.g., X11, if needed for running xterm or GUI-based apps)
+  sudo apt update
+  sudo apt install -y x11-xserver-utils xterm
+  sudo apt install -y xvfb
+# Variables
+INTERFACE="YOURINTERFACE"  # Replace with your actual interface name
+NEW_NAME="wlan1"
+SCRIPT="./pwn.sh"          # Path to the pwn.sh script
+
+# Ensure the INTERFACE variable is not empty
+if [[ -z "$INTERFACE" ]]; then
+  echo "Error: INTERFACE is not set. Please set it before running the script."
+  exit 1
+fi
+
+# Set the interface
+sudo ip link set "$INTERFACE" down
+sudo ip link set "$INTERFACE" name "$NEW_NAME"
+sudo ip link set "$NEW_NAME" up
+if [[ $? -ne 0 ]]; then
+  echo "Error: Failed to rename the interface. Check the interface name or permissions."
+  exit 1
+fi
+
+# Remove lines containing 'airmon-ng check kill' from pwn.sh
+if [[ -f "$SCRIPT" ]]; then
+  sed -i '/airmon-ng check kill/d' "$SCRIPT"
+  echo "Lines containing 'airmon-ng check kill' have been removed from $SCRIPT."
+else
+  echo "Error: $SCRIPT not found. Please ensure the file exists."
+  exit 1
+fi
+
+# Remove setuid permission from xterm
+sudo chmod u-s /usr/bin/xterm
+if [[ $? -ne 0 ]]; then
+  echo "Error: Failed to remove setuid permission from /usr/bin/xterm."
+  exit 1
+fi
+
+# Run the pwn.sh script using xvfb-run
+if [[ -f "$SCRIPT" ]]; then
+  sudo xvfb-run "$SCRIPT"
+else
+  echo "Error: $SCRIPT not found. Please ensure the file exists."
+  exit 1
+fi
+
+menu
+
+  # Additional Raspberry Pi-specific steps can be added here if necessary
+else
+  echo "Non-Raspberry Pi system detected. Skipping Raspberry Pi-specific installations."
+fi
+
 # Color Definitions
 Red="\e[1;91m"
 Green="\e[0;92m"
@@ -115,7 +175,7 @@ installAll () {
         return 1
     fi
 
-     # Clone additional tools into the tools directory
+    # Clone additional tools into the tools directory
     echo "Cloning additional tools into $tools_dir"
 
 
@@ -194,11 +254,13 @@ cd ..
 
     
 
+
     # Set proper permissions for the tools
     echo "Setting permissions for all tools..."
     chmod -R 755 "$tools_dir"
 
     echo "All tools have been cloned into the tools directory."
+    echo "Please go to the tools directory and set up tools if necessary."
     sleep 5
 
     clear
