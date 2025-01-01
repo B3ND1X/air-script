@@ -27,7 +27,7 @@
     - [Step 8: Update the System](#step-8-update-the-system)
     - [Step 9: Optional - Set a Static IP](#step-9-optional---set-a-static-ip)
 7. [Conclusion](#conclusion)
-
+8. .[Additional Information for Headless Pi](#Additional-Information)
 
 ---
 
@@ -279,4 +279,13 @@ Restart the Raspberry Pi:
 
 Now, your Raspberry Pi should be fully set up and accessible via SSH on your network. You can access it remotely without needing a monitor, keyboard, or mouse, and perform tasks using the terminal or other software tools.
 
+## Additional Information
+
+Please note that I have created a script, rpi.sh, to set up and run pwn.sh on a headless Raspberry Pi.
+
+I have encountered certain xterm processes that are vital to the script's functionality, which fail due to display issues.
+
+This script aims to fix these issues. The rpi.sh script will need to be manually edited with the correct interface name if you wish to rename your interface.
+
+Renaming the interface is optional but recommended if you are having difficulty putting your interface into monitor mode.
 
