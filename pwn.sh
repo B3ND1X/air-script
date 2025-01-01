@@ -326,11 +326,7 @@ attackAllNo () {
 
 crack () {
 checkServices
-	sudo airmon-ng stop $foo > /dev/null 2>&1
-sudo airmon-ng stop wlan0mon > /dev/null 2>&1
-sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
-sudo systemctl start NetworkManager > /dev/null 2>&1
-systemctl start wpa_supplicant  > /dev/null 2>&
+	stopMon
 sleep 2
     echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
     # Check if there are any .cap files in the current directory
@@ -1441,12 +1437,12 @@ run_script_if_exists "uninstall.sh"
 }
 
 stopMon () {
-sudo airmon-ng stop $foo > /dev/null 2>&1
-sudo airmon-ng stop wlan0mon > /dev/null 2>&1
-sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
-sudo systemctl start NetworkManager > /dev/null 2>&1
-systemctl start wpa_supplicant  > /dev/null 2>&1
-echo -e "\e[32mmonitor mode disabled.\e[0m"
+  sudo airmon-ng stop $foo > /dev/null 2>&1
+  sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+  sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
+		sudo systemctl start NetworkManager > /dev/null 2>&1
+  sudo systemctl start wpa_supplicant > /dev/null 2>&1
+  echo -e "\e[32mmonitor mode disabled.\e[0m"
 }
 
 
