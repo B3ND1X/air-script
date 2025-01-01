@@ -45,6 +45,13 @@ That’s perfectly fine! Air Script comes with a variety of additional tools to 
 ## Mobile & Raspberry Pi
 
 **Note**:  
+##IF USING HEADLESS PI OR DEVICE WITH NO DISPLAY
+
+```bash
+sudo xvfb-run ./pwn.sh 
+```
+This command must be executed every time you run Airscript. The pwn.sh script relies on xterm in sudo, which requires a graphical environment. The xvfb-run command simulates this environment, which is essential for actions like deauthentication or scanning for client MAC addresses.
+
 - **No Jailbreak** is required to SSH into your Raspberry Pi from an iOS device! Just download the "Terminus" app from the App Store.  
 - **No Root** is required to SSH into your Raspberry Pi from an Android device. Simply download a terminal app from the Google Play Store.  
 - For Raspberry Pi users, it's recommend only installing the tools you need to save space.
