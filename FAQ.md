@@ -1,21 +1,19 @@
 # Raspberry Pi Setup Guide
 
 ## Table of Contents
-1. [Setting Up and Usage of Air Script](#setting-up-and-usage-of-air-script)
-    - [Modify the airmon-ng Check Kill Command](#modify-the-airmon-ng-check-kill-command)
-    - [Run the Air Script](#run-the-air-script)
-2. [Wireless Adapter Interface Naming and Monitor Mode](#wireless-adapter-interface-naming-and-monitor-mode)
+
+1. [Wireless Adapter Interface Naming and Monitor Mode](#wireless-adapter-interface-naming-and-monitor-mode)
     - [Rename the Network Interface](#rename-the-network-interface)
     - [Make the Change Permanent](#make-the-change-permanent)
-3. [Preventing airodump-ng from Killing Processes](#preventing-airodump-ng-from-killing-processes)
-4. [Disabling Power Saving for Better Performance](#disabling-power-saving-for-better-performance)
+2. [Preventing airodump-ng from Killing Processes](#preventing-airodump-ng-from-killing-processes)
+3. [Disabling Power Saving for Better Performance](#disabling-power-saving-for-better-performance)
     - [Disable CPU Frequency Scaling](#disable-cpu-frequency-scaling)
     - [Disable Wi-Fi Power Saving](#disable-wi-fi-power-saving)
     - [Disable USB Suspend](#disable-usb-suspend)
     - [Disable HDMI Power Saving](#disable-hdmi-power-saving)
     - [Disable Display Power Management Signaling (DPMS)](#disable-display-power-management-signaling-dpms)
-5. [Reboot the Raspberry Pi](#reboot-the-raspberry-pi)
-6. [How to Set Up a Headless Pi with SSH](#how-to-set-up-a-headless-pi-with-ssh)
+    - [Reboot the Raspberry Pi](#reboot-the-raspberry-pi)
+4. [How to Set Up a Headless Pi with SSH](#how-to-set-up-a-headless-pi-with-ssh)
     - [Prerequisites](#prerequisites)
     - [Step 1: Prepare the microSD Card](#step-1-prepare-the-microsd-card)
     - [Step 2: Enable SSH](#step-2-enable-ssh)
@@ -26,25 +24,8 @@
     - [Step 7: Change the Default Password](#step-7-change-the-default-password)
     - [Step 8: Update the System](#step-8-update-the-system)
     - [Step 9: Optional - Set a Static IP](#step-9-optional---set-a-static-ip)
-7. [Conclusion](#conclusion)
-8. .[Additional Information for Headless Pi](#Additional-Information)
+5. [Conclusion](#conclusion)
 
----
-
-## Setting Up and Usage of Air Script
-
-### Modify the airmon-ng Check Kill Command:
-1. Locate the line containing `airmon-ng check kill` and either remove it or comment it out by adding a `#` at the beginning of the line.
-2. As of the time of writing, this line is at line 611. Please be aware that this may change if the script is updated.
-
-### Run the Air Script:
-1. When running the air script, use the following commands:
-    ```bash
-    tmux
-    sudo airscript
-    ```
-2. To scroll within tmux, press `Ctrl + B` followed by `[`.
-3. To exit the scroll mode, press `q`.
 
 ---
 
@@ -63,6 +44,7 @@ sudo ip link set wlan1 up
 You can replace `wlan1` with any name you prefer. This is just an example.
 
  **Note:** Although the name of the interface will change to `wlan1`, the interface will still be in monitor mode, even though it may no longer display "mon" in its name. Both monitor and managed modes will appear as `wlan1`.
+
 
 ### Make the Change Permanent:
 
@@ -279,10 +261,4 @@ Restart the Raspberry Pi:
 
 Now, your Raspberry Pi should be fully set up and accessible via SSH on your network. You can access it remotely without needing a monitor, keyboard, or mouse, and perform tasks using the terminal or other software tools.
 
-## Additional Information
-
-Please note that I have created a script, rpi.sh, to set up and run pwn.sh on a headless Raspberry Pi.
-I have encountered certain xterm processes that are vital to the script's functionality, which fail due to display issues.
-This script aims to fix these issues. The rpi.sh script will need to be manually edited with the correct interface name if you wish to rename your interface.
-Renaming the interface is optional but recommended if you are having difficulty putting your interface into monitor mode.
 
