@@ -273,7 +273,7 @@ Save and exit the editor (press Ctrl+X, then Y to confirm, and Enter).
 
 Restart the Raspberry Pi:
 
-    sudo reboot
+    sudo reboot 
 
 ## Conclusion
 
@@ -282,10 +282,7 @@ Now, your Raspberry Pi should be fully set up and accessible via SSH on your net
 ## Additional Information
 
 Please note that I have created a script, rpi.sh, to set up and run pwn.sh on a headless Raspberry Pi.
-
 I have encountered certain xterm processes that are vital to the script's functionality, which fail due to display issues.
-
 This script aims to fix these issues. The rpi.sh script will need to be manually edited with the correct interface name if you wish to rename your interface.
-
 Renaming the interface is optional but recommended if you are having difficulty putting your interface into monitor mode.
 
