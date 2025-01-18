@@ -111,8 +111,7 @@ installMin() {
     clear
     echo "$(tput setaf 2)Installing minimum required dependencies..."
     apt-get update
-    apt-get install -y aircrack-ng macchanger
-
+    sudo apt install -y arp-scan dsniff aircrack-ng net-tools iw macchanger
     # Check if sendemail is installed, and remove it if found
     if dpkg -l | grep -q sendemail; then
         echo "$(tput setaf 2)Removing sendemail as it's incompatible with postfix..."
