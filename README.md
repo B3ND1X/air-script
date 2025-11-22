@@ -153,7 +153,8 @@ For more details and frequently asked questions, check out the [FAQ section](htt
 ## Changelog 
 
 ## v2.1.0 
-• - Airscript attack method is more aggressive now: up to MAX_HANDSHAKE_ATTEMPTS=5, each
+- More aggressive:
+  - Airscript attack method is more aggressive now: up to MAX_HANDSHAKE_ATTEMPTS=5, each
     attempt boosts deauth frames (30 + 30*(attempt-1) → 30/60/90/120/150), with
     a 15s client scan, 5s airodump spin-up, deauth burst(s), then ~12s capture
     before stopping the capture process.
@@ -169,6 +170,8 @@ For more details and frequently asked questions, check out the [FAQ section](htt
 - Control-flow fixes:
   - Email prompts now break on “no” branch.
   - Attack functions now call the revamped `deauthAttack` instead of the old single-shot deauth.
+-  Install:
+  - Updated install script for a smoother and cleaner install
 - Misc:
   - Improved SSID extraction for logging so `/logs/password` stores network names instead of cap filenames.
 
