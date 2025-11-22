@@ -152,6 +152,26 @@ For more details and frequently asked questions, check out the [FAQ section](htt
 
 ## Changelog 
 
+## v2.1.0 
+• - Airscript attack method is more aggressive now: up to MAX_HANDSHAKE_ATTEMPTS=5, each
+    attempt boosts deauth frames (30 + 30*(attempt-1) → 30/60/90/120/150), with
+    a 15s client scan, 5s airodump spin-up, deauth burst(s), then ~12s capture
+    before stopping the capture process.
+- New wordlist handling:
+  - Added `WORDLIST_DIR`, `SYSTEM_WORDLIST_DIR=/opt/airscript/wordlists`, `DEFAULT_WORDLIST`.
+  - `select_wordlist` trims input, resolves relative names against both local and system dirs, and defaults to the existing file if you just hit Enter. Both directories are listed for the user.
+- Handshake/attack loop overhaul:
+  - Added `MAX_HANDSHAKE_ATTEMPTS` and `CLIENTS` plus `validate_target`, `capture_clients`, and `deauthAttack` rewritten to iterate attempts, rotate clients, and stop once a handshake is validated.
+  - `check_valid_handshake` now uses a dummy wordlist, retries without `-b` if needed, matches `WPA (1 handshake)`, and stops the attack immediately when a valid handshake is found.
+  - `check_cap_files` now uses `check_valid_handshake`, stops monitor, emails if set, and proceeds to cracking as soon as a valid handshake is detected.
+- Cracking updates:
+  - `crack_caps_locally` uses the new wordlist selector, writes found keys to a temp file via `-l`, logs SSIDs/passwords, and handles “no password” cases cleanly.
+- Control-flow fixes:
+  - Email prompts now break on “no” branch.
+  - Attack functions now call the revamped `deauthAttack` instead of the old single-shot deauth.
+- Misc:
+  - Improved SSID extraction for logging so `/logs/password` stores network names instead of cap filenames.
+
 **v2.0.9**
 - Resolved various bugs for improved performance and reliability.
 - Enhanced the installation script for a smoother setup experience.
