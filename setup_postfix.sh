@@ -170,19 +170,17 @@ log_message "Welcome to the Postfix setup script."
 # Check if Postfix is installed and install if necessary
 check_postfix_installed
 
-# Ask if the user wants to configure Gmail credentials for Postfix
+# Configure Postfix to relay via Gmail and then collect credentials if requested
+configure_postfix
+
 log_message "Do you want to configure Gmail credentials for Postfix (Y/n)?"
 read -r configure_postfix_choice
 
 if [[ "$configure_postfix_choice" == "Y" || "$configure_postfix_choice" == "y" || "$configure_postfix_choice" == "" ]]; then
-    # Configure Postfix credentials
     configure_postfix_credentials
 else
     log_message "Skipping Gmail credentials configuration."
 fi
-
-# Update system and reinstall Postfix if needed
-update_system_and_reinstall_postfix
 
 # Configure Postfix utilities
 check_postfix_utilities

@@ -56,7 +56,7 @@ done
 
 uninstallALL () {  
 cd ..
-sudo rm -rf/bin/air-script
+sudo rm -rf /bin/air-script
 sudo rm -rf air-script
 sudo apt-get remove wifiphisher
 sudo apt-get remove kali-anonsurf

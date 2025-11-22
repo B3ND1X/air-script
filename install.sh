@@ -5,68 +5,61 @@ if [ $(id -u) -ne 0 ]; then
     echo "This script must be run as root"
     exit 1
 fi
-    sudo chmod 755 /home/$username/air-script > /dev/null 2>&1
-    sudo chown 755 /home/$username/air-script > /dev/null 2>&1
-    sudo chmod 755 /home/$username/air-script/* > /dev/null 2>&1
-    sudo chown 755 /home/$username/air-script/* > /dev/null 2>&1
-    
-# Prompt user to enter username
-echo "Please enter your username (e.g., Pi):"
-read username
 
-# Ensure the username is not empty
-if [ -z "$username" ]; then
-  echo "Username cannot be empty!"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ORIGINAL_DIR="$SCRIPT_DIR"
+
+current_user="$(logname 2>/dev/null || whoami)"
+if [ -z "$current_user" ]; then
+  echo "Unable to determine current user."
   exit 1
 fi
 
-# Update pwn.sh to replace /home/*/ with /home/$username/
-sed -i "s|/home/\*/|/home/$username/|g" pwn.sh
+# Prefer a predictable install location so the tool can be used from anywhere
+TARGET_DIR="/opt/airscript"
 
-echo "pwn.sh has been updated with the username: $username"
+relocate_repo_if_needed() {
+    local target="$1"
 
-# Check if the device is a Raspberry Pi
-if grep -q "Raspberry Pi" /proc/cpuinfo; then
-  echo "Raspberry Pi detected. Installing Raspberry Pi specific packages..."
+    # If we're already in the target directory, nothing to do
+    if [ "$SCRIPT_DIR" = "$target" ]; then
+        base_dir="$SCRIPT_DIR"
+        return
+    fi
 
-  # Install necessary packages for Raspberry Pi (e.g., X11, if needed for running xterm or GUI-based apps)
-  sudo apt update
-  sudo apt install -y x11-xserver-utils xterm
-  sudo apt install -y xvfb
-# Variables
+    echo "Relocating Air-Script from $SCRIPT_DIR to $target ..."
+    mkdir -p "$target"
 
-SCRIPT="./pwn.sh"          # Path to the pwn.sh script
+    if command -v rsync >/dev/null 2>&1; then
+        rsync -a --delete "$SCRIPT_DIR"/ "$target"/ || { echo "Relocation with rsync failed."; exit 1; }
+    else
+        cp -a "$SCRIPT_DIR"/. "$target"/ || { echo "Relocation with cp failed."; exit 1; }
+    fi
 
+    base_dir="$target"
 
-# Remove lines containing 'airmon-ng check kill' from pwn.sh
-if [[ -f "$SCRIPT" ]]; then
-  sed -i '/airmon-ng check kill/d' "$SCRIPT"
-  echo "Lines containing 'airmon-ng check kill' have been removed from $SCRIPT."
+    # Remove the old copy to keep things tidy
+    if [ -d "$SCRIPT_DIR" ]; then
+        rm -rf "$SCRIPT_DIR"
+    fi
+
+    echo "Air-Script is now located at $base_dir"
+}
+
+relocate_repo_if_needed "$TARGET_DIR"
+
+# Base directory for the install now reflects the relocated path
+: "${base_dir:=$TARGET_DIR}"
+mkdir -p "$base_dir"
+cd "$base_dir" || exit 1
+
+# Update pwn.sh paths if any legacy /home/*/air-script placeholders exist
+placeholder_count=$(grep -c "/home/\*/air-script" "$base_dir/pwn.sh" || true)
+if [ "$placeholder_count" -gt 0 ]; then
+  sed -i "s|/home/\*/air-script|$base_dir|g" "$base_dir/pwn.sh"
+  echo "pwn.sh has been updated for path: $base_dir"
 else
-  echo "Error: $SCRIPT not found. Please ensure the file exists."
-  exit 1
-fi
-
-# Remove setuid permission from xterm
-sudo chmod u-s /usr/bin/xterm
-if [[ $? -ne 0 ]]; then
-  echo "Error: Failed to remove setuid permission from /usr/bin/xterm."
-  exit 1
-fi
-
-# Run the pwn.sh script using xvfb-run
-if [[ -f "$SCRIPT" ]]; then
-  sudo xvfb-run "$SCRIPT"
-else
-  echo "Error: $SCRIPT not found. Please ensure the file exists."
-  exit 1
-fi
-
-menu
-
-  # Additional Raspberry Pi-specific steps can be added here if necessary
-else
-  echo "Non-Raspberry Pi system detected. Skipping Raspberry Pi-specific installations."
+  echo "No /home/*/air-script placeholders found in pwn.sh; leaving paths unchanged."
 fi
 
 # Color Definitions
@@ -75,6 +68,30 @@ Green="\e[0;92m"
 Yellow="\e[0;93m"
 Blue="\e[1;94m"
 White="\e[0;97m"
+
+run_postfix_setup() {
+    local postfix_script="$base_dir/setup_postfix.sh"
+
+    if [ ! -f "$postfix_script" ]; then
+        echo "Postfix setup script not found at $postfix_script, skipping Postfix automation."
+        return
+    fi
+
+    echo -n "Run Postfix setup now (uses setup_postfix.sh)? [Y/n]: "
+    read -r choice
+    case "$choice" in
+        [Nn]*) echo "Skipping Postfix setup per request."; return ;;
+        *) ;;
+    esac
+
+    chmod +x "$postfix_script"
+    echo "Running Postfix setup..."
+    if bash "$postfix_script"; then
+        echo "Postfix setup completed."
+    else
+        echo "Postfix setup encountered issues. Please review $postfix_script output."
+    fi
+}
 
 # Banner function for introduction
 banner () {
@@ -111,29 +128,30 @@ installMin() {
     clear
     echo "$(tput setaf 2)Installing minimum required dependencies..."
     apt-get update
-    sudo apt install -y arp-scan dsniff aircrack-ng net-tools iw macchanger
+    # Core tooling needed by pwn.sh (mail/curl/tshark/xterm for notifications & uploads)
+    sudo apt install -y \
+        arp-scan dsniff aircrack-ng net-tools iw macchanger \
+        xterm tshark tmux mailutils curl postfix
     # Check if sendemail is installed, and remove it if found
     if dpkg -l | grep -q sendemail; then
         echo "$(tput setaf 2)Removing sendemail as it's incompatible with postfix..."
         apt-get remove --purge -y sendemail
     fi
-        sudo apt install xterm
-        sudo apt install tshark
-        sudo apt install tmux
 
-    # Install postfix
-    echo "$(tput setaf 2)Installing postfix..."
-    apt-get install -y postfix
+    # Postfix configuration helper
+    run_postfix_setup
 
     # Make pwn.sh executable if not already
-    chmod +x ./pwn.sh
+    chmod +x "$base_dir/pwn.sh"
 
     # Create a symbolic link for airscript to open pwn.sh from anywhere
-    ln -sf $(pwd)/pwn.sh /usr/local/bin/airscript
+    ln -sf "$base_dir/pwn.sh" /usr/local/bin/airscript
 
     # Confirmation
     clear
     echo "$(tput setaf 2)The command 'airscript' is now available from any directory and will open pwn.sh."
+    echo "$(tput setaf 2)Air-Script installed to: $base_dir"
+    echo "$(tput setaf 2)Run it anytime with: sudo airscript"
     sleep 3
     clear
     permissions
@@ -148,7 +166,7 @@ installAll () {
    installMin
 
     # Define the tools directory
-    tools_dir="/home/$username/air-script/tools"
+    tools_dir="$base_dir/tools"
 
     # Ensure the tools directory exists
     mkdir -p "$tools_dir"
@@ -263,7 +281,8 @@ cd ..
 
 # Tool selection for individual installation
 selectTools() {
-    cd /home/$username/air-script/tools
+    mkdir -p "$base_dir/tools"
+    cd "$base_dir/tools" || return
     echo -e "\n${Yellow}         Select the tools you want to install:\n"
     tools=("aircrack-ng" "macchanger" "websploit" "wifiphisher" "fluxion" "wifite2" "anonsurf" "dracnmap" "morpheus" "kickthemout" "routersploit" "ghost-phisher" "zattacker" "airgeddon" "angryip")
     for i in "${!tools[@]}"; do
@@ -296,7 +315,7 @@ selectTools() {
 
 # Function to install a specific tool
 installTool() {
-    cd /home/$username/air-script/tools
+    cd "$base_dir/tools" || return
     tool=$1
     echo "Installing $tool..."
     case $tool in
@@ -322,18 +341,55 @@ installTool() {
     sleep 5
 }
 
+raspberry_pi_setup() {
+    if ! grep -q "Raspberry Pi" /proc/cpuinfo; then
+        echo "Non-Raspberry Pi system detected. Skipping Raspberry Pi-specific installations."
+        return
+    fi
+
+    echo "Raspberry Pi detected. Installing Raspberry Pi specific packages..."
+
+    # Install necessary packages for Raspberry Pi (e.g., X11, if needed for running xterm or GUI-based apps)
+    sudo apt update
+    sudo apt install -y x11-xserver-utils xterm xvfb
+
+    local script_path="$base_dir/pwn.sh"
+
+    # Remove lines containing 'airmon-ng check kill' from pwn.sh
+    if [[ -f "$script_path" ]]; then
+      sed -i '/airmon-ng check kill/d' "$script_path"
+      echo "Lines containing 'airmon-ng check kill' have been removed from $script_path."
+    else
+      echo "Error: $script_path not found. Please ensure the file exists."
+      return 1
+    fi
+
+    # Remove setuid permission from xterm
+    if ! sudo chmod u-s /usr/bin/xterm; then
+      echo "Error: Failed to remove setuid permission from /usr/bin/xterm."
+      return 1
+    fi
+
+    # Run the pwn.sh script using xvfb-run
+    if [[ -f "$script_path" ]]; then
+      sudo xvfb-run "$script_path"
+    else
+      echo "Error: $script_path not found. Please ensure the file exists."
+      return 1
+    fi
+}
+
 # Permissions function
 permissions () {
     clear
     echo "$(tput setaf 2)Fixing permissions..."
     sleep 5
-    cd /home/$username/air-script
-    sudo chmod 755 /home/$username/air-script > /dev/null 2>&1
-    sudo chown 755 /home/$username/air-script > /dev/null 2>&1
-    sudo chmod 755 /home/$username/air-script/* > /dev/null 2>&1
-    sudo chown 755 /home/$username/air-script/* > /dev/null 2>&1
+    cd "$base_dir" 2>/dev/null || return 0
+    sudo chmod -R 755 "$base_dir" > /dev/null 2>&1
+    sudo chown -R "$current_user:$current_user" "$base_dir" > /dev/null 2>&1
     }
 
-# Run the banner and main menu
+# Run Raspberry Pi adjustments (if applicable), then show the menu
+raspberry_pi_setup
 banner
 menu
