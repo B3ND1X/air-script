@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Air Script
+Comment=Automated Wi-Fi penetration testing helper
+TryExec=/usr/local/bin/airscript
+Exec=sudo /usr/local/bin/airscript
+Icon=airscript
+Terminal=true
+Categories=Utility;Network;Security;
+Keywords=wifi;aircrack;wireless;penetration;

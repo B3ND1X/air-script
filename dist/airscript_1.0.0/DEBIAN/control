@@ -1,0 +1,9 @@
+Package: airscript
+Version: 1.0.0
+Section: net
+Priority: optional
+Architecture: all
+Maintainer: Liam Bendix <liam@liambendix.com>
+Depends: aircrack-ng, arp-scan, dsniff, iw, macchanger, net-tools, xterm, tshark, tmux, mailutils, curl, postfix, network-manager
+Description: Automated Wi-Fi penetration testing helper
+ Air Script automates Wi-Fi scanning, handshake capture, cracking, and workflow tooling through an interactive Bash interface.

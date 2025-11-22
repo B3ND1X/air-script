@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+AIR_HOME="/opt/airscript"
+BIN_LINK="/usr/local/bin/airscript"
+
+case "$1" in
+    configure)
+        mkdir -p "$AIR_HOME/handshakes" "$AIR_HOME/logs"
+        touch "$AIR_HOME/logs/password" "$AIR_HOME/logs/error"
+
+        chown -R root:root "$AIR_HOME"
+
+        if [ -f "$AIR_HOME/pwn.sh" ]; then
+            chmod 755 "$AIR_HOME/pwn.sh"
+        fi
+
+        for f in install.sh uninstall.sh setup_postfix.sh; do
+            if [ -f "$AIR_HOME/$f" ]; then
+                chmod 755 "$AIR_HOME/$f"
+            fi
+        done
+
+        if [ -f "$AIR_HOME/logs/password" ]; then
+            chmod 644 "$AIR_HOME/logs/password"
+        fi
+
+        if [ -f "$AIR_HOME/logs/error" ]; then
+            chmod 644 "$AIR_HOME/logs/error"
+        fi
+
+        ln -sf "$AIR_HOME/pwn.sh" "$BIN_LINK"
+        ;;
+    *)
+        ;;
+esac
+
+exit 0
